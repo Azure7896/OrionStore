@@ -25,7 +25,7 @@ public class OrionprojectApplication {
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
         senderService.sendEmail("test@test.com",
-                "Witaj w sklepie OrionStore!", "Witaj w serwisie");
+                "Witaj w sklepie OrionStore!", "Witaj w serwisie.");
     }
 
 }
