@@ -1,15 +1,12 @@
 package pl.orionproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.UserRepository;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -24,7 +21,6 @@ public class EmailSenderService {
     public void sendEmail (String toEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         Date date = new Date();
-        date.getTime();
         User user = new User("x", "haslo12345", date);
         message.setFrom("orionstoreproject@gmail.com");
         message.setTo(toEmail);

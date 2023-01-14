@@ -22,10 +22,10 @@ public class OrionprojectApplication {
 
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+    /*@EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
         senderService.sendEmail("test@test.com",
                 "Witaj w sklepie OrionStore!", "Witaj w serwisie.");
-    }
+    }*/
 
 }

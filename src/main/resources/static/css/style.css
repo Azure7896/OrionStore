@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-image: url(./galaxy.png);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+
+.container {
+    display: flex;
+    height: 500px;
+    width: 800px;
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 300px;
+    box-shadow: 0px 0px 30px 10px rgb(0, 0, 0);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    background-color: white;
+}
+
+.form h2 {
+    font-size: 2rem;
+    margin: 40px;
+}
+
+.box {
+    padding: 10px;
+    width: 50%;
+    margin: 15px;
+    border: 1px solid rgb(5, 80, 219);
+    outline: none;
+    border-radius: 20px;
+}
+
+#submit {
+    padding: 12px 30px;
+    width: 40%;
+    margin-top: 20px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+}
+
+#submit:hover {
+    cursor: pointer;
+    transition-duration: 600ms;
+    background-color: rgb(0, 140, 255)
+}
+
+.form a {
+    text-decoration: none;
+    color: black;
+    margin-top: 20px;
+}
+
+.form a:hover {
+    transition-duration: 600ms;
+    animation-delay: 3s;
+    color: rgb(0, 140, 255);
+}
+
+.side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.side img {
+    width: 400px;
+    height: 500px;
+}
