@@ -2,13 +2,17 @@ package pl.orionproject.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class ConfirmationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +23,10 @@ public class ConfirmationToken {
     @OneToOne(targetEntity = User.class)
     @JoinColumn (nullable = false)
     private User user;
+
+    public ConfirmationToken (User user) {
+        this.createdDate = new Date();
+        this.user = user;
+        this.confirmationToken = UUID.randomUUID().toString();
+    }
 }

@@ -11,23 +11,19 @@ import java.util.Date;
 
 @Service
 public class EmailSenderService {
+
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Async
     public void sendEmail (String toEmail, String subject, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        Date date = new Date();
-        User user = new User("x", "haslo12345", date);
-        message.setFrom("orionstoreproject@gmail.com");
-        message.setTo(toEmail);
-        message.setText(body + " " + user.getEmail());
-        message.setSubject(subject + date.getTime());
-        mailSender.send(message);
-        userRepository.save(user);
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("orionstoreproject@gmail.com");
+        mailMessage.setTo(toEmail);
+        mailMessage.setText(body);
+        mailMessage.setSubject(subject);
+        mailSender.send(mailMessage);
         System.out.println("Mail sent succesfully");
     }
 }

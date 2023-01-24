@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,18 +14,25 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long customerId;
+    private long id;
     private String organisationName;
-    private int vatNumber;
+    @Column (length = 15)
+    private String vatNumber;
+    @Column (nullable = false, length = 50)
     private String firstName;
+    @Column (nullable = false, length = 50)
     private String lastName;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String password;
-    @Column (unique = true, nullable = false)
+    @Column (unique = true, nullable = false, length = 62)
     private String email;
-    private int phone;
+    @Column (unique = true, length = 9)
+    private String phone;
+    @Column (length = 95)
     private String address;
+    @Column (length = 6)
     private String postalCode;
+    @Column (length = 35)
     private String city;
     @Column (nullable = false)
     private boolean enabled;
@@ -35,8 +41,8 @@ public class User {
     private Date date;
 
 
-    public User(String organisationName, int vatNumber, String firstName, String lastName, String password,
-                String email, int phone, String address, String postalCode, String city, Date date) {
+    public User(String organisationName, String vatNumber, String firstName, String lastName, String password,
+                String email, String phone, String address, String postalCode, String city, Date date) {
         this.organisationName = organisationName;
         this.vatNumber = vatNumber;
         this.firstName = firstName;
@@ -51,9 +57,12 @@ public class User {
         this.date = date;
     }
 
-    public User(String email, String password, Date date) {
+    public User(String firstName, String lastName, String password, String email, Date date) {
+        this.firstName=firstName;
+        this.lastName=lastName;
         this.password = password;
         this.email = email;
         this.date = date;
     }
 }
+

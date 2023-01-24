@@ -25,7 +25,7 @@ public class UserRepositoryTest {
     @Test
     public void addUserToDatabaseTest() {
         Date date = new Date();
-        User user = new User("testowy@gmail.com", "12345", date);
+        //User user = new User("testowy@gmail.com", "12345", date);
 
         //User savedUser = userRepository.save(user);
 
