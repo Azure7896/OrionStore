@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/style.css">
-    <link rel="icon" type="image/x-icon" href="orionstore/img/favicon/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/css/registerstyle.css">
+    <link rel="icon" type="image/x-icon" href="../../../../../../Desktop/OrionStore/img/favicon/favicon.ico">
     <title>Orion Store - kosmiczny sklep internetowy</title>
 </head>
 
@@ -14,14 +14,15 @@
     <section>
         <div class="container">
             <form action="" class="form">
-                <h2>Zaloguj się</h2>
+                <h2>Zarejestruj się</h2>
+                <input type="firstname" class="box" , placeholder="Wpisz imię">
+                <input type="lastname" class="box" , placeholder="Wpisz nazwisko">
                 <input type="email" name="email" class="box" placeholder="Wpisz email">
-                <input type="password" name="password" class="box" placeholder="Wpisz hasło">
                 <input type="password" name="password" class="box" placeholder="Wpisz hasło">
                 <input type="submit" value="Logowanie" id="submit">
             </form>
             <div class="side">
-                <img th:src="@{./img/orionimg.png}" />
+                <img src="css/orionimg.png">
             </div>
         </div>
     </section>
