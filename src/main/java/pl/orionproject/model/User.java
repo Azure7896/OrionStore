@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,6 +40,8 @@ public class User {
     @Column (nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @ManyToMany
+    private Set<Role> roles;
 
 
     public User(String organisationName, String vatNumber, String firstName, String lastName, String password,
