@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import pl.orionproject.model.ConfirmationToken;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ConfirmationTokenRepository;
+import pl.orionproject.repository.RoleRepository;
 import pl.orionproject.repository.UserRepository;
+
+import java.util.HashSet;
+
 @Service
 public class UserService {
     @Autowired
@@ -19,11 +23,12 @@ public class UserService {
     @Autowired
     EmailSenderService emailSenderService;
 
-
-
+    @Autowired
+    RoleRepository roleRepository;
 
     public void registerUser (User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(new HashSet<> (roleRepository.findAll()));
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(confirmationToken);
@@ -31,4 +36,9 @@ public class UserService {
                 + user.getFirstName() + "!", "Aby potwierdzić swoje konto kliknij w link: "
                 + "http://localhost8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
     }
+    public User findByUsername (String email) {
+        return userRepository.findByEmail(email);
+    }
+
+
 }

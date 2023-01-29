@@ -42,6 +42,8 @@ public class User {
     private Date date;
     @ManyToMany
     private Set<Role> roles;
+    @Transient
+    private String passwordConfirm;
 
 
     public User(String organisationName, String vatNumber, String firstName, String lastName, String password,

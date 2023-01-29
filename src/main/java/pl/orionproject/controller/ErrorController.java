@@ -17,7 +17,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
             Integer statusCode = Integer.valueOf(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error-404";
+                return "notfound";
             }
             else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return "accessdenied";
