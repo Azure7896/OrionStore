@@ -13,12 +13,12 @@
 <body>
     <section>
         <div class="container">
-            <form action="" class="form">
+            <form th:action="@{/register}" method="post" th:object="${user}" class="form">
                 <h2>Zarejestruj się</h2>
-                <input type="firstname" class="box" , placeholder="Wpisz imię">
-                <input type="lastname" class="box" , placeholder="Wpisz nazwisko">
-                <input type="email" name="email" class="box" placeholder="Wpisz email">
-                <input type="password" name="password" class="box" placeholder="Wpisz hasło">
+                <input type="firstname" class="box" , placeholder="Wpisz imię" th:field="*{firstName}">
+                <input type="lastname" class="box" , placeholder="Wpisz nazwisko" th:field="*{lastName}">
+                <input type="email" name="email" class="box" placeholder="Wpisz email" th:field="*{email}">
+                <input type="password" name="password" class="box" placeholder="Wpisz hasło" th:field="*{password}">
                 <input type="submit" value="Logowanie" id="submit">
             </form>
             <div class="side">

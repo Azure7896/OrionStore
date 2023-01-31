@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @ManyToMany
-    private Set<Role> roles;
+    private List<Role> roles;
     @Transient
     private String passwordConfirm;
 
@@ -58,16 +58,16 @@ public class User {
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;
-        this.enabled = false;
         this.date = date;
     }
 
-    public User(String firstName, String lastName, String password, String email, Date date) {
+    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles) {
         this.firstName=firstName;
         this.lastName=lastName;
         this.password = password;
         this.email = email;
         this.date = date;
+        this.roles = roles;
     }
 }
 

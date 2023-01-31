@@ -6,9 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
+@Table(name="roles")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,7 +19,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @ManyToMany(mappedBy = "roles", cascade=CascadeType.ALL)
+    private List<User> users;
 
+    public Role(String name) {
+        this.name = name;
+    }
 }

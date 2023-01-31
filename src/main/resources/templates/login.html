@@ -23,6 +23,10 @@
                 <input type="submit" value="Logowanie" id="submit">
                 <a href="">Nie masz konta? Zarejestruj się!</a>
                 <a href="">Zapomniałeś hasla?</a>
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}" />
             </form>
             <div class="side">
                 <img src="css/orionimg.png">
