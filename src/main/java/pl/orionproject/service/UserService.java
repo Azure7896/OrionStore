@@ -32,9 +32,9 @@ public class UserService {
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(confirmationToken);
-        emailSenderService.sendEmail(user.getEmail(), "Witaj w OrionStore, "
+        /*emailSenderService.sendEmail(user.getEmail(), "Witaj w OrionStore, "
                 + user.getFirstName() + "!", "Aby potwierdzić swoje konto kliknij w link: "
-                + "http://localhost8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+                + "http://localhost8080/confirm-account?token=" + confirmationToken.getConfirmationToken());*/
     }
 
     public User findByUsername(String email) {

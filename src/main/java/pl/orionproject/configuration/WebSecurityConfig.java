@@ -1,3 +1,4 @@
+
 package pl.orionproject.configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -41,7 +42,7 @@ public class WebSecurityConfig {
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/login")
                                 .permitAll()
-                );
+                ).csrf().disable();
         return http.build();
     }
 
@@ -54,3 +55,4 @@ public class WebSecurityConfig {
 
 
 }
+

@@ -1,3 +1,4 @@
+
 package pl.orionproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,16 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       /* User user = userRepository.findByEmail(username);
+
+ User user = userRepository.findByEmail(username);
         if(user==null) {
             throw new UsernameNotFoundException("Nie znaleziono użytkownika" + user.getEmail());
         }
         UserDetails userDetails = org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail()).password(user.getPassword()).authorities("USER").build();*/
+                .withUsername(user.getEmail()).password(user.getPassword()).authorities("USER").build();
+
         return null;
+
     }
 }
+

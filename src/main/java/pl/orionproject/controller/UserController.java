@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.orionproject.DataTransferObjects.UserRegistrationDTO;
 import pl.orionproject.service.UserService;
 
@@ -18,16 +16,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    UserValidator userValidator;
-
     @GetMapping("/login")
     public String viewLoginPage() {
         return "login";
     }
 
     @GetMapping("/register")
-    public String viewRegisterPage() {
+    public String viewRegisterPage()
+    {
         return "register";
     }
 
@@ -37,9 +33,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerAccount(@ModelAttribute("user")UserRegistrationDTO registrationDTO) {
-        userService.registerUser(registrationDTO);
-        return "redirect:/login";
+    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDTO registrationDto) {
+        userService.registerUser(registrationDto);
+        return "login";
     }
 
 

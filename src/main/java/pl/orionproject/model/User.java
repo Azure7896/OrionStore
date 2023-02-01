@@ -40,10 +40,12 @@ public class User {
     @Column (nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable (name = "users_roles", joinColumns = @JoinColumn (name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+
     private List<Role> roles;
-    @Transient
-    private String passwordConfirm;
+
 
 
     public User(String organisationName, String vatNumber, String firstName, String lastName, String password,

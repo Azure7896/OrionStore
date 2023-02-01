@@ -27,10 +27,10 @@ public class OrionprojectApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
-        Date date = new Date();
+        /*Date date = new Date();
         UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO("Szymon", "Napora", "12345",
                 "azurusek@gmail.com", false);
-        userService.registerUser(userRegistrationDTO);
+        userService.registerUser(userRegistrationDTO);*/
     }
 
 }
