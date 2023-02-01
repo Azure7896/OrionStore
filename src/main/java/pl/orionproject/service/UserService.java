@@ -16,6 +16,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     EmailSenderService emailSenderService;
+
     UserRegistrationDTO userRegistrationDTO;
     @Autowired
     private UserRepository userRepository;

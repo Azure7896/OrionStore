@@ -33,12 +33,14 @@ public class WebSecurityConfig {
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/")
-                                .failureUrl("/login")
                                 .permitAll()
+                                .defaultSuccessUrl("/")
+                                .failureUrl("/login?error")
+
                 ).logout(
                         logout -> logout
+                                .invalidateHttpSession(true)
+                                .clearAuthentication(true)
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/login")
                                 .permitAll()

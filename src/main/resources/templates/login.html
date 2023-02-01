@@ -13,14 +13,13 @@
 <body>
 <section>
     <div class="container">
-        <form class="form">
+        <form th:action="@{/login}" method="post" class="form">
         <h2>Zaloguj się</h2>
-        <span th:text="${message}"></span>
-        <input type="email" name="email" class="box" placeholder="Wpisz email">
-        <input type="password" name="password" class="box" placeholder="Wpisz hasło">
+        <input type="email" id="username" name="username" class="box" placeholder="Wpisz email">
+        <input type="password" id="password" name="password" class="box" placeholder="Wpisz hasło">
         <input type="submit" value="Logowanie" id="submit">
-        <a href="">Nie masz konta? Zarejestruj się!</a>
-        <a href="">Zapomniałeś hasla?</a>
+            <a href="/register">Nie masz konta? Zarejestruj się!</a>
+            <a href="">Zapomniałeś hasla?</a>
         </form>
         <div class="side">
             <img src="css/orionimg.png">
