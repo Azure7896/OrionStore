@@ -14,11 +14,10 @@
 <section>
     <div class="container">
         <form th:action="@{/login}" method="post" class="form">
-        <h2>Zaloguj się</h2>
-        <input type="email" id="username" name="username" class="box" placeholder="Wpisz email">
-        <input type="password" id="password" name="password" class="box" placeholder="Wpisz hasło">
-        <input type="submit" value="Logowanie" id="submit">
-            <a href="/register">Nie masz konta? Zarejestruj się!</a>
+            <h2>Zaloguj się</h2>
+            <input type="text" id="username" name="username" class="box" placeholder="Wpisz email">
+            <input type="password" id="password" name="password" class="box" placeholder="Wpisz hasło">
+            <input type="submit" value="Logowanie"/>
             <a href="">Zapomniałeś hasla?</a>
         </form>
         <div class="side">

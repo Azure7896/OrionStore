@@ -23,28 +23,26 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register").permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                                .requestMatchers("/**")
+                                .permitAll()
                                 //.requestMatchers("/").permitAll()
-                                .requestMatchers("/cart").hasRole("USER")
-                                .requestMatchers("/admin").hasRole("ADMIN")
+                                .requestMatchers("/cart")
+                                .hasRole("USER")
+                                .requestMatchers("/admin/**")
+                                .hasRole("ADMIN")
                                 .requestMatchers("/resources/**").permitAll().anyRequest().permitAll()
-                ).formLogin(
-                        form -> form
+                                .and()
+                                .formLogin()
                                 .loginPage("/login")
-                                .permitAll()
-                                .defaultSuccessUrl("/")
+                                .loginProcessingUrl("/perform_login")
+                                .defaultSuccessUrl("/", true)
                                 .failureUrl("/login?error")
-
-                ).logout(
-                        logout -> logout
-                                .invalidateHttpSession(true)
-                                .clearAuthentication(true)
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .logoutSuccessUrl("/login")
-                                .permitAll()
-                ).csrf().disable();
+                                .and()
+                                .logout()
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/login");
         return http.build();
     }
 

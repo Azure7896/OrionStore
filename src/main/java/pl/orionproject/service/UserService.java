@@ -38,9 +38,6 @@ public class UserService {
                 + "http://localhost8080/confirm-account?token=" + confirmationToken.getConfirmationToken());*/
     }
 
-    public User findByUsername(String email) {
-        return userRepository.findByEmail(email);
-    }
 
 
 }
