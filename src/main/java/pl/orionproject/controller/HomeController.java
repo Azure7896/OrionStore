@@ -16,4 +16,9 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/admin/additem")
+    public String viewAddItemPage() {
+        return "itemadd";
+    }
+
 }

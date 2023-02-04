@@ -58,44 +58,15 @@ nav a img {
 
 .content {
     background-color: #d9dfe4;
-    width: 80%;
-    height: 1200px;
+    width: 10%;
+    height: 400px;
     margin: auto;
     margin-top: 40px;
     border-radius: 5px;
-    padding-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: flex-start;
-}
-
-.item {
-    background-color: white;
-    width: 270px;
-    height: 320px;
-    border-radius: 10px;
-    margin: 10px;
-}
-
-.specific-item {
-    background-color: rgba(171, 43, 43, 1);
-    color: white;
+    display: block;
+    padding:30px;
     text-align: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
 
-.item img {
-    width: 250px;
-    height: auto;
-    border: 1px rgba(171, 43, 43, 1);
-}
-
-.item p {
-    text-align: center;
-    margin-top: 5px;
-    color: rgba(0, 3, 40, 1);
 }
 
 .item button {
