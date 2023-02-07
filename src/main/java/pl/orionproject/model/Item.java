@@ -1,27 +1,27 @@
 package pl.orionproject.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.math.BigDecimal;
 
-/*@Entity
+@Entity
 @AllArgsConstructor
-@NoArgsConstructor*/
+@NoArgsConstructor
 public class Item {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
-    Long id;
-    String itemName;
-    int quantity;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String itemName;
+    private int quantity;
 
-    double price;
+    private double price;
 
     String description;
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Category category;
 
 }
