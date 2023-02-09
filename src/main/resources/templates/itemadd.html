@@ -8,45 +8,58 @@
 </head>
 
 <body>
-<nav>
-  <a href="localhost:8080/"><img src="css/logo.png" class="logo" alt="OrionStore"></a>
-  <ul>
-    <li></li>
-    <li><a href="">O nas</a></li>
-    <li><a href="">Regulamin</a></li>
-    <li><a href="">Promocje</a></li>
-    <li><a href="">Kontakt</a></li>
-    <li><a href="">Koszyk</a></li>
-    <li><a href="">Ustawienia</a></li>
-  </ul>
-</nav>
+  <nav>
+    <a href="localhost:8080/"><img src="css/logo.png" class="logo" alt="OrionStore"></a>
+    <ul>
+      <li></li>
+      <li><a th:href="@{/}">OrionStore</a></li>
+      <li><a href="">Ustawienia</a></li>
+    </ul>
+  </nav>
 
-<div class="content">
   <form>
-    <label for="name">Nazwa</label>
-
-    <input type="text" id="name" name="name" required
-           minlength="4" maxlength="30">
-
-    <label for="name">Kategoria</label>
-
-    <input list="browsers">
-
-    <datalist id="browsers">
-      <option value="Internet Explorer">
-      <option value="Firefox">
-      <option value="Google Chrome">
-      <option value="Opera">
-      <option value="Safari">
-    </datalist>
-
-    <label for="name">Cena</label>
-
-    <input type="text" id="name" name="name" required
-           minlength="4" maxlength="30">
+    <table>
+      <tr>
+        <td>Nazwa:</td>
+        <td><input type="text" id="name" name="name" maxlength="100"></td><br>
+      </tr>
+      <tr>
+        <td>Link do obrazu:</td>
+        <td><input type="text" id="image" name="image" maxlength="100"></td><br>
+      </tr>
+      <tr>
+        <td>Cena:</td>
+        <td><input type="number" id="number" name="number" min="1" max="50000" placeholder="1000"></td><br>
+      </tr>
+      <tr>
+        <td>Ilość sztuk:</td>
+        <td><input type="number" id="quantity" name="quantity" min="1" max="50000" placeholder="1000"></td><br>
+      </tr>
+      <tr>
+        <td>Kategoria:</td>
+        <td><input list="browsers">
+          <datalist id="browsers">
+            <option value="Procesor">
+            <option value="Karta graficzna">
+            <option value="Zasilacz">
+            <option value="Pamiec RAM">
+            <option value="Obudowa">
+            <option value="Dysk">
+            <option value="Chlodzenie">
+          </datalist>
+        </td><br>
+      </tr>
+      <tr>
+        <td>Opis:</td>
+        <td><textarea name="paragraph_text" id="description" cols="25" rows="10" maxlength="300"></textarea></td><br>
+      </tr>
+      <tr>
+        <td><button>Dodaj</button></td>
+      </tr>
+    </table>
 
   </form>
-</div>
+
 
 
 </body>

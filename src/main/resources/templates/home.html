@@ -22,7 +22,7 @@
     </nav>
 
     <div class="content">
-        <div class="item">
+        <div class="item" th:each="item : ${items}">
             <p class="specific-item" th:text="${item.getCategory()}"></p>
             <img src="/css/products/intelcorei7.jpg" alt="">
             <p th:text="${item.getItemName()}"></p>
