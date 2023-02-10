@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ItemDto {
     private String itemName;
-
     private String imagePath;
     private int quantity;
     private double price;

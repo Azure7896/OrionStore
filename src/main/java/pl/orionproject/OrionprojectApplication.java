@@ -7,8 +7,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import pl.orionproject.DataTransferObjects.UserRegistrationDTO;
+import pl.orionproject.model.Category;
+import pl.orionproject.model.Item;
 import pl.orionproject.model.Role;
 import pl.orionproject.model.User;
+import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.service.EmailSenderService;
 import pl.orionproject.service.UserService;
 
@@ -21,6 +24,9 @@ public class OrionprojectApplication {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ItemRepository itemRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(OrionprojectApplication.class, args);
     }
@@ -31,6 +37,9 @@ public class OrionprojectApplication {
         UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO("Szymon", "Napora", "12345",
                 "azurusek@gmail.com", false);
         userService.registerUser(userRegistrationDTO);*/
+        /*Item item = new Item("AMD XD", 99, 24.99, "Testowy opis", new Category("Procesor"));
+        itemRepository.save(item);*/
+
     }
 
 }

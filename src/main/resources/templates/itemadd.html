@@ -17,27 +17,27 @@
     </ul>
   </nav>
 
-  <form>
+  <form th:action="@{/admin/additem}" method="post" th:object="${item}" class="form">
     <table>
       <tr>
         <td>Nazwa:</td>
-        <td><input type="text" id="name" name="name" maxlength="100"></td><br>
+        <td><input type="text" id="itemName" name="name" th:field="*{itemName}" maxlength="100" required></td><br>
       </tr>
       <tr>
         <td>Link do obrazu:</td>
-        <td><input type="text" id="image" name="image" maxlength="100"></td><br>
+        <td><input type="text" id="image" th:field="*{imagePath}" name="image" maxlength="100" required ></td><br>
       </tr>
       <tr>
         <td>Cena:</td>
-        <td><input type="number" id="number" name="number" min="1" max="50000" placeholder="1000"></td><br>
+        <td><input type="number" id="price" th:field="*{price}" name="price" min="1" max="50000" placeholder="1000 required"></td><br>
       </tr>
       <tr>
         <td>Ilość sztuk:</td>
-        <td><input type="number" id="quantity" name="quantity" min="1" max="50000" placeholder="1000"></td><br>
+        <td><input type="number" id="quantity" th:field="*{quantity}" name="quantity" min="1" max="50000" placeholder="1000"></td><br>
       </tr>
       <tr>
         <td>Kategoria:</td>
-        <td><input list="browsers">
+        <td><input list="browsers" th:field="*{category}">
           <datalist id="browsers">
             <option value="Procesor">
             <option value="Karta graficzna">
@@ -51,10 +51,10 @@
       </tr>
       <tr>
         <td>Opis:</td>
-        <td><textarea name="paragraph_text" id="description" cols="25" rows="10" maxlength="300"></textarea></td><br>
+        <td><textarea name="description" id="description"  th:field="*{description}" cols="25" rows="10" maxlength="300" required></textarea></td><br>
       </tr>
       <tr>
-        <td><button>Dodaj</button></td>
+        <td><button type="submit">Dodaj</button></td>
       </tr>
     </table>
 

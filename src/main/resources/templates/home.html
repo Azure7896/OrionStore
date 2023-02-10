@@ -24,7 +24,7 @@
     <div class="content">
         <div class="item" th:each="item : ${items}">
             <p class="specific-item" th:text="${item.getCategory()}"></p>
-            <img src="/css/products/intelcorei7.jpg" alt="">
+            <img th:src="${item.get}" alt="">
             <p th:text="${item.getItemName()}"></p>
             <p th:text="${item.getPrice()}"></p>
             <button>KUP TERAZ</button>
