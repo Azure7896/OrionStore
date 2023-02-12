@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Orion Store - kosmiczny sklep internetowy</title>
-    <link rel="stylesheet" type="text/css" href="/css/homestyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/cardstyle.css">
 </head>
 
 <body>
@@ -21,14 +21,12 @@
         </ul>
     </nav>
 
-    <div class="content">
-        <div class="item" th:each="item : ${items}">
-            <p class="specific-item" th:text="${item.getCategory()}"></p>
+        <div class="item">
             <img src="/css/products/intelcorei7.jpg" alt="">
-            <p th:text="${item.getItemName()}"></p>
-            <p th:text="${item.getPrice()}"></p>
+            <p>procesor</p>
+            <p>Intel Core I7 8700K</p>
+            <p>2300,99 zł</p>
             <button>KUP TERAZ</button>
-        </div>
     </div>
 
 

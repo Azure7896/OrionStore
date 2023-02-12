@@ -27,7 +27,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                                 .requestMatchers("/**")
                                 .permitAll()
-                                //.requestMatchers("/").permitAll()
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/cart")
                                 .hasRole("USER")
                                 .requestMatchers("/admin/**")

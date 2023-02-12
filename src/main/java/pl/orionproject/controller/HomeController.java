@@ -39,7 +39,7 @@ public class HomeController {
     );
     @GetMapping("/")
     public String viewHomePage(Model model) {
-        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("items", items);
         return "home";
     }
 }

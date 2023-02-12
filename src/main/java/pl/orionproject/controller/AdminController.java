@@ -32,8 +32,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/additem")
-    public String registerUserAccount(@ModelAttribute("item") ItemDto itemDto) {
-        itemRepository.save(new Item(itemDto.getItemName(), itemDto.getQuantity(),
+    public String addItem(@ModelAttribute("item") ItemDto itemDto) {
+        itemRepository.save(new Item(itemDto.getItemName(), itemDto.getImagePath(), itemDto.getQuantity(),
                 itemDto.getPrice(), itemDto.getDescription(), new Category(itemDto.getCategory())));
         return "redirect:/";
     }
