@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.ItemDto;
-import pl.orionproject.DataTransferObjects.UserRegistrationDTO;
 import pl.orionproject.repository.ItemRepository;
 
 import java.util.List;

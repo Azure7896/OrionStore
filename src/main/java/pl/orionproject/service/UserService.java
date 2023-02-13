@@ -3,7 +3,7 @@ package pl.orionproject.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.orionproject.DataTransferObjects.UserRegistrationDTO;
+import pl.orionproject.DataTransferObjects.UserRegistrationDto;
 import pl.orionproject.model.ConfirmationToken;
 import pl.orionproject.model.Role;
 import pl.orionproject.model.User;
@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     EmailSenderService emailSenderService;
 
-    UserRegistrationDTO userRegistrationDTO;
+    UserRegistrationDto userRegistrationDTO;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -25,7 +25,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerUser(UserRegistrationDTO userRegistrationDTO) {
+    public void registerUser(UserRegistrationDto userRegistrationDTO) {
         userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         User user = new User(userRegistrationDTO.getFirstName(), userRegistrationDTO.getLastName(),
                 userRegistrationDTO.getPassword(), userRegistrationDTO.getEmail(), new Date(),

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
-import pl.orionproject.DataTransferObjects.UserRegistrationDTO;
+import pl.orionproject.DataTransferObjects.UserRegistrationDto;
 import pl.orionproject.service.UserService;
 
 
@@ -26,12 +26,12 @@ public class UserController {
     }
 
     @ModelAttribute("user")
-    public UserRegistrationDTO userRegistrationDTO() {
-        return new UserRegistrationDTO();
+    public UserRegistrationDto userRegistrationDTO() {
+        return new UserRegistrationDto();
     }
 
     @PostMapping("/register")
-    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDTO registrationDto) {
+    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         userService.registerUser(registrationDto);
         return "redirect:/register?success";
     }

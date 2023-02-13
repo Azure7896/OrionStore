@@ -4,19 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
-import pl.orionproject.DataTransferObjects.UserRegistrationDTO;
-import pl.orionproject.model.Category;
-import pl.orionproject.model.Item;
-import pl.orionproject.model.Role;
-import pl.orionproject.model.User;
 import pl.orionproject.repository.ItemRepository;
-import pl.orionproject.service.EmailSenderService;
 import pl.orionproject.service.UserService;
-
-import java.util.Date;
-import java.util.List;
 
 
 @SpringBootApplication
@@ -34,7 +24,7 @@ public class OrionprojectApplication {
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
         /*Date date = new Date();
-        UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO("Szymon", "Napora", "12345",
+        UserRegistrationDto userRegistrationDTO = new UserRegistrationDto("Szymon", "Napora", "12345",
                 "azurusek@gmail.com", false);
         userService.registerUser(userRegistrationDTO);*/
         /*Item item = new Item("AMD XD", 99, 24.99, "Testowy opis", new Category("Procesor"));

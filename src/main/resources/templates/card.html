@@ -9,7 +9,7 @@
 
 <body>
     <nav>
-        <a href="localhost:8080/"><img src="css/logo.png" class="logo" alt="OrionStore"></a>
+        <a th:href="@{/}"><img src="css/logo.png" class="logo" alt="OrionStore"></a>
         <ul>
             <li></li>
             <li><a href="">O nas</a></li>
@@ -20,14 +20,18 @@
             <li><a href="">Ustawienia</a></li>
         </ul>
     </nav>
-
+    <div class="product">
         <div class="item">
             <img src="/css/products/intelcorei7.jpg" alt="">
-            <p>procesor</p>
+        </div>
+    <div class="informations">
+            <p>Procesor</p>
             <p>Intel Core I7 8700K</p>
             <p>2300,99 zł</p>
             <button>KUP TERAZ</button>
     </div>
+    </div>
+    <h2>Iorem ipLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h2>
 
 
 </body>

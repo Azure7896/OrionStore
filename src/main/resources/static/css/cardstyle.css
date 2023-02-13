@@ -9,7 +9,6 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: whitesmoke;
 }
 
 nav {
@@ -55,20 +54,26 @@ a:hover {
 nav a img {
     height: 90%;
 }
-.item img {
-    width: 500px;
+
+.item {
+    float: left;
+    margin-top: -15vh;
+    margin-left: 23vh;
+    margin-right: 40vh;
 }
 
-.item p {
+.informations {
     font-size: 50px;
     color: rgba(0, 3, 40, 1);
+    margin-top: 30vh;
 }
 
-.item button {
-    font-size: 14px;
+
+button {
+    font-size: 24px;
     color: #fff;
     background-color: rgba(171, 43, 43, 1);
-    padding: 10px 30px;
+    padding: 30px 50px;
     border: 2px solid rgba(171, 43, 43, 1);
     box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
     border-radius: 50px;
@@ -79,11 +84,16 @@ nav a img {
     align-items: center;
     cursor: pointer;
 }
+h2 {
+    padding: 5vh;
+    margin: 10vh;
+    text-align: center;
+}
 
-.item button:hover {
+button:hover {
 
     transition: 500ms;
-    padding: 10px 50px;
+    padding: 30px 70px;
     transform: translateY(-0px);
     background-color: #fff;
     color: rgba(0, 3, 40, 1);
