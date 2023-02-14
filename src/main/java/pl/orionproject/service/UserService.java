@@ -25,6 +25,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public boolean isUserExists(UserRegistrationDto userRegistrationDTO) {
+        User user = userRepository.findByEmail(userRegistrationDTO.getEmail());
+        return !user.getEmail().equals(null);
+    }
+
     public void registerUser(UserRegistrationDto userRegistrationDTO) {
         userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         User user = new User(userRegistrationDTO.getFirstName(), userRegistrationDTO.getLastName(),
