@@ -85,5 +85,6 @@ body {
 section p {
     align-items: center;
     justify-content: center;
-    color: rgb(0, 140, 255)
+    color: rgb(0, 140, 255);
+    margin-top: 5px;
 }

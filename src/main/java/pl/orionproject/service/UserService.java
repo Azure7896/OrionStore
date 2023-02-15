@@ -9,6 +9,7 @@ import pl.orionproject.model.Role;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ConfirmationTokenRepository;
 import pl.orionproject.repository.UserRepository;
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public boolean isUserExists(UserRegistrationDto userRegistrationDTO) {
-        User user = userRepository.findByEmail(userRegistrationDTO.getEmail());
-        return !user.getEmail().equals(null);
+    public boolean isUserExists(UserRegistrationDto userRegistrationDto) {
+        User user = userRepository.findByEmail(userRegistrationDto.getEmail());
+        return user == null;
     }
 
     public void registerUser(UserRegistrationDto userRegistrationDTO) {
@@ -42,7 +43,6 @@ public class UserService {
                 + user.getFirstName() + "!", "Aby potwierdzić swoje konto kliknij w link: "
                 + "http://localhost8080/confirm-account?token=" + confirmationToken.getConfirmationToken());*/
     }
-
 
 
 }

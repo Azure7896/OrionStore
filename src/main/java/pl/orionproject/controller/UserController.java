@@ -33,10 +33,10 @@ public class UserController {
     @PostMapping("/register")
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         if (userService.isUserExists(registrationDto)) {
-            return "redirect:/register?fail";
-        } else {
             userService.registerUser(registrationDto);
             return "redirect:/register?success";
+        } else {
+            return "redirect:/register?fail";
         }
     }
 
