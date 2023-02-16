@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @NoArgsConstructor
+@Table(name="items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Item {
     private double price;
 
     String description;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable=false)
     private Category category;
 

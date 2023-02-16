@@ -11,16 +11,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name="categories")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private Long categoryId;
     private String categoryName;
 
 
     public Category(String categoryName) {
+
         this.categoryName = categoryName;
+
     }
 }

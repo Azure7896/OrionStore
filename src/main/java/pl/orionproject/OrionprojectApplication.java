@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import pl.orionproject.model.Category;
+import pl.orionproject.model.Item;
+import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.service.UserService;
 
@@ -17,6 +20,9 @@ public class OrionprojectApplication {
     @Autowired
     ItemRepository itemRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(OrionprojectApplication.class, args);
     }
@@ -27,7 +33,9 @@ public class OrionprojectApplication {
         UserRegistrationDto userRegistrationDTO = new UserRegistrationDto("Szymon", "Napora", "12345",
                 "azurusek@gmail.com", false);
         userService.registerUser(userRegistrationDTO);*/
-        /*Item item = new Item("AMD XD", 99, 24.99, "Testowy opis", new Category("Procesor"));
+        /*Category category = categoryRepository.findByCategoryName("Processor");
+        Item item = new Item("ItemName2", "exampleImagePath", 120,
+                24.99, "Example description", category);
         itemRepository.save(item);*/
 
     }
