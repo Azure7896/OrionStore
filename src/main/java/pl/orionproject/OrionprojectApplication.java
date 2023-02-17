@@ -33,11 +33,6 @@ public class OrionprojectApplication {
         UserRegistrationDto userRegistrationDTO = new UserRegistrationDto("Szymon", "Napora", "12345",
                 "azurusek@gmail.com", false);
         userService.registerUser(userRegistrationDTO);*/
-        /*Category category = categoryRepository.findByCategoryName("Processor");
-        Item item = new Item("ItemName2", "exampleImagePath", 120,
-                24.99, "Example description", category);
-        itemRepository.save(item);*/
-
     }
 
 }

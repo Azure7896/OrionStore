@@ -23,7 +23,7 @@
                 <input type="submit" value="Rejestracja" id="submit">
 
                 <div th:if="${param.success}">
-                    <p>Twoje konto zostało pomyślnie założone.</p>
+                    <p><a th:href="@{/login}">Konto zostało założone. Przejdź do logowania.</a></p>
                 </div>
 
                 <div th:if="${param.fail}">
@@ -36,5 +36,4 @@
         </div>
 </section>
 </body>
-
 </html>

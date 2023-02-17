@@ -21,7 +21,7 @@ public class Item {
 
     private double price;
 
-    String description;
+    private String description;
     @ManyToOne
     @JoinColumn(nullable=false)
     private Category category;

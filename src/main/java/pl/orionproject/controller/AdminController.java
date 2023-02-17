@@ -2,23 +2,22 @@ package pl.orionproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.ItemDto;
-import pl.orionproject.model.Category;
-import pl.orionproject.model.Item;
-import pl.orionproject.repository.ItemRepository;
+import pl.orionproject.service.ItemService;
 
 @Controller
 public class AdminController {
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemService itemService;
 
     @GetMapping("/admin")
     public String viewAdminPage() {
-        return "home";
+        return "admin";
     }
 
     @ModelAttribute("item")
@@ -27,14 +26,15 @@ public class AdminController {
     }
 
     @GetMapping("/admin/additem")
-    public String viewAddItemPage() {
+    public String viewAddItemPage(Model model) {
+        //model.addAttribute("items", items);
         return "itemadd";
     }
 
     @PostMapping("/admin/additem")
     public String addItem(@ModelAttribute("item") ItemDto itemDto) {
-        itemRepository.save(new Item(itemDto.getItemName(), itemDto.getImagePath(), itemDto.getQuantity(),
-                itemDto.getPrice(), itemDto.getDescription(), new Category(itemDto.getCategory())));
+        itemService.addItem(itemDto);
         return "redirect:/";
     }
+
 }
