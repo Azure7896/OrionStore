@@ -8,28 +8,28 @@
 </head>
 
 <body>
-    <nav>
-        <a th:href="@{/}"><img src="css/logo.png" class="logo" alt="OrionStore"></a>
-        <ul>
-            <li></li>
-            <li><a href="">O nas</a></li>
-            <li><a href="">Regulamin</a></li>
-            <li><a href="">Promocje</a></li>
-            <li><a href="">Kontakt</a></li>
-            <li><a href="">Koszyk</a></li>
-            <li><a href="">Ustawienia</a></li>
-        </ul>
-    </nav>
+<nav>
+    <a th:href="@{/}"><img src="css/logo.png" class="logo" alt="OrionStore"></a>
+    <ul>
+        <li></li>
+        <li><a href="">O nas</a></li>
+        <li><a href="">Regulamin</a></li>
+        <li><a href="">Promocje</a></li>
+        <li><a href="">Kontakt</a></li>
+        <li><a href="">Koszyk</a></li>
+        <li><div class="login"><a th:href="@{/login}">Logowanie</a></div></li>
+    </ul>
+</nav>
 
-    <div class="content">
-        <div class="item" th:each="item : ${items}">
-            <p class="specific-item" th:text="${item.getCategory()}"></p>
-            <img src="/css/products/intelcorei7.jpg" alt="">
-            <p th:text="${item.getItemName()}"></p>
-            <p th:text="${item.getPrice()}"></p>
-            <button>KUP TERAZ</button>
-        </div>
+<div class="content">
+    <div class="item" th:each="item : ${items}">
+        <p class="specific-item" th:text="${item.getCategory()}"></p>
+        <img src="/css/products/intelcorei7.jpg" alt="">
+        <p th:text="${item.getItemName()}"></p>
+        <p th:text="${item.getPrice()}"></p>
+        <button>KUP TERAZ</button>
     </div>
+</div>
 
 
 </body>

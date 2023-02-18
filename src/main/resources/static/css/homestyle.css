@@ -46,6 +46,10 @@ nav ul li a {
     text-transform: uppercase;
 }
 
+.login{
+    background-color: rgba(0, 3, 40, 1);
+}
+
 a.active,
 a:hover {
     background: black;
