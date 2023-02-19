@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.orionproject.DataTransferObjects.ItemDto;
+import pl.orionproject.model.Item;
 import pl.orionproject.repository.ItemRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +18,7 @@ public class HomeController {
     @Autowired
     ItemRepository itemRepository;
 
-    private List<ItemDto> items = List.of(
+    /*private List<ItemDto> items = List.of(
             new ItemDto("Intel Core I7 13701K", "/css/products/intelcorei7.jpg", 60, 2350.99, "Test", "Procesor"),
             new ItemDto("Intel Core I7 13701K", "/css/products/intelcorei7.jpg", 60, 2350.99, "Test", "Procesor"),
             new ItemDto("Intel Core I7 13702K", "/css/products/intelcorei7.jpg", 60, 2350.99, "Test", "Procesor"),
@@ -33,10 +35,10 @@ public class HomeController {
             new ItemDto("Intel Core I7 13701K", "/css/products/intelcorei7.jpg", 60, 2350.99, "Test", "Procesor"),
             new ItemDto("Intel Core I7 13702K", "/css/products/intelcorei7.jpg", 60, 2350.99, "Test", "Procesor"),
             new ItemDto("Intel Core I7 13703K", "/css/products/intelcorei7.jpg", 60, 2350.99, "Test", "Procesor")
-    );
+    );*/
     @GetMapping("/")
     public String viewHomePage(Model model) {
-        model.addAttribute("items", items);
+        model.addAttribute("items", itemRepository.findAll());
         return "home";
     }
 }

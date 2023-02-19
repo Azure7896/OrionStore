@@ -2,13 +2,18 @@ package pl.orionproject.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.math.BigDecimal;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Table(name="items")
 public class Item {
     @Id
