@@ -37,14 +37,8 @@
       <tr>
         <td>Kategoria:</td>
         <td><input list="browsers" th:field="*{category}">
-          <datalist id="browsers">
-            <option value="Procesor">
-            <option value="Karta graficzna">
-            <option value="Zasilacz">
-            <option value="Pamiec RAM">
-            <option value="Obudowa">
-            <option value="Dysk">
-            <option value="Chlodzenie">
+          <datalist id="browsers" >
+            <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
           </datalist>
         </td><br>
       </tr>
