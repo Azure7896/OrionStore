@@ -23,12 +23,13 @@
 
 <div class="content">
     <div class="item" th:each="item : ${items}">
-        <p th:text="${item.getId}" hidden></p>
         <p class="specific-item" th:text="${item.getCategory().getCategoryName()}"></p>
         <img th:src="${item.getImagePath()}" alt="Zdjęcie produktu">
         <p th:text="${item.getItemName()}"></p>
-        <p th:text="${item.getPrice()}"></p>
+        <p th:text="${item.getPrice()} + zł"></p>
+        <a th:href="@{/card/{id} (id=${item.getId})}">
         <button>KUP TERAZ</button>
+        </a>
     </div>
 </div>
 

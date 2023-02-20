@@ -25,8 +25,8 @@
             <img src="/css/products/intelcorei7.jpg" alt="">
         </div>
     <div class="informations">
-            <p>Procesor</p>
-            <p>Intel Core I7 8700K</p>
+            <!--<p th:text="item.getCategory().getCategoryName()"></p>-->
+        <p th:text="${item.getItemName()}"></p>
             <p>2300,99 zł</p>
             <button>KUP TERAZ</button>
     </div>

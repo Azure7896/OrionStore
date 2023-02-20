@@ -90,8 +90,9 @@ nav a img {
 }
 
 .item img {
-    width: 250px;
-    height: auto;
+    width: auto;
+    height: 60%;
+    margin: 5px;
     border: 1px rgba(171, 43, 43, 1);
 }
 
