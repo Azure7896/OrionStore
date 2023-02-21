@@ -24,9 +24,9 @@
         <div class="item">
             <img src="/css/products/intelcorei7.jpg" alt="">
         </div>
-    <div class="informations">
+    <div class="informations" th:object="item">
             <!--<p th:text="item.getCategory().getCategoryName()"></p>-->
-        <p th:text="${item.getItemName()}"></p>
+        <p th:text="${item.getItemName()}></p>
             <p>2300,99 zł</p>
             <button>KUP TERAZ</button>
     </div>

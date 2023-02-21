@@ -16,8 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CustomUserDetailService implements UserDetailsService {
-   private UserRepository userRepository;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

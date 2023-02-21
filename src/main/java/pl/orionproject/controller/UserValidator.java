@@ -2,38 +2,29 @@ package pl.orionproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
+import pl.orionproject.DataTransferObjects.UserRegistrationDto;
 import pl.orionproject.model.User;
-import pl.orionproject.service.UserService;
+import pl.orionproject.repository.UserRepository;
 
 @Component
-public class UserValidator implements Validator {
-    @Autowired
-    private UserService userService;
+public class UserValidator {
 
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+    @Autowired
+    UserRepository userRepository;
+
+    public boolean isUserExists(UserRegistrationDto userRegistrationDto) {
+        User user = userRepository.findByEmail(userRegistrationDto.getEmail());
+        return user == null;
     }
 
-    @Override
-    public void validate(Object o, Errors errors) {
-        User user = (User) o;
+    public boolean isFieldEmpty(UserRegistrationDto userRegistrationDto) {
+        return userRegistrationDto.getEmail().isEmpty() || userRegistrationDto.getFirstName().isEmpty()
+            || userRegistrationDto.getLastName().isEmpty() || userRegistrationDto.getPassword().isEmpty();
+    }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-        if (user.getEmail().length() < 6 || user.getEmail().length() > 32) {
-            errors.rejectValue("email", "Size.userForm.username");
-        }
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
-        }
-
-        /*if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
-        }*/
+    public boolean isValidNumberOfCharacters(UserRegistrationDto userRegistrationDto) {
+        return userRegistrationDto.getEmail().length() <= 62 || userRegistrationDto.getFirstName().length() <= 50
+                || userRegistrationDto.getLastName().length() <= 50 || userRegistrationDto.getPassword().length() <= 255 &&
+                userRegistrationDto.getPassword().length() >= 6;
     }
 }

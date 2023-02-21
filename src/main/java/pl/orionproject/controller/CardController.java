@@ -13,8 +13,8 @@ public class CardController {
     @Autowired
     ItemRepository itemRepository;
     @GetMapping("/card/{id}")
-    public String showCard(@PathVariable Long id, Model model) {
-        model.addAttribute("item", itemRepository.findById(id));
+    public String showCard(@PathVariable("id") Long id, Model model) {
+//        model.addAttribute("item", itemRepository.findById(id));
         return "card";
     }
 }

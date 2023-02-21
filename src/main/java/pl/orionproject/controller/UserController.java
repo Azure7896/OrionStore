@@ -12,6 +12,8 @@ import pl.orionproject.service.UserService;
 public class UserController {
 
     @Autowired
+    private UserValidator userValidator;
+    @Autowired
     private UserService userService;
 
     @GetMapping("/login")
@@ -32,9 +34,13 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
-        if (userService.isUserExists(registrationDto)) {
+        if (userValidator.isUserExists(registrationDto)) {
             userService.registerUser(registrationDto);
             return "redirect:/register?success";
+        } else if (userValidator.isFieldEmpty(registrationDto)) {
+            return "redirect:/register?fieldisempty";
+        } else if(userValidator.isValidNumberOfCharacters(registrationDto)) {
+            return "redirect:/register?wrongnumberofcharacters";
         } else {
             return "redirect:/register?fail";
         }

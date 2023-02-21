@@ -18,18 +18,12 @@ public class UserService {
     @Autowired
     private EmailSenderService emailSenderService;
 
-    private UserRegistrationDto userRegistrationDTO;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    public boolean isUserExists(UserRegistrationDto userRegistrationDto) {
-        User user = userRepository.findByEmail(userRegistrationDto.getEmail());
-        return user == null;
-    }
 
     public void registerUser(UserRegistrationDto userRegistrationDTO) {
         userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
