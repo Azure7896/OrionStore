@@ -19,7 +19,7 @@ public class UserValidator {
 
     public boolean isFieldEmpty(UserRegistrationDto userRegistrationDto) {
         return userRegistrationDto.getEmail().isEmpty() || userRegistrationDto.getFirstName().isEmpty()
-            || userRegistrationDto.getLastName().isEmpty() || userRegistrationDto.getPassword().isEmpty();
+                || userRegistrationDto.getLastName().isEmpty() || userRegistrationDto.getPassword().isEmpty();
     }
 
     public boolean isValidNumberOfCharacters(UserRegistrationDto userRegistrationDto) {

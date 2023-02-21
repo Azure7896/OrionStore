@@ -6,11 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
-import java.util.List;
-
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,6 +17,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
     public Role(String name) {
         this.name = name;
     }

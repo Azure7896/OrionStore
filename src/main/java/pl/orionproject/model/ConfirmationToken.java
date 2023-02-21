@@ -3,14 +3,13 @@ package pl.orionproject.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name="confirmation_tokens")
+@Table(name = "confirmation_tokens")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -22,10 +21,10 @@ public class ConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @OneToOne(targetEntity = User.class)
-    @JoinColumn (nullable = false)
+    @JoinColumn(nullable = false)
     private User user;
 
-    public ConfirmationToken (User user) {
+    public ConfirmationToken(User user) {
         this.createdDate = new Date();
         this.user = user;
         this.confirmationToken = UUID.randomUUID().toString();

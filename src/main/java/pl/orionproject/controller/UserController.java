@@ -2,8 +2,9 @@ package pl.orionproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.UserRegistrationDto;
 import pl.orionproject.service.UserService;
 
@@ -22,8 +23,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String viewRegisterPage()
-    {
+    public String viewRegisterPage() {
         return "register";
     }
 
@@ -39,7 +39,7 @@ public class UserController {
             return "redirect:/register?success";
         } else if (userValidator.isFieldEmpty(registrationDto)) {
             return "redirect:/register?fieldisempty";
-        } else if(userValidator.isValidNumberOfCharacters(registrationDto)) {
+        } else if (userValidator.isValidNumberOfCharacters(registrationDto)) {
             return "redirect:/register?wrongnumberofcharacters";
         } else {
             return "redirect:/register?fail";
