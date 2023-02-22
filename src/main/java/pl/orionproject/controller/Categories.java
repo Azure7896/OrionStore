@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
@@ -20,9 +21,14 @@ public class Categories {
     CategoryRepository categoryRepository;
 
     @GetMapping("/category/{id}")
-    public String registerUserAccount(@ModelAttribute("items") Item item, Model model,
-                                      @PathVariable Long id) {
-//        model.addAttribute("items", itemRepository.findItemByCategory()
+    public String registerUserAccount(Model model, @PathVariable Long id) {
+        Category category = categoryRepository.findByCategoryId(id);
+        if (category==null) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("items", itemRepository
+                    .findItemByCategory(category));
+        }
         return "home";
     }
 

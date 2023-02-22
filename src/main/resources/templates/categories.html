@@ -16,7 +16,7 @@
     </ul>
 </nav>
 
-<h1>Witaj ADMIN, wybierz odpowiednie opcje w prawym górnym rogu.</h1>
+<h1>WWitaj użytkowniku, wybierz odopowiednią dla siebie kategorię.</h1>
 <div th:each="category : ${categories}">
 <a th:href="@{/category/{id} (id=${category.getCategoryId()})}">
     <button th:text="${category.getCategoryName()}"></button>
