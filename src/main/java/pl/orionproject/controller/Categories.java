@@ -11,6 +11,9 @@ import pl.orionproject.model.Item;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class Categories {
 
@@ -26,8 +29,9 @@ public class Categories {
         if (category==null) {
             return "redirect:/";
         } else {
-            model.addAttribute("items", itemRepository
-                    .findItemByCategory(category));
+            List<Item> items = itemRepository.findAll();
+            model.addAttribute("items", items.stream().filter(item -> item
+                    .getCategory().getCategoryId() == id).collect(Collectors.toList()));
         }
         return "home";
     }
