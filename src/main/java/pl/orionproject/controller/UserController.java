@@ -35,7 +35,11 @@ public class UserController {
     @PostMapping("/register")
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         if (userValidator.isUserExists(registrationDto)) {
-            userService.registerUser(registrationDto);
+            try {
+                userService.registerUser(registrationDto);
+            } catch (Exception e) {
+                return e.getMessage();
+            }
             return "redirect:/register?success";
         } else if (userValidator.isFieldEmpty(registrationDto)) {
             return "redirect:/register?fieldisempty";

@@ -32,7 +32,7 @@ public class AdminController {
     @GetMapping("/admin/additem")
     public String viewAddItemPage(Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
-        return "itemadd";
+        return "additem";
     }
 
     @PostMapping("/admin/additem")
