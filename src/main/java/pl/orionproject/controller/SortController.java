@@ -19,12 +19,13 @@ public class SortController {
 
     @GetMapping("/sort/desc")
     public String sortByDesc(Model model) {
-        model.addAttribute("items", sortService.sortByAsc(itemRepository.findAll()));
+        model.addAttribute("items", sortService.sortByDesc(itemRepository.findAll()));
         return "home";
     }
 
     @GetMapping("/sort/asc")
-    public String sortByAsc() {
+    public String sortByAsc(Model model) {
+        model.addAttribute("items", sortService.sortByAsc(itemRepository.findAll()));
         return "home";
     }
 }

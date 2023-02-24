@@ -12,4 +12,10 @@ public class SortService {
         Collections.sort(items);
         return items;
     }
+
+    public List<Item> sortByDesc(List<Item> items) {
+        Collections.sort(items);
+        Collections.reverse(items);
+        return items;
+    }
 }
