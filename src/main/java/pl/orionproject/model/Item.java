@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "items")
-public class Item {
+public class Item implements Comparable <Item> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,5 +35,10 @@ public class Item {
         this.price = price;
         this.description = description;
         this.category = category;
+    }
+
+    @Override
+    public int compareTo(Item other) {
+        return Double.compare(this.getPrice(), other.getPrice());
     }
 }
