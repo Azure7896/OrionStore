@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Orion Store - kosmiczny sklep internetowy</title>
+    <link rel="stylesheet" type="text/css" href="/css/itemadd.css">
+</head>
+
+<body>
+<nav>
+    <ul>
+        <li></li>
+        <li><a th:href="@{/}">OrionStore</a></li>
+        <li><a href="">Ustawienia</a></li>
+    </ul>
+</nav>
+
+<form th:action="@{/admin/addcategories}" method="post" th:object="${category}" class="form">
+    <table>
+        <tr>
+            <td>Nazwa kategorii: </td>
+            <td><input type="text" id="category" name="category" th:field="*{categoryName}" maxlength="20" required></td>
+            <br>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Dodaj</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table id="example">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nazwa kategorii:</th>
+        <th>Akcja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categories}">
+        <td th:text="${category.getCategoryId()}"></td>
+        <td th:text="${category.getCategoryName()}"></td>
+        <td>
+            <a th:href="@{/admin/modify/{id} (id=${category.getCategoryId()})}">
+            <button>Modyfikuj</button>
+            </a>
+            <a th:href="@{/admin/category/delete/{id} (id=${category.getCategoryId()})}">
+            <button>Usuń</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+
+</html>

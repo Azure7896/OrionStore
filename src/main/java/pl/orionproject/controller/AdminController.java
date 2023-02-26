@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.orionproject.DataTransferObjects.CategoryDto;
 import pl.orionproject.DataTransferObjects.ItemDto;
+import pl.orionproject.model.Category;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.service.ItemService;
-import pl.orionproject.service.SessionService;
 
 @Controller
 @Transactional
@@ -37,6 +38,11 @@ public class AdminController {
         return new ItemDto();
     }
 
+    @ModelAttribute("category")
+    public CategoryDto categoryDto() {
+        return new CategoryDto();
+    }
+
     @GetMapping("/admin/additem")
     public String viewAddItemPage(Model model) {
 //        model.addAttribute("categories", categoryRepository.findAll());
@@ -50,10 +56,27 @@ public class AdminController {
         return "redirect:/";
     }
 
-    @GetMapping("/admin/delete/{id}")
+    @GetMapping("/admin/item/delete/{id}")
     public String deleteItem(@PathVariable Long id) {
         itemRepository.deleteItemById(id);
         return "redirect:/admin/additem";
     }
 
+    @GetMapping("/admin/addcategories")
+    public String addCategories(Model model) {
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "addcategories";
+    }
+
+    @PostMapping("/admin/addcategories")
+    public String addCategories(@ModelAttribute("category") CategoryDto categoryDto) {
+        categoryRepository.save(new Category(categoryDto.getCategoryName()));
+        return "redirect:/addcategories";
+    }
+
+    @GetMapping("/admin/category/delete/{id}")
+    public String deleteCategory(@PathVariable Long id) {
+        categoryRepository.deleteCategoriesByCategoryId(id);
+        return "redirect:/admin/addcategories";
+    }
 }
