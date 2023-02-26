@@ -12,4 +12,6 @@ import java.util.Collections;
 public interface UserService extends UserDetailsService {
     void registerUser(UserRegistrationDto registrationDto);
     Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles);
+
+    String createHelloNotification();
 }

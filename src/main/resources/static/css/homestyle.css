@@ -162,3 +162,18 @@ body .sorting-buttons {
     margin-left: 10%;
     margin-top: 2%;
 }
+
+.hello {
+    font-size: 30px;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 1%;
+    text-align: center;
+}
+
+.hello input {
+    padding: 5px;
+    font-size: 23px;
+    border-radius: 50px;
+    border: 2px solid rgba(171, 43, 43, 1);
+}

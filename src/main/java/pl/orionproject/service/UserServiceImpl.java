@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private SessionService sessionService;
+
     public void registerUser(UserRegistrationDto userRegistrationDTO) {
         userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         User user = new User(userRegistrationDTO.getFirstName(), userRegistrationDTO.getLastName(),
@@ -57,9 +60,20 @@ public class UserServiceImpl implements UserService {
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user.getRoles()));
     }
-
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
+
+    public String createHelloNotification() {
+        if (sessionService.getUserSessionEmail().equals("anonymousUser")) {
+            return "Witaj w sklepie OrionStore. Zaloguj się aby otrzymać pełną funkcjonalność.";
+        } else {
+            return "Witaj w sklepie OrionStore, " + userRepository.findByEmail(sessionService.getUserSessionEmail()).getFirstName()
+                    + "! Dziękujemy że jesteś.";
+        }
+    }
+
+
 }
