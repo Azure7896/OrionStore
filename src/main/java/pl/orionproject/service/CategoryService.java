@@ -12,5 +12,5 @@ public class CategoryService {
 
     public List<Item> itemsByCategory(List<Item> items, Long id) {
         return items.stream().filter(item -> item
-                .getCategory().getCategoryId() == id).collect(Collectors.toList());
+                .getCategory().getCategoryId() == id && item.getQuantity() > 0).collect(Collectors.toList());
     }}

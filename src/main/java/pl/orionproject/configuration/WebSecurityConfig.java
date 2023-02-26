@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,8 +34,8 @@ public class WebSecurityConfig {
         http.csrf().disable()
           .authorizeRequests()
 //                .requestMatchers("/card/**", "/admin", "/admin/**").authenticated()
-                .requestMatchers("/card/**")
-                .hasRole("USER")
+//                .requestMatchers("/card/**")
+//                .hasRole("USER")
 //                .requestMatchers("/admin/**")
 //                .hasRole("ADMIN")
 //                .requestMatchers("/**")
@@ -71,7 +73,5 @@ public class WebSecurityConfig {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-
-
 }
 

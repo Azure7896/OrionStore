@@ -88,6 +88,7 @@ button {
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+    margin-left: 5%;
 }
 h2 {
     padding: 5vh;
@@ -106,4 +107,10 @@ button:hover {
     background-color: #fff;
     color: rgba(0, 3, 40, 1);
     border: solid 2px rgba(0, 3, 40, 1);
+    margin-bottom: 10px;
+}
+
+#numberofitems {
+    color: green;
+    font-size: 19px;
 }

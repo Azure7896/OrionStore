@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.orionproject.model.Item;
 import pl.orionproject.repository.ItemRepository;
+import pl.orionproject.service.ItemService;
 import pl.orionproject.service.SortService;
 
 @Controller
@@ -15,17 +16,17 @@ public class SortController {
     SortService sortService;
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemService itemService;
 
     @GetMapping("/sort/desc")
     public String sortByDesc(Model model) {
-        model.addAttribute("items", sortService.sortByDesc(itemRepository.findAll()));
+        model.addAttribute("items", sortService.sortByDesc(itemService.viewAllItems()));
         return "home";
     }
 
     @GetMapping("/sort/asc")
     public String sortByAsc(Model model) {
-        model.addAttribute("items", sortService.sortByAsc(itemRepository.findAll()));
+        model.addAttribute("items", sortService.sortByAsc(itemService.viewAllItems()));
         return "home";
     }
 }

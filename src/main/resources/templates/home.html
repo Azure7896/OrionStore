@@ -17,9 +17,20 @@
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
         <li><a href="">Koszyk</a></li>
+        <li></li>
         <li><div class="login"><a th:href="@{/login}">Logowanie</a></div></li>
     </ul>
 </nav>
+
+<div class="sorting-buttons">
+    <label for="first">Sortuj po:</label>
+    <a th:href="@{/sort/desc}">
+    <button id="first">Cena: Malejąco</button>
+    </a>
+    <a th:href="@{/sort/asc}">
+    <button id="second">Cena: Rosnąco</button>
+    </a>
+</div>
 
 <div class="content">
     <div class="item" th:each="item : ${items}">

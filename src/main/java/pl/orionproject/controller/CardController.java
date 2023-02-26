@@ -18,4 +18,5 @@ public class CardController {
         model.addAttribute("item", itemRepository.findItemById(id));
         return "card";
     }
+
 }

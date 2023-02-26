@@ -27,12 +27,14 @@
     <div class="informations">
         <p th:text="${item.getCategory().getCategoryName()}"></p>
         <p th:text="${item.getItemName()}"></p>
-        <p th:text="${item.getPrice()}"></p>
+        <p th:text="${item.getPrice()} + zł"></p>
         <button>Dodaj do koszyka</button>
     </div>
 </div>
+<p id="numberofitems" th:text="${item.getQuantity()} + | sztuk - tyle posiadamy na stanie |"></p>
+
 <div class="description" th:each="product : ${item}">
-<h2 th:text="${item.getDescription()}"></h2>
+    <h2 th:text="${item.getDescription()}"></h2>
 </div>
 </body>
 

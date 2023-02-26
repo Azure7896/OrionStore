@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.ItemDto;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.service.ItemService;
+import pl.orionproject.service.SessionService;
 
 @Controller
 public class AdminController {
@@ -19,8 +20,12 @@ public class AdminController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    SessionService sessionService;
+
     @GetMapping("/admin")
     public String viewAdminPage() {
+        System.out.println(sessionService.getUserSessionEmail());
         return "admin";
     }
 

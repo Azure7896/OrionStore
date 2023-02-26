@@ -63,8 +63,7 @@ nav a img {
 .content {
     background-color: #d9dfe4;
     width: 80%;
-    margin: auto;
-    margin-top: 40px;
+    margin: 40px auto auto;
     border-radius: 5px;
     padding-top: 10px;
     display: flex;
@@ -102,15 +101,14 @@ nav a img {
 }
 
 .item button {
-    margin: auto;
-    margin-top: 15px;
+    margin: 15px auto auto;
     font-weight: 0;
     font-size: 14px;
     color: #fff;
     background-color: rgba(171, 43, 43, 1);
     padding: 10px 30px;
     border: 2px solid rgba(171, 43, 43, 1);
-    box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+    box-shadow: rgb(0, 0, 0);
     border-radius: 50px;
     transition: 1000ms;
     transform: translateY(0);
@@ -128,4 +126,39 @@ nav a img {
     background-color: #fff;
     color: rgba(0, 3, 40, 1);
     border: solid 2px rgba(0, 3, 40, 1);
+}
+
+body .sorting-buttons button {
+    font-size: 14px;
+    color: #fff;
+    background-color: rgba(171, 43, 43, 1);
+    padding: 10px 30px;
+    border: 2px solid rgba(171, 43, 43, 1);
+    box-shadow: rgb(0, 0, 0);
+    border-radius: 50px;
+    transition: 1000ms;
+    transform: translateY(0);
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    display:inline-block;
+    margin-left: auto;
+
+}
+
+body .sorting-buttons button:hover {
+
+    transition: 500ms;
+    padding: 10px 50px;
+    transform: translateY(-0px);
+    background-color: #fff;
+    color: rgba(0, 3, 40, 1);
+    border: solid 2px rgba(0, 3, 40, 1);
+    display:inline-block;
+    margin-left: auto;
+}
+
+body .sorting-buttons {
+    margin-left: 10%;
+    margin-top: 2%;
 }
