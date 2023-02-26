@@ -5,17 +5,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import pl.orionproject.model.Category;
-import pl.orionproject.model.Item;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
-import pl.orionproject.service.UserService;
+import pl.orionproject.service.UserServiceImpl;
 
 
 @SpringBootApplication
 public class OrionprojectApplication {
     @Autowired
-    UserService userService;
+    UserServiceImpl userServiceImpl;
 
     @Autowired
     ItemRepository itemRepository;

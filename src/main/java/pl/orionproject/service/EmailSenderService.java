@@ -16,7 +16,7 @@ public class EmailSenderService {
     @Async
     public void sendEmail(String toEmail, String subject, String body) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("orionstoreproject@gmail.com");
+        mailMessage.setFrom("notificationsorionstore@gmail.com");
         mailMessage.setTo(toEmail);
         mailMessage.setText(body);
         mailMessage.setSubject(subject);

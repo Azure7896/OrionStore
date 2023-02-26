@@ -11,7 +11,7 @@ import pl.orionproject.model.ConfirmationToken;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ConfirmationTokenRepository;
 import pl.orionproject.repository.UserRepository;
-import pl.orionproject.service.UserService;
+import pl.orionproject.service.UserServiceImpl;
 
 
 @Controller
@@ -24,11 +24,21 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
+
+    @PostMapping("/login")
+    public String viewLoginPageAfterLogin() {
+        return "redirect:/";
+    }
 
     @GetMapping("/login")
     public String viewLoginPage() {
         return "login";
+    }
+
+    @PostMapping("/logout")
+    public String logout() {
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
@@ -45,7 +55,7 @@ public class UserController {
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         if (userValidator.isUserExists(registrationDto)) {
             try {
-                userService.registerUser(registrationDto);
+                userServiceImpl.registerUser(registrationDto);
             } catch (Exception e) {
                 return e.getMessage();
             }
@@ -65,7 +75,7 @@ public class UserController {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmToken);
         if (token != null) {
             User user = userRepository.findByEmail(token.getUser().getEmail());
-            user.setEnabled(true);
+            user.setActive(true);
             userRepository.save(user);
             confirmationTokenRepository.delete(token);
             return "registrationsuccesful";

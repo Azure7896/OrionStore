@@ -37,7 +37,7 @@ public class User {
     @Column(length = 35)
     private String city;
     @Column(nullable = false)
-    private boolean enabled;
+    private boolean isActive;
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;

@@ -20,6 +20,11 @@
             <input type="submit" value="Logowanie" id="submit"/>
             <a th:href="@{/register}">Nie masz konta? Zarejestruj się</a>
             <a href="">Zapomniałeś hasła?</a>
+            <div class="error" th:if="${param.error}">
+                <p>Błędna nazwa użytkownia lub hasło.</p>
+                <p><a th:href="@{/login}">Kliknij tutaj aby spróbować ponownie.</a></p>
+                <p>Sprawdź czy aktywowałeś konto.</p>
+            </div>
         </form>
         <div class="side">
             <img src="css/orionimg.png">
