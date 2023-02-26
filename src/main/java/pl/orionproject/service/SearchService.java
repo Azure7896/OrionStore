@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 public class SearchService {
 
     public List<Item> searchItems(List<Item> items, ItemDto itemDto) {
-            return items.stream().filter(item -> item.getItemName().contains(itemDto.getItemName())).collect(Collectors.toList());
+        return items.stream().filter(item -> item.getItemName()
+                        .contains(itemDto.getItemName()))
+                .collect(Collectors.toList());
     }
 }

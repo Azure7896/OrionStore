@@ -21,12 +21,12 @@ public class SortController {
     @GetMapping("/sort/desc")
     public String sortByDesc(Model model) {
         model.addAttribute("items", sortService.sortByDesc(itemService.viewAllItems()));
-        return "home";
+        return "homecategory";
     }
 
     @GetMapping("/sort/asc")
     public String sortByAsc(Model model) {
         model.addAttribute("items", sortService.sortByAsc(itemService.viewAllItems()));
-        return "home";
+        return "homecategory";
     }
 }

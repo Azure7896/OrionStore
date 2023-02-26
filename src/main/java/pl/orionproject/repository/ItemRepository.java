@@ -10,5 +10,6 @@ import pl.orionproject.model.Item;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findItemById(Long id);
     Item findItemByCategory(Category category);
+    void deleteItemById(Long id);
 
 }

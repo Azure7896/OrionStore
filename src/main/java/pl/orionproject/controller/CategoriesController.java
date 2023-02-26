@@ -33,12 +33,12 @@ public class CategoriesController {
             model.addAttribute("items", categoryService
                     .itemsByCategory(itemRepository.findAll(), id));
         }
-        return "home";
+        return "homecategory";
     }
 
     @GetMapping("/categories")
     public String showCategoriesList(Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
-        return "categories";
+        return "homecategory";
     }
 }

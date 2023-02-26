@@ -2,57 +2,97 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Orion Store - kosmiczny sklep internetowy</title>
-  <link rel="stylesheet" type="text/css" href="/css/itemadd.css">
+    <meta charset="UTF-8">
+    <title>Orion Store - kosmiczny sklep internetowy</title>
+    <link rel="stylesheet" type="text/css" href="/css/itemadd.css">
 </head>
 
 <body>
-  <nav>
+<nav>
     <ul>
-      <li></li>
-      <li><a th:href="@{/}">OrionStore</a></li>
-      <li><a href="">Ustawienia</a></li>
+        <li></li>
+        <li><a th:href="@{/}">OrionStore</a></li>
+        <li><a href="">Ustawienia</a></li>
     </ul>
-  </nav>
+</nav>
 
-  <form th:action="@{/admin/additem}" method="post" th:object="${item}" class="form">
+<form th:action="@{/admin/additem}" method="post" th:object="${item}" class="form">
     <table>
-      <tr>
-        <td>Nazwa:</td>
-        <td><input type="text" id="itemName" name="name" th:field="*{itemName}" maxlength="100" required></td><br>
-      </tr>
-      <tr>
-        <td>Link do obrazu:</td>
-        <td><input type="text" id="image" th:field="*{imagePath}" name="image" maxlength="100" required ></td><br>
-      </tr>
-      <tr>
-        <td>Cena:</td>
-        <td><input type="number" id="price" th:field="*{price}"  min="0.00" max="10000.00" step="0.01" required></td><br>
-      </tr>
-      <tr>
-        <td>Ilość sztuk:</td>
-        <td><input type="number" id="quantity" th:field="*{quantity}" name="quantity" min="1" max="50000" placeholder="1000"></td><br>
-      </tr>
-      <tr>
-        <td>Kategoria:</td>
-        <td><input list="browsers" th:field="*{category}">
-          <datalist id="browsers" >
-            <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
-          </datalist>
-        </td><br>
-      </tr>
-      <tr>
-        <td>Opis:</td>
-        <td><textarea name="description" id="description"  th:field="*{description}" cols="25" rows="10" maxlength="300" required></textarea></td><br>
-      </tr>
-      <tr>
-        <td><button type="submit">Dodaj</button></td>
-      </tr>
+        <tr>
+            <td>Nazwa:</td>
+            <td><input type="text" id="itemName" name="name" th:field="*{itemName}" maxlength="100" required></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Link do obrazu:</td>
+            <td><input type="text" id="image" th:field="*{imagePath}" name="image" maxlength="100" required></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Cena:</td>
+            <td><input type="number" id="price" th:field="*{price}" min="0.00" max="10000.00" step="0.01" required></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Ilość sztuk:</td>
+            <td><input type="number" id="quantity" th:field="*{quantity}" name="quantity" min="1" max="50000"
+                       placeholder="1000"></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Kategoria:</td>
+            <td><input list="browsers" th:field="*{category}">
+                <datalist id="browsers">
+                    <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
+                </datalist>
+            </td>
+            <br>
+        </tr>
+        <tr>
+            <td>Opis:</td>
+            <td><textarea name="description" id="description" th:field="*{description}" cols="25" rows="10"
+                          maxlength="300" required></textarea></td>
+            <br>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Dodaj</button>
+            </td>
+        </tr>
     </table>
+</form>
 
-  </form>
-
+<table id="example">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nazwa</th>
+        <th>Obraz</th>
+        <th>Sztuk</th>
+        <th>Cena</th>
+        <th>Kategoria</th>
+        <th>Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="iteminfo : ${allitems}">
+        <td th:text="${iteminfo.getId()}"></td>
+        <td th:text="${iteminfo.getItemName()}"></td>
+        <td th:text="${iteminfo.getImagePath()}"></td>
+        <td th:text="${iteminfo.getQuantity()}"></td>
+        <td th:text="${iteminfo.getPrice()}"></td>
+        <td th:text="${iteminfo.getCategory().getCategoryName()}"></td>
+        <td>
+            <a th:href="@{/admin/modify/{id} (id=${iteminfo.getId()})}">
+            <button>Modyfikuj</button>
+            </a>
+            <a th:href="@{/admin/delete/{id} (id=${iteminfo.getId()})}">
+            <button>Usuń</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
 </body>

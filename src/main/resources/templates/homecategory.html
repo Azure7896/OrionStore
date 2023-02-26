@@ -27,12 +27,12 @@
     <p th:text="${info}"></p>
 </div>
 
-<div class="hello">
-    <form th:action="@{/}" method="post" th:object="${searcheditem}" class="form">
-        <label for="search">Wyszukaj: </label>
-        <input type="text" id="search" name="search" placeholder="Wyszukaj i naciśnij enter..." th:field="*{itemName}"></p>
-    </form>
-</div>
+<!--<div class="hello">-->
+<!--    <form th:action="@{/}" method="post" th:object="${searcheditem}" class="form">-->
+<!--        <label for="search">Wyszukaj: </label>-->
+<!--        <input type="text" id="search" name="search" placeholder="Wyszukaj i naciśnij enter..." th:field="*{itemName}"></p>-->
+<!--    </form>-->
+<!--</div>-->
 
 <div class="sorting-buttons">
     <label for="first">Sortuj po:</label>
@@ -50,7 +50,7 @@
         <img th:src="${item.getImagePath()}" alt="Zdjęcie produktu">
         <p th:text="${item.getItemName()}"></p>
         <p th:text="${item.getPrice()} + zł"></p>
-        <a th:href="@{/card/{id} (id=${item.getId()})}">
+        <a th:href="@{/card/{id} (id=${item.getId})}">
             <button>KUP TERAZ</button>
         </a>
     </div>
