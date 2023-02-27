@@ -39,6 +39,6 @@ public class CategoriesController {
     @GetMapping("/categories")
     public String showCategoriesList(Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
-        return "homecategory";
+        return "categories";
     }
 }

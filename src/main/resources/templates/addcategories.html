@@ -44,7 +44,7 @@
         <td th:text="${category.getCategoryId()}"></td>
         <td th:text="${category.getCategoryName()}"></td>
         <td>
-            <a th:href="@{/admin/modify/{id} (id=${category.getCategoryId()})}">
+            <a th:href="@{/admin/category/modify/{id} (id=${category.getCategoryId()})}">
             <button>Modyfikuj</button>
             </a>
             <a th:href="@{/admin/category/delete/{id} (id=${category.getCategoryId()})}">

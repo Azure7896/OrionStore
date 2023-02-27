@@ -79,4 +79,19 @@ public class AdminController {
         categoryRepository.deleteCategoriesByCategoryId(id);
         return "redirect:/admin/addcategories";
     }
+
+    @GetMapping("/admin/category/modify/{id}")
+    public String modifyCategory (@PathVariable Long id, Model model) {
+        Category category = categoryRepository.findByCategoryId(id);
+        model.addAttribute("categorytomodify", category);
+        return "categorymodify";
+    }
+
+    @PostMapping("/admin/category/modify/{id}")
+    public String modifyCategory (@PathVariable Long id, @ModelAttribute("category") CategoryDto categoryDto) {
+        Category category = categoryRepository.findByCategoryId(id);
+        category.setCategoryName(categoryDto.getCategoryName());
+        categoryRepository.save(category);
+        return "redirect:/admin/addcategories";
+    }
 }

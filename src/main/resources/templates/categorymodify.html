@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Orion Store - kosmiczny sklep internetowy</title>
+    <link rel="stylesheet" type="text/css" href="/css/itemadd.css">
+</head>
+
+<body>
+<nav>
+    <ul>
+        <li></li>
+        <li><a th:href="@{/}">OrionStore</a></li>
+        <li><a href="">Ustawienia</a></li>
+    </ul>
+</nav>
+
+<form th:href="@{/admin/category/modify/{id}}" method="post" th:object="${category}" th:each="category : ${categorytomodify}"
+      class="form">
+    <table>
+        <tr>
+            <td>Nazwa kategorii:</td>
+            <td><input type="text" id="category" name="category" maxlength="20"
+                       th:placeholder="${category.getCategoryName()}" th:field="*{categoryName}" required></td>
+            <br>
+        </tr>
+        <tr>
+            <td>
+                <a th:href="@{/admin/category/modify/{id} (id=${category.getCategoryId()})}">
+                <button type="submit">Zmień nazwę</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+
+</html>
