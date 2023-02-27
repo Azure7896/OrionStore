@@ -51,7 +51,7 @@
         <tr>
             <td>Opis:</td>
             <td><textarea name="description" id="description" th:field="*{description}" cols="25" rows="10"
-                          maxlength="300" required></textarea></td>
+                          maxlength="65555" required></textarea></td>
             <br>
         </tr>
         <tr>
@@ -83,7 +83,7 @@
         <td th:text="${iteminfo.getPrice()}"></td>
         <td th:text="${iteminfo.getCategory().getCategoryName()}"></td>
         <td>
-            <a th:href="@{/admin/modify/{id} (id=${iteminfo.getId()})}">
+            <a th:href="@{/admin/item/modify/{id} (id=${iteminfo.getId()})}">
             <button>Modyfikuj</button>
             </a>
             <a th:href="@{/admin/item/delete/{id} (id=${iteminfo.getId()})}">

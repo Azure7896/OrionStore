@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Orion Store - kosmiczny sklep internetowy</title>
+    <link rel="stylesheet" type="text/css" href="/css/itemadd.css">
+</head>
+
+<body>
+<nav>
+    <ul>
+        <li></li>
+        <li><a th:href="@{/}">OrionStore</a></li>
+        <li><a href="">Ustawienia</a></li>
+    </ul>
+</nav>
+
+<h1>Modyfikuj przedmiot</h1>
+
+<form th:href="@{/admin/item/modify/{id}}" method="post" th:object="${item}" th:each="item : ${itemtomodify}"
+      class="form">
+    <table>
+        <tr>
+            <td>Nazwa przedmiotu:</td>
+            <td><input type="text" id="item" name="item" maxlength="50"
+                       value="test" th:field="*{itemName}" required>
+            </td>
+            <td th:text="| Poprzednio: | + ${item.getItemName()}"></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Link do obrazu:</td>
+            <td><input type="text" id="image" th:field="*{imagePath}"
+                       name="image" maxlength="100" required></td>
+            <td th:text="| Poprzednio: | + ${item.getImagePath()}"></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Cena:</td>
+            <td><input type="number" id="price" th:field="*{price}"
+                       min="0.00" max="10000.00" step="0.01" required></td>
+            <td th:text="| Poprzednio: | + ${item.getPrice()}"></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Ilość sztuk:</td>
+            <td><input type="number" id="quantity"
+                       th:field="*{quantity}" name="quantity" min="1" max="50000"
+                       placeholder="1000"></td>
+            <td th:text="| Poprzednio: | + ${item.getQuantity()}"></td>
+            <br>
+
+        </tr>
+        <tr>
+            <td>Kategoria:</td>
+            <td><input list="browsers" th:field="*{category}">
+                <datalist id="browsers">
+                    <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
+                </datalist>
+            </td>
+            <td th:text="| Kategoria: Poprzednio: | + ${item.getCategory().getCategoryName()}"></td>
+            <br>
+        </tr>
+        <tr>
+            <td>Opis:</td>
+            <td><textarea name="description" id="description" th:field="*{description}" th:text="| Poprzednio: | + ${item.getQuantity()}" cols="25" rows="10"
+                          maxlength="65555" required></textarea></td>
+            <td th:text="| Poprzednio: | + ${item.getDescription()}"></td>
+            <br>
+        </tr>
+        <tr>
+            <td>
+                <a th:href="@{/admin/item/modify/{id}}">
+                    <button type="submit">Modyfikuj</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+
+</html>

@@ -22,7 +22,7 @@ public class Item implements Comparable <Item> {
     private int quantity;
 
     private double price;
-
+    @Column(length = 65555)
     private String description;
     @ManyToOne
     @JoinColumn(nullable = false)

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.CategoryDto;
 import pl.orionproject.DataTransferObjects.ItemDto;
 import pl.orionproject.model.Category;
+import pl.orionproject.model.Item;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.service.ItemService;
@@ -71,7 +72,7 @@ public class AdminController {
     @PostMapping("/admin/addcategories")
     public String addCategories(@ModelAttribute("category") CategoryDto categoryDto) {
         categoryRepository.save(new Category(categoryDto.getCategoryName()));
-        return "redirect:/addcategories";
+        return "redirect:/admin/addcategories";
     }
 
     @GetMapping("/admin/category/delete/{id}")
@@ -93,5 +94,25 @@ public class AdminController {
         category.setCategoryName(categoryDto.getCategoryName());
         categoryRepository.save(category);
         return "redirect:/admin/addcategories";
+    }
+
+    @GetMapping("/admin/item/modify/{id}")
+    public String modifyItem (@PathVariable Long id, Model model) {
+        Item item = itemRepository.findItemById(id);
+        model.addAttribute("itemtomodify", item);
+        return "itemmodify";
+    }
+
+    @PostMapping("/admin/item/modify/{id}")
+    public String modifyItem (@PathVariable Long id, @ModelAttribute("item") ItemDto itemDto) {
+        Item item = itemRepository.findItemById(id);
+        item.setItemName(itemDto.getItemName());
+        item.setPrice(itemDto.getPrice());
+        item.setImagePath(itemDto.getImagePath());
+        item.setDescription(itemDto.getDescription());
+        item.setQuantity(itemDto.getQuantity());
+        item.setCategory(categoryRepository.findByCategoryName(itemDto.getCategory()));
+        itemRepository.save(item);
+        return "redirect:/admin/additem";
     }
 }
