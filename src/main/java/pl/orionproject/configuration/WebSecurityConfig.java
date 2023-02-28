@@ -3,6 +3,7 @@ package pl.orionproject.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,13 +34,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
           .authorizeRequests()
-//                .requestMatchers("/card/**", "/admin", "/admin/**").authenticated()
-//                .requestMatchers("/card/**")
-//                .hasRole("USER")
-//                .requestMatchers("/admin/**")
-//                .hasRole("ADMIN")
-//                .requestMatchers("/**")
-//                .permitAll()
+               .requestMatchers( "/cart", "/card/additem/**").authenticated()
+                .requestMatchers("/admin").hasAuthority("ADMIN")
                 .requestMatchers("/resources/**").permitAll().anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -54,7 +50,6 @@ public class WebSecurityConfig {
                 .logoutSuccessUrl("/login");
         return http.build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)

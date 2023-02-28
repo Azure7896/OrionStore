@@ -46,10 +46,6 @@ nav ul li a {
     text-transform: uppercase;
 }
 
-.login{
-    background-color: rgba(0, 3, 40, 1);
-}
-
 a.active,
 a:hover {
     background: black;
@@ -176,4 +172,11 @@ body .sorting-buttons {
     font-size: 23px;
     border-radius: 50px;
     border: 2px solid rgba(171, 43, 43, 1);
+}
+
+
+#admin {
+    color: #ffffff;
+    background-color: black;
+    font-size: 19px;
 }

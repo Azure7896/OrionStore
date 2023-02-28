@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
 
+import java.util.List;
+
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
@@ -13,5 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Item findItemByItemName(String name);
     void deleteItemById(Long id);
+
+    List<Item> findAllByCategory(Category category);
 
 }

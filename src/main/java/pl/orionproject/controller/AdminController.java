@@ -91,7 +91,7 @@ public class AdminController {
 
     @GetMapping("/admin/category/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {
-        if (categoryValidator.isCategoryExists(id)) {
+        if (categoryValidator.isItemWithCategoryExists(categoryRepository.findByCategoryId(id))) {
             return "redirect:/admin/addcategories?fail";
         }
         categoryRepository.deleteCategoriesByCategoryId(id);

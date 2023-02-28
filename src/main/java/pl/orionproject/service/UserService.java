@@ -14,4 +14,6 @@ public interface UserService extends UserDetailsService {
     Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles);
 
     String createHelloNotification();
+
+    String getUserName();
 }

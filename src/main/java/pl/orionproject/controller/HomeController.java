@@ -33,6 +33,7 @@ public class HomeController {
     @GetMapping("/")
     public String viewHomePage(Model model) {
         model.addAttribute("username", userService.createHelloNotification());
+        model.addAttribute("email", userService.getUserName());
         model.addAttribute("items", itemService.viewAllItems());
         return "home";
     }
@@ -41,5 +42,10 @@ public class HomeController {
     public String viewSearchedItems(Model model, @ModelAttribute("searcheditem") ItemDto item) {
         model.addAttribute("items", searchService.searchItems(itemService.viewAllItems(), item));
         return "home";
+    }
+
+    @GetMapping("/cart")
+    public String viewCart() {
+        return "cart";
     }
 }

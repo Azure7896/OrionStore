@@ -78,5 +78,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public String getUserName() {
+        return sessionService.getUserSessionEmail();
+    }
+
 
 }

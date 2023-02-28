@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Orion Store - kosmiczny sklep internetowy</title>
+    <link rel="stylesheet" type="text/css" href="/css/homestyle.css">
+</head>
+
+<body>
+<nav>
+    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
+    <ul>
+        <li><a href="">O nas</a></li>
+        <li><a href="">Regulamin</a></li>
+        <li><a href="">Promocje</a></li>
+        <li><a th:href="@{/categories}">Kategorie</a></li>
+        <li><a href="">Koszyk</a></li>
+        <li>
+                <div th:each="usermail : ${email}">
+                    <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
+                    <div th:if="${usermail} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
+                </div>
+        </li>
+    </ul>
+</nav>
+</div>
+
+</body>
+
+</html>
