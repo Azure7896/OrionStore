@@ -9,15 +9,14 @@
 
 <body>
 <nav>
+    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
-        <li></li>
         <li><a href="#">Kategorie</a></li>
         <li><a href="">Ustawienia</a></li>
     </ul>
 </nav>
 
 <h1>Witaj użytkowniku, wybierz odopowiednią dla siebie kategorię.</h1>
-<p>Nasz sklep specalizuje się w wielu kategoriach.</p>
 <div th:each="category : ${categories}">
 <a th:href="@{/category/{id} (id=${category.getCategoryId()})}">
     <button th:text="${category.getCategoryName()}"></button>

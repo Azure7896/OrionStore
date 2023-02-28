@@ -89,6 +89,7 @@ button {
     align-items: center;
     cursor: pointer;
     margin-left: 5%;
+    margin-top: 5px;
 }
 h2 {
     padding: 5vh;

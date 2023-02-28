@@ -9,8 +9,8 @@
 
 <body>
 <nav>
+    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
-        <li></li>
         <li><a th:href="@{/}">OrionStore</a></li>
         <li><a href="">Ustawienia</a></li>
     </ul>
@@ -59,7 +59,7 @@
                     <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
                 </datalist>
             </td>
-            <td th:text="| Kategoria: Poprzednio: | + ${item.getCategory().getCategoryName()}"></td>
+            <td th:text="| Poprzednio: | + ${item.getCategory().getCategoryName()}"></td>
             <br>
         </tr>
         <tr>
@@ -70,7 +70,7 @@
             <br>
         </tr>
         <tr>
-            <td>
+            <td colspan="3">
                 <a th:href="@{/admin/item/modify/{id}}">
                     <button type="submit">Modyfikuj</button>
                 </a>

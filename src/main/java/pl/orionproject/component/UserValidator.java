@@ -1,4 +1,4 @@
-package pl.orionproject.controller;
+package pl.orionproject.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class UserValidator {
 
     public boolean isUserExists(UserRegistrationDto userRegistrationDto) {
         User user = userRepository.findByEmail(userRegistrationDto.getEmail());
-        return user == null;
+        return !(user == null);
     }
 
     public boolean isFieldEmpty(UserRegistrationDto userRegistrationDto) {
@@ -22,9 +22,9 @@ public class UserValidator {
                 || userRegistrationDto.getLastName().isEmpty() || userRegistrationDto.getPassword().isEmpty();
     }
 
-    public boolean isValidNumberOfCharacters(UserRegistrationDto userRegistrationDto) {
-        return userRegistrationDto.getEmail().length() <= 62 || userRegistrationDto.getFirstName().length() <= 50
-                || userRegistrationDto.getLastName().length() <= 50 || userRegistrationDto.getPassword().length() <= 255 &&
-                userRegistrationDto.getPassword().length() >= 6;
+    public boolean isNotValidNumberOfCharacters(UserRegistrationDto userRegistrationDto) {
+        return userRegistrationDto.getEmail().length() >= 62 || userRegistrationDto.getFirstName().length() >= 50
+                || userRegistrationDto.getLastName().length() >= 50 || userRegistrationDto.getPassword().length() >= 255 ||
+                userRegistrationDto.getPassword().length() <= 6;
     }
 }

@@ -1,6 +1,7 @@
 package pl.orionproject.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -47,7 +49,6 @@ public class User {
 
     private List<Role> roles;
 
-
     public User(String organisationName, String vatNumber, String firstName, String lastName, String password,
                 String email, String phone, String address, String postalCode, String city, Date date) {
         this.organisationName = organisationName;
@@ -63,7 +64,7 @@ public class User {
         this.date = date;
     }
 
-    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles) {
+    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles/*, ShoppingCart shoppingCart*/) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;

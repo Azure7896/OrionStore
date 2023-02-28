@@ -9,12 +9,15 @@
 
 <body>
 <nav>
+    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
         <li></li>
         <li><a th:href="@{/}">OrionStore</a></li>
         <li><a href="">Ustawienia</a></li>
     </ul>
 </nav>
+
+<h1>Dodaj przedmiot</h1>
 
 <form th:action="@{/admin/additem}" method="post" th:object="${item}" class="form">
     <table>
@@ -55,12 +58,16 @@
             <br>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
                 <button type="submit">Dodaj</button>
             </td>
         </tr>
     </table>
 </form>
+
+<div class="error" th:if="${param.fail}">
+    <p>Przedmiot już istnieje.</p>
+</div>
 
 <table id="example">
     <thead>

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.orionproject.DataTransferObjects.UserRegistrationDto;
+import pl.orionproject.component.UserValidator;
 import pl.orionproject.model.ConfirmationToken;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ConfirmationTokenRepository;
@@ -53,19 +54,12 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
-        if (userValidator.isUserExists(registrationDto)) {
-            try {
-                userServiceImpl.registerUser(registrationDto);
-            } catch (Exception e) {
-                return e.getMessage();
-            }
-            return "redirect:/register?success";
-        } else if (userValidator.isFieldEmpty(registrationDto)) {
-            return "redirect:/register?fieldisempty";
-        } else if (userValidator.isValidNumberOfCharacters(registrationDto)) {
-            return "redirect:/register?wrongnumberofcharacters";
-        } else {
+        if (userValidator.isUserExists(registrationDto) || userValidator.isFieldEmpty(registrationDto)
+                || userValidator.isNotValidNumberOfCharacters(registrationDto)) {
             return "redirect:/register?fail";
+        } else {
+                userServiceImpl.registerUser(registrationDto);
+            return "redirect:/register?success";
         }
     }
 

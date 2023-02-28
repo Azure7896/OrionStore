@@ -27,20 +27,15 @@
                 </div>
 
                 <div th:if="${param.fail}">
-                    <p>Konto już istnieje. Spróbuj ponownie.</p>
+                    <p>Wystąpił błąd, sprawdź pola. Konto może już istnieć.</p>
                 </div>
 
-                <div th:if="${param.fieldisempty}">
-                    <p>Któreś z pół jest puste. Spróbuj ponownie.</p>
-                </div>
-
-                <div th:if="${param.wrongnumberofcharacters}">
-                    <p>Sprawdź długość pól. Hasło może być za krótkie.</p>
-                </div>
 
             </form>
         <div class="side">
+            <a th:href="@{/}">
             <img src="css/orionimg.png">
+            </a>
         </div>
         </div>
 </section>

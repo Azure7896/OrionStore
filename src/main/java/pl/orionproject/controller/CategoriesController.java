@@ -25,7 +25,7 @@ public class CategoriesController {
     CategoryService categoryService;
 
     @GetMapping("/category/{id}")
-    public String registerUserAccount(Model model, @PathVariable Long id) {
+    public String showCategories(Model model, @PathVariable Long id) {
         Category category = categoryRepository.findByCategoryId(id);
         if (category==null) {
             return "redirect:/";
@@ -35,6 +35,8 @@ public class CategoriesController {
         }
         return "homecategory";
     }
+
+
 
     @GetMapping("/categories")
     public String showCategoriesList(Model model) {

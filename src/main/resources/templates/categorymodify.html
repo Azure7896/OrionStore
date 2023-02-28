@@ -9,6 +9,7 @@
 
 <body>
 <nav>
+    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
         <li></li>
         <li><a th:href="@{/}">OrionStore</a></li>
@@ -16,6 +17,7 @@
     </ul>
 </nav>
 
+<h1>Modyfikuj kategorię</h1>
 <form th:href="@{/admin/category/modify/{id}}" method="post" th:object="${category}" th:each="category : ${categorytomodify}"
       class="form">
     <table>

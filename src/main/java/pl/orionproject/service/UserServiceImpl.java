@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import pl.orionproject.model.ConfirmationToken;
 import pl.orionproject.model.Role;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ConfirmationTokenRepository;
+import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.repository.RoleRepository;
 import pl.orionproject.repository.UserRepository;
 
@@ -40,11 +40,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SessionService sessionService;
 
+    @Autowired
+    private ItemRepository itemRepository;
+
     public void registerUser(UserRegistrationDto userRegistrationDTO) {
         userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         User user = new User(userRegistrationDTO.getFirstName(), userRegistrationDTO.getLastName(),
                 userRegistrationDTO.getPassword(), userRegistrationDTO.getEmail(), new Date(),
-                false, List.of(new Role("USER")));
+                false, List.of(new Role("USER"))/*, new ShoppingCart(itemRepository.findAll())*/);
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(confirmationToken);

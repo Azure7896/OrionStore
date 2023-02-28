@@ -94,3 +94,13 @@ body {
     text-align: center;
     margin-top: 15px;
 }
+
+.side img {
+    transition-duration: 600ms;
+}
+
+.side img:hover {
+    transition-duration: 600ms;
+    filter: grayscale(75%);
+
+}
