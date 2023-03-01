@@ -49,22 +49,7 @@ public class User {
 
     private List<Role> roles;
 
-    public User(String organisationName, String vatNumber, String firstName, String lastName, String password,
-                String email, String phone, String address, String postalCode, String city, Date date) {
-        this.organisationName = organisationName;
-        this.vatNumber = vatNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.date = date;
-    }
-
-    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles/*, ShoppingCart shoppingCart*/) {
+    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;

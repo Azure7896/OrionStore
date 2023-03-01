@@ -40,14 +40,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SessionService sessionService;
 
-    @Autowired
-    private ItemRepository itemRepository;
 
     public void registerUser(UserRegistrationDto userRegistrationDTO) {
         userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         User user = new User(userRegistrationDTO.getFirstName(), userRegistrationDTO.getLastName(),
                 userRegistrationDTO.getPassword(), userRegistrationDTO.getEmail(), new Date(),
-                false, List.of(new Role("USER"))/*, new ShoppingCart(itemRepository.findAll())*/);
+                false, List.of(new Role("USER")));
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(confirmationToken);

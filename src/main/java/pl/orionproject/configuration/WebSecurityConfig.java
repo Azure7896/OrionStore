@@ -15,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import pl.orionproject.repository.ShoppingCartItemsRepository;
+import pl.orionproject.service.ShoppingCartService;
 import pl.orionproject.service.UserService;
 import pl.orionproject.service.UserServiceImpl;
 

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -44,9 +43,9 @@
         </tr>
         <tr>
             <td>Kategoria:</td>
-            <td><input list="browsers" th:field="*{category}">
+            <td><input list="browsers" th:field="*{category}" autocomplete="off">
                 <datalist id="browsers">
-                    <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
+                    <option th:each="showcategory : ${categories}" th:value="${showcategory.getCategoryName()} ">
                 </datalist>
             </td>
             <br>

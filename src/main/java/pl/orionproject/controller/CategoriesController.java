@@ -9,6 +9,8 @@ import pl.orionproject.model.Category;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.service.CategoryService;
+import pl.orionproject.service.ShoppingCartService;
+import pl.orionproject.service.UserService;
 
 import java.util.stream.Collectors;
 
@@ -23,6 +25,12 @@ public class CategoriesController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ShoppingCartService shoppingCartService;
 
     @GetMapping("/category/{id}")
     public String showCategories(Model model, @PathVariable Long id) {
@@ -40,7 +48,10 @@ public class CategoriesController {
 
     @GetMapping("/categories")
     public String showCategoriesList(Model model) {
+        model.addAttribute("count", shoppingCartService.sumProductsCount());
+        model.addAttribute("priceofallitems", shoppingCartService.viewRoundedPrices());
         model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("email", userService.getUserName());
         return "categories";
     }
 }

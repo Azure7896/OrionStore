@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Orion Store - kosmiczny sklep internetowy</title>
@@ -54,9 +53,9 @@
         </tr>
         <tr>
             <td>Kategoria:</td>
-            <td><input list="browsers" th:field="*{category}">
+            <td><input list="browsers" th:field="*{category}" autocomplete="off">
                 <datalist id="browsers">
-                    <option th:value="${category.getCategoryName()}" th:each="category : ${categories}">
+                    <option th:each="showcategory : ${categories}" th:value="${showcategory.getCategoryName()} " >
                 </datalist>
             </td>
             <td th:text="| Poprzednio: | + ${item.getCategory().getCategoryName()}"></td>

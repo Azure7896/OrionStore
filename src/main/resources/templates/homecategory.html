@@ -11,20 +11,22 @@
 <nav>
     <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
+        <li id="admin" sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin}">ADMIN PANEL</a>
+        </li>
         <li><a href="">O nas</a></li>
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
-        <li><a href="">Koszyk</a></li>
-        <li></li>
+        <li><a th:href="@{/cart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
-            <div class="login"><a th:href="@{/login}">Logowanie</a></div>
+            <div th:each="usermail : ${email}">
+                <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
+                <div th:if="${usermail} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
+            </div>
         </li>
     </ul>
 </nav>
-<div class="hello" th:each="info : ${username}">
-    <p th:text="${info}"></p>
-</div>
 
 <!--<div class="sorting-buttons">-->
 <!--    <label for="first">Sortuj po:</label>-->

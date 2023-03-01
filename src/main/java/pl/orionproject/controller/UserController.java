@@ -34,7 +34,11 @@ public class UserController {
 
     @GetMapping("/login")
     public String viewLoginPage() {
-        return "login";
+        if (userServiceImpl.getUserName().equals("anonymousUser")) {
+            return "login";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/logout")
@@ -74,7 +78,7 @@ public class UserController {
             confirmationTokenRepository.delete(token);
             return "registrationsuccesful";
         } else {
-            return "registerfail";
+            return "register?fail";
         }
 
     }

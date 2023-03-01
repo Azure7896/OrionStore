@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.ItemDto;
 import pl.orionproject.DataTransferObjects.UserRegistrationDto;
 import pl.orionproject.repository.ItemRepository;
-import pl.orionproject.service.ItemService;
-import pl.orionproject.service.SearchService;
-import pl.orionproject.service.SessionService;
-import pl.orionproject.service.UserService;
+import pl.orionproject.repository.ShoppingCartItemsRepository;
+import pl.orionproject.service.*;
 
 @Controller
 public class HomeController {
@@ -25,6 +23,10 @@ public class HomeController {
     @Autowired
     SearchService searchService;
 
+    @Autowired
+    ShoppingCartService shoppingCartService;
+
+
     @ModelAttribute("searcheditem")
     public ItemDto searchedItem() {
         return new ItemDto();
@@ -35,17 +37,18 @@ public class HomeController {
         model.addAttribute("username", userService.createHelloNotification());
         model.addAttribute("email", userService.getUserName());
         model.addAttribute("items", itemService.viewAllItems());
+        model.addAttribute("count", shoppingCartService.sumProductsCount());
+        model.addAttribute("priceofallitems", shoppingCartService.viewRoundedPrices());
         return "home";
     }
 
     @PostMapping("/")
     public String viewSearchedItems(Model model, @ModelAttribute("searcheditem") ItemDto item) {
+        model.addAttribute("count", shoppingCartService.sumProductsCount());
+        model.addAttribute("priceofallitems", shoppingCartService.viewRoundedPrices());
         model.addAttribute("items", searchService.searchItems(itemService.viewAllItems(), item));
+        model.addAttribute("email", userService.getUserName());
         return "home";
     }
 
-    @GetMapping("/cart")
-    public String viewCart() {
-        return "cart";
-    }
 }
