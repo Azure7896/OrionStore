@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-<!--<html xmlns:th="https://thymeleaf.org">-->
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Orion Store - kosmiczny sklep internetowy</title>
     <link rel="stylesheet" type="text/css" href="/css/cart.css">
 </head>
 
-<body>
-<!--<div th:if="${param.cartisempty}">-->
-<!--    <p>Twój koszyk jest pusty.</p>-->
-<!--</div>-->
+<!--<body>-->
 
-<nav>
-    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
-    <ul>
-        <li id="admin" sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/admin}">ADMIN PANEL</a>
-        </li>
-        <li><a href="">O nas</a></li>
-        <li><a href="">Regulamin</a></li>
-        <li><a href="">Promocje</a></li>
-        <li><a th:href="@{/categories}">Kategorie</a></li>
-        <li>
-            <div th:each="usermail : ${email}">
-                <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
-                <div th:if="${usermail} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
-            </div>
-        </li>
-    </ul>
-</nav>
+<!--<nav>-->
+<!--    <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>-->
+<!--    <ul>-->
+<!--        <li id="admin" sec:authorize="hasAuthority('ADMIN')">-->
+<!--            <a th:href="@{/admin}">ADMIN PANEL</a>-->
+<!--        </li>-->
+<!--        <li><a href="">O nas</a></li>-->
+<!--        <li><a href="">Regulamin</a></li>-->
+<!--        <li><a href="">Promocje</a></li>-->
+<!--        <li><a th:href="@{/categories}">Kategorie</a></li>-->
+<!--        <li>-->
+<!--            <div th:each="usermail : ${email}">-->
+<!--                <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>-->
+<!--                <div th:if="${usermail} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->
 
-<div class="form">
-    <form name="Form1" action="mypage.asp" method="get">
+    <form th:action="@{/cart}" method="post" th:object="${user}" class="form">
         <label for="vatnumber">NIP:</label>
-        <input type="text" id="vatnumber" th:value="${userfields.getVatNumber()}"
+        <input type="text" id="vatnumber" th:field="" th:value="${userfields.getVatNumber()}"
                placeholder="Uzupełnij NIP (Opcjonalne)">
         <label for="organisationname">Nazwa firmy:</label>
         <input type="text" id="organisationname" th:value="${userfields.getOrganisationName()}"
@@ -55,34 +50,27 @@
         <label for="telephonenumber">Numer telefonu:</label>
         <input type="text" id="telephonenumber" th:value="${userfields.getCity()}"
                placeholder="Uzupełnij kod pocztowy (Wymagane)">
+        <button id="submit" type="submit">Zamów</button>
     </form>
-</div>
 
-<table id="example">
-    <thead>
-    <tr>
-        <th colspan="4">Twój koszyk:</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="iteminfo : ${cartitems}">
-        <td th:text="${iteminfo.getItem().itemName}"></td>
-        <td th:text="${iteminfo.getTotalItems()}"></td>
-        <td><img th:src="${iteminfo.getItem().getImagePath()}"></td>
-        <td th:text="${iteminfo.getTotalPrices()}"></td>
-        <td>
-            <a th:href="@{/cart/deleteposition/{id} (id=${iteminfo.getId()})}">
-                <button>Usuń</button>
-            </a>
-    <tr>
-        <td colspan="4">
-            <button>Zamów</button>
-        </td>
-
-
-    </tr>
-    </tbody>
-</table>
+<!--<table id="example">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th colspan="4">Twój koszyk:</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="iteminfo : ${cartitems}">-->
+<!--        <td th:text="${iteminfo.getItem().itemName}"></td>-->
+<!--        <td th:text="${iteminfo.getTotalItems()}"></td>-->
+<!--        <td><img th:src="${iteminfo.getItem().getImagePath()}"></td>-->
+<!--        <td th:text="${iteminfo.getTotalPrices()}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{/cart/deleteposition/{id} (id=${iteminfo.getId()})}">-->
+<!--                <button>Usuń</button>-->
+<!--            </a>-->
+<!--    </tbody>-->
+<!--</table>-->
 
 </body>
 

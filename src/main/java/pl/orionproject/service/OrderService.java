@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.orionproject.model.Order;
 import pl.orionproject.model.OrderItem;
 import pl.orionproject.model.ShoppingCartItems;
+import pl.orionproject.repository.OrderItemRepository;
 import pl.orionproject.repository.OrderRepository;
 import pl.orionproject.repository.ShoppingCartItemsRepository;
 import pl.orionproject.repository.UserRepository;
@@ -28,8 +29,11 @@ public class OrderService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    OrderItemRepository orderItemRepository;
 
-    public List<OrderItem> createOrderItems(Order order) {
+
+    public List<OrderItem> mapOrderItems(Order order) {
         List<ShoppingCartItems> shoppingCartItems = shoppingCartService.fillItemsByUser();
         List<OrderItem> orderItems = new ArrayList<>();
         for (ShoppingCartItems sh : shoppingCartItems) {
@@ -40,5 +44,9 @@ public class OrderService {
 
     public Order createOrder() {
         return orderRepository.save(new Order(new Date(), userRepository.findByEmail(userService.getUserName()), "NOWE"));
+    }
+
+    public void createOrderItems(List<OrderItem> orderItems) {
+        orderItemRepository.saveAll(orderItems);
     }
 }

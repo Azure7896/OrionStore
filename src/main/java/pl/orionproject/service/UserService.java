@@ -16,4 +16,7 @@ public interface UserService extends UserDetailsService {
     String createHelloNotification();
 
     String getUserName();
+    User getUserFromDatabaseBySession();
+
+
 }

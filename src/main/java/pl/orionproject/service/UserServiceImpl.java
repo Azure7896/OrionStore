@@ -80,5 +80,9 @@ public class UserServiceImpl implements UserService {
         return sessionService.getUserSessionEmail();
     }
 
+    public User getUserFromDatabaseBySession() {
+        return userRepository.findByEmail(getUserName());
+    }
+
 
 }

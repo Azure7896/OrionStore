@@ -18,8 +18,11 @@ import pl.orionproject.model.Order;
 import pl.orionproject.repository.*;
 import pl.orionproject.service.ItemService;
 import pl.orionproject.service.OrderService;
+import pl.orionproject.service.PdfService;
 import pl.orionproject.service.UserService;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 @Controller
@@ -43,10 +46,17 @@ public class AdminController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    PdfService pdfService;
+
+    @Autowired
+    UserService userService;
+
 
     @GetMapping("/admin")
-    public String viewAdminPage() {
-        orderService.createOrder();
+    public String viewAdminPage() throws URISyntaxException, IOException {
+        pdfService.createPurchaseInvoice(userService.getUserFromDatabaseBySession());
+        System.out.println(userService.getUserFromDatabaseBySession().getCity());
         return "admin";
     }
 

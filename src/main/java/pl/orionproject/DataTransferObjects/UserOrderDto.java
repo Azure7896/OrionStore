@@ -13,8 +13,7 @@ import lombok.Setter;
 public class UserOrderDto {
 
 
-    private int vatNumber;
-
+    private String vatNumber;
     private String organisationName;
     private String address;
     private String postalCode;
