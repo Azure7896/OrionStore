@@ -1,4 +1,4 @@
-package pl.orionproject.component;
+package pl.orionproject.validator;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,6 @@ public class ShoppingCartValidator {
     @Autowired
     UserService userService;
     public boolean isShoppingCartIsEmpty() {
-        return shoppingCartService.fillItemsByUser().size() == 0 && !userService.getUserName().equals("anonymousUser");
+        return shoppingCartService.fillItemsByUser().size() == 0 && !userService.getUserSessionEmail().equals("anonymousUser");
     }
 }

@@ -37,7 +37,7 @@ public class ShoppingCartService {
         return sum;
     }
 
-    public String viewRoundedPrices() {
+    public String viewTotalRoundedPrices() {
         return String.format("%.2f", totalALlItemsInTheCart());
     }
 
@@ -56,25 +56,26 @@ public class ShoppingCartService {
         return sum;
     }
 
-    public void deleteAllUserItems() {
-        shoppingCartItemsRepository.deleteAllByUser(userRepository.findByEmail(userService.getUserName()));
+    @Transactional
+    public void deleteAllUserShoppingCartItems() {
+        shoppingCartItemsRepository.deleteAllByUser(userRepository.findByEmail(userService.getUserSessionEmail()));
     }
 
     @Transactional
     public void deleteItemFromCart(Long id) {
-        User user = userRepository.findByEmail(userService.getUserName());
+        User user = userRepository.findByEmail(userService.getUserSessionEmail());
         shoppingCartItemsRepository.deleteShoppingCartItemsByIdAndUser(id, user);
     }
 
     public List<ShoppingCartItems> fillItemsByUser() {
         return shoppingCartItemsRepository.findAll().stream().filter(item -> item
-                .getUser().getEmail().equals(userService.getUserName())).collect(Collectors.toList());
+                .getUser().getEmail().equals(userService.getUserSessionEmail())).collect(Collectors.toList());
     }
 
     public void addItemToCart(Long itemId) {
         Item item = itemRepository.findItemById(itemId);
 
-        User user = userRepository.findByEmail(userService.getUserName());
+        User user = userRepository.findByEmail(userService.getUserSessionEmail());
 
         List<ShoppingCartItems> shoppingCartItems = shoppingCartItemsRepository.findAllShoppingCartItemsByItemAndUser(item, user);
         if (shoppingCartItems.size() >= 1) {
@@ -84,6 +85,10 @@ public class ShoppingCartService {
         } else {
             shoppingCartItemsRepository.save(new ShoppingCartItems(1, item.getPrice(), user, item));
         }
+    }
+
+    public boolean shoppingCartIsEmpty() {
+        return fillItemsByUser().size() == 0;
     }
 
 }

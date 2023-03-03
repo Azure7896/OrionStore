@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/ordercompleted.css">
+    <title>404 - Czarna dziura</title>
+</head>
+<body>
+<div class="dot">
+    <div class="error">
+        <h2>Hej, kosmiczny podróżniku!</h2>
+        <h1>Zarejestrowaliśmy twoje zamówienie!</h1>
+        <h3 th:text="|Zamówienie numer: | + ${order}"></h3>
+
+        <h4>Zachęcamy do kolejnych zakupów.</h4>
+        <h4 id="backtohomepage">OrionStore</h4>
+        <a th:href="@{/}">
+            <p>Klknij tutaj by przejść do strony głównej.</p>
+        </a>
+    </div>
+</div>
+</body>
+</html>

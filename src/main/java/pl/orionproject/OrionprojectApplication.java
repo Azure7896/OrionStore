@@ -10,9 +10,6 @@ import pl.orionproject.service.SessionService;
 @SpringBootApplication
 public class OrionprojectApplication {
 
-
-    SessionService sessionService;
-
     public static void main(String[] args) {
         SpringApplication.run(OrionprojectApplication.class, args);
     }

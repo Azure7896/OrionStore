@@ -6,26 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.orionproject.DataTransferObjects.UserRegistrationDto;
-import pl.orionproject.component.UserValidator;
-import pl.orionproject.model.ConfirmationToken;
-import pl.orionproject.model.User;
+import pl.orionproject.DataTransferObjects.UserDto;
+import pl.orionproject.validator.UserValidator;
 import pl.orionproject.repository.ConfirmationTokenRepository;
-import pl.orionproject.repository.UserRepository;
 import pl.orionproject.service.UserServiceImpl;
 
 
 @Controller
 public class UserController {
-
-    @Autowired
-    ConfirmationTokenRepository confirmationTokenRepository;
-    @Autowired
-    UserRepository userRepository;
     @Autowired
     private UserValidator userValidator;
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserServiceImpl userService;
 
     @PostMapping("/login")
     public String viewLoginPageAfterLogin() {
@@ -34,7 +26,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String viewLoginPage() {
-        if (userServiceImpl.getUserName().equals("anonymousUser")) {
+        if (userService.getUserSessionEmail().equals("anonymousUser")) {
             return "login";
         } else {
             return "redirect:/";
@@ -52,35 +44,29 @@ public class UserController {
     }
 
     @ModelAttribute("user")
-    public UserRegistrationDto userRegistrationDTO() {
-        return new UserRegistrationDto();
+    public UserDto userRegistrationDTO() {
+        return new UserDto();
     }
 
     @PostMapping("/register")
-    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+    public String registerUserAccount(@ModelAttribute("user") UserDto registrationDto) {
         if (userValidator.isUserExists(registrationDto) || userValidator.isFieldEmpty(registrationDto)
                 || userValidator.isNotValidNumberOfCharacters(registrationDto)) {
             return "redirect:/register?fail";
         } else {
-                userServiceImpl.registerUser(registrationDto);
+            userService.registerUser(registrationDto);
             return "redirect:/register?success";
         }
     }
 
 
     @GetMapping("/confirm-account")
-    public String confirmAccount(@RequestParam("token") String confirmToken) {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmToken);
-        if (token != null) {
-            User user = userRepository.findByEmail(token.getUser().getEmail());
-            user.setActive(true);
-            userRepository.save(user);
-            confirmationTokenRepository.delete(token);
+    public String confirmAccount(@RequestParam("token") String confirmationToken) {
+        if (userService.activateAccount(confirmationToken)) {
             return "registrationsuccesful";
         } else {
             return "register?fail";
         }
-
     }
 }
 

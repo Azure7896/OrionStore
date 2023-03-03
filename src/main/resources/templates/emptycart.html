@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>Orion Store - kosmiczny sklep internetowy</title>
-    <link rel="stylesheet" type="text/css" href="/css/cardstyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/cart.css">
 </head>
 
 <body>
+
 <nav>
     <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
@@ -18,7 +18,6 @@
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
-        <li><a th:href="@{/cart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
             <div th:each="usermail : ${email}">
                 <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
@@ -28,23 +27,14 @@
     </ul>
 </nav>
 
-<div class="product" th:each="product : ${item}">
-    <div class="item">
-        <img th:src="${item.getImagePath()}" alt="">
-    </div>
-    <div class="informations">
-        <p th:text="${item.getCategory().getCategoryName()}"></p>
-        <p th:text="${item.getItemName()}"></p>
-        <p th:text="${item.getPrice()} + zł"></p>
-        <a th:href="@{/card/additem/{id} (id=${item.getId()})}">
-        <button>Dodaj do koszyka</button>
-        </a>
-    </div>
-</div>
-<p id="numberofitems" th:text="${item.getQuantity()} + | sztuk - tyle posiadamy na stanie |"></p>
-
-<div class="description" th:each="product : ${item}">
-    <h2 th:text="${item.getDescription()}"></h2>
+<div class="container">
+<table id="example">
+    <thead>
+    <tr>
+        <th colspan="4">Twój koszyk jest pusty. Dodaj produkty do koszyka.</th>
+    </tr>
+    </tbody>
+</table>
 </div>
 </body>
 

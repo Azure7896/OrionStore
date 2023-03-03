@@ -7,12 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.orionproject.DataTransferObjects.UserRegistrationDto;
+import pl.orionproject.DataTransferObjects.RestUserInfoDto;
+import pl.orionproject.DataTransferObjects.UserDto;
 import pl.orionproject.model.ConfirmationToken;
 import pl.orionproject.model.Role;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ConfirmationTokenRepository;
-import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.repository.RoleRepository;
 import pl.orionproject.repository.UserRepository;
 
@@ -24,16 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
+    RoleRepository roleRepository;
+    @Autowired
     private EmailSenderService emailSenderService;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -41,11 +38,13 @@ public class UserServiceImpl implements UserService {
     private SessionService sessionService;
 
 
-    public void registerUser(UserRegistrationDto userRegistrationDTO) {
-        userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        User user = new User(userRegistrationDTO.getFirstName(), userRegistrationDTO.getLastName(),
-                userRegistrationDTO.getPassword(), userRegistrationDTO.getEmail(), new Date(),
-                false, List.of(new Role("USER")));
+    public void registerUser(UserDto userDTO) {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        User user = new User(userDTO.getFirstName(), userDTO.getLastName(),
+                userDTO.getPassword(), userDTO.getEmail(), new Date(),
+                false, List.of(new Role("USER")), "Brak",
+                "Brak", "Brak", "Brak", "Brak", "Brak");
+
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(confirmationToken);
@@ -53,20 +52,49 @@ public class UserServiceImpl implements UserService {
                 + user.getFirstName() + "!", "Aby potwierdzić swoje konto kliknij w link: "
                 + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
     }
+
+    @Override
+    public boolean activateAccount(String confirmationToken) {
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+        if (token != null) {
+            User user = userRepository.findByEmail(token.getUser().getEmail());
+            user.setActive(true);
+            userRepository.save(user);
+            confirmationTokenRepository.delete(token);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void addUserAdditionalInformation(RestUserInfoDto restUserInfoDto) {
+        User user = getUserFromDatabaseBySession();
+        user.setVatNumber(restUserInfoDto.getVatNumber());
+        user.setOrganisationName(restUserInfoDto.getOrganisationName());
+        user.setAddress(restUserInfoDto.getAddress());
+        user.setPostalCode(restUserInfoDto.getPostalCode());
+        user.setCity(restUserInfoDto.getCity());
+        user.setPhone(restUserInfoDto.getPhone());
+        userRepository.save(user);
+    }
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(username);
-        if (user == null || user.isActive() == false) {
+        if (user == null || !user.isActive()) {
             throw new UsernameNotFoundException("Nie znaleziono użytkownika" + user.getEmail());
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user.getRoles()));
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
 
+
+    @Override
     public String createHelloNotification() {
         if (sessionService.getUserSessionEmail().equals("anonymousUser")) {
             return "Witaj w sklepie OrionStore. Zaloguj się aby otrzymać pełną funkcjonalność.";
@@ -76,12 +104,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public String getUserName() {
+    @Override
+    public String getUserSessionEmail() {
         return sessionService.getUserSessionEmail();
     }
 
+    @Override
     public User getUserFromDatabaseBySession() {
-        return userRepository.findByEmail(getUserName());
+        return userRepository.findByEmail(getUserSessionEmail());
     }
 
 

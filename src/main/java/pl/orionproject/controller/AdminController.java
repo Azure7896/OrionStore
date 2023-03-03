@@ -10,20 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.orionproject.DataTransferObjects.CategoryDto;
 import pl.orionproject.DataTransferObjects.ItemDto;
-import pl.orionproject.component.CategoryValidator;
-import pl.orionproject.component.ItemValidator;
+import pl.orionproject.validator.CategoryValidator;
+import pl.orionproject.validator.ItemValidator;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
-import pl.orionproject.model.Order;
 import pl.orionproject.repository.*;
 import pl.orionproject.service.ItemService;
 import pl.orionproject.service.OrderService;
 import pl.orionproject.service.PdfService;
 import pl.orionproject.service.UserService;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Date;
 
 @Controller
 @Transactional
@@ -52,11 +47,12 @@ public class AdminController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ShoppingCartItemsRepository shoppingCartItemsRepository;
+
 
     @GetMapping("/admin")
-    public String viewAdminPage() throws URISyntaxException, IOException {
-        pdfService.createPurchaseInvoice(userService.getUserFromDatabaseBySession());
-        System.out.println(userService.getUserFromDatabaseBySession().getCity());
+    public String viewAdminPage() {
         return "admin";
     }
 
@@ -89,6 +85,7 @@ public class AdminController {
 
     @GetMapping("/admin/item/delete/{id}")
     public String deleteItem(@PathVariable Long id) {
+        shoppingCartItemsRepository.deleteAllByItem(itemRepository.findItemById(id));
         itemRepository.deleteItemById(id);
         return "redirect:/admin/additem";
     }

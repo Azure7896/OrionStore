@@ -1,4 +1,4 @@
-package pl.orionproject.component;
+package pl.orionproject.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

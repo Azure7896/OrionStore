@@ -11,6 +11,7 @@ import pl.orionproject.repository.ItemRepository;
 //import pl.orionproject.repository.ShoppingCartRepository;
 import pl.orionproject.repository.ShoppingCartItemsRepository;
 import pl.orionproject.repository.UserRepository;
+import pl.orionproject.service.ItemService;
 import pl.orionproject.service.ShoppingCartService;
 import pl.orionproject.service.UserService;
 
@@ -21,26 +22,27 @@ import java.util.List;
 @Controller
 public class CardController {
 
-    @Autowired
-    ItemRepository itemRepository;
 
     @Autowired
-    ShoppingCartItemsRepository shoppingCartItemsRepository;
+    private ShoppingCartItemsRepository shoppingCartItemsRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
+
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("/card/{id}")
     public String showCard(@PathVariable Long id, Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
-        model.addAttribute("priceofallitems", shoppingCartService.viewRoundedPrices());
-        model.addAttribute("item", itemRepository.findItemById(id));
+        model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
+        model.addAttribute("item", itemService.viewItemById(id));
         return "card";
     }
 

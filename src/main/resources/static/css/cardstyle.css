@@ -115,3 +115,9 @@ button:hover {
     color: green;
     font-size: 19px;
 }
+
+#admin {
+    color: #ffffff;
+    background-color: black;
+    font-size: 19px;
+}

@@ -16,18 +16,22 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import org.springframework.stereotype.Service;
+import pl.orionproject.model.OrderItem;
 import pl.orionproject.model.User;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PdfService {
 
-    public void createPurchaseInvoice(User user) throws IOException {
-        String filePath = "C:\\orion\\test.pdf";
+    public String createPurchaseInvoice(User user, List<OrderItem> orderItems) throws IOException {
+
+        Long orderNumber = orderItems.get(0).getOrder().getId();
+
+        String filePath = "C:\\orion\\FakturaVATZamowienieNr" + orderItems.get(0).getOrder().getId() + "Dla" + user.getLastName() + ".pdf";
         String imageSrc = "C:\\orion\\logo.png";
 
 
@@ -54,7 +58,7 @@ public class PdfService {
         date.setFixedPosition(395, 815, 200);
         document.add(date);
 
-        Paragraph vat = new Paragraph("FAKTURA VAT FA/06");
+        Paragraph vat = new Paragraph("FAKTURA VAT FA/" + orderNumber);
         vat.setFontSize(8);
         vat.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP).setFontSize(15f).setBold();
         document.add(vat);
@@ -62,25 +66,44 @@ public class PdfService {
         float col = 280f;
         float[] columnWidth = {col, col};
 
-
         Table table = new Table(columnWidth).setVerticalAlignment(VerticalAlignment.MIDDLE);
-        table.setBackgroundColor(new DeviceRgb(255,255,255)).setFontColor(new DeviceRgb(226, 135, 67));
+        table.setBackgroundColor(new DeviceRgb(255, 255, 255)).setFontColor(new DeviceRgb(226, 135, 67));
         table.addCell(new Cell().setBorder(Border.NO_BORDER).add(image).setTextAlignment(TextAlignment.CENTER)
                 .setMarginTop(15f));
-        table.addCell(new Cell().setBorder(Border.NO_BORDER).add(user.getFirstName() + " " + user.getLastName() + "\n" + user.getAddress() + "\n" + user.getPostalCode() + " " + user.getCity() + "\n" + user.getPhone())).setTextAlignment(TextAlignment.RIGHT)
-                .setMarginTop(30f)
-                .setMarginBottom(30f)
-                .setFontSize(15f);
+
+        if (user.getVatNumber().equals("Brak") || user.getVatNumber().isEmpty() || user.getOrganisationName().equals("Brak") || user.getOrganisationName().isEmpty()) {
+            table.addCell(new Cell().setBorder(Border.NO_BORDER).add(user.getFirstName() + " " + user.getLastName() + "\n" + user.getAddress() + "\n" +
+                            user.getPostalCode() + " " + user.getCity() + "\n" + user.getPhone())).setTextAlignment(TextAlignment.RIGHT)
+                    .setMarginTop(30f)
+                    .setMarginBottom(30f)
+                    .setFontSize(15f);
+        } else {
+            table.addCell(new Cell().setBorder(Border.NO_BORDER).add(user.getVatNumber() + "\n" + user.getOrganisationName() + "\n" + user.getFirstName() +
+                            " " + user.getLastName() + "\n" + user.getAddress() + "\n" + user.getPostalCode() + " " + user.getCity() + "\n" + user.getPhone())).setTextAlignment(TextAlignment.RIGHT)
+                    .setMarginTop(30f)
+                    .setMarginBottom(30f)
+                    .setFontSize(15f);
+        }
+
         float[] colWidth = {80, 300, 100, 80};
         Table products = new Table(colWidth);
         products.addCell(new Cell(0, 4).setBackgroundColor(Color.convertRgbToCmyk(new DeviceRgb(226, 135, 67)))
                 .add("Twoje zamowione produkty:")
                 .setBold().setTextAlignment(TextAlignment.LEFT));
-        products.addCell(new Cell().add("Name"));
-        products.addCell(new Cell().add("Name"));
-        products.addCell(new Cell().add("Name"));
-        products.addCell(new Cell().add("Name"));
-        products.addCell(new Cell(0, 4).add("Razem do zaplaty: ")).setTextAlignment(TextAlignment.RIGHT).setBold();
+
+        int counter = 1;
+        double total = 0;
+        for (OrderItem orderItem : orderItems) {
+
+            products.addCell(new Cell().add(String.valueOf(counter)));
+            products.addCell(new Cell().add(orderItem.getItemName()));
+            products.addCell(new Cell().add(orderItem.getQuantity() + " szt."));
+            products.addCell(new Cell().add(String.format("%.2f", orderItem.getQuantity() * orderItem.getTotalPrice())));
+
+            total += orderItem.getQuantity() * orderItem.getTotalPrice();
+        }
+
+        products.addCell(new Cell(0, 4).add("Razem do zaplaty: " + String.format("%.02", total) + "zł")).setTextAlignment(TextAlignment.RIGHT).setBold();
 
 
         document.add(table);
@@ -92,5 +115,6 @@ public class PdfService {
         document.add(foot);
 
         document.close();
+        return filePath;
     }
 }

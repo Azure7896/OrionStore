@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.orionproject.DataTransferObjects.ItemDto;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
+import pl.orionproject.model.OrderItem;
 import pl.orionproject.repository.CategoryRepository;
 import pl.orionproject.repository.ItemRepository;
 
@@ -31,4 +32,30 @@ public class ItemService {
         return itemRepository.findAll().stream().filter(item -> item
                 .getQuantity() > 0).collect(Collectors.toList());
     }
+
+    public Item viewItemById(Long id) {
+        return itemRepository.findItemById(id);
+    }
+
+    public boolean areEnoughItemsInDatabase(List<OrderItem> orderItems) {
+        boolean areEnough = true;
+        for (OrderItem orderedItem : orderItems) {
+            Item item = itemRepository.findItemByItemName(orderedItem.getItemName());
+            int itemQuantity = item.getQuantity();
+            if (itemQuantity - orderedItem.getQuantity() < 0) {
+                areEnough = false;
+            }
+        }
+        return areEnough;
+    }
+
+    public void removeAProductsPiecesAfterOrderCompleted(List<OrderItem> orderItems) {
+        for (OrderItem orderedItem : orderItems) {
+            Item item = itemRepository.findItemByItemName(orderedItem.getItemName());
+            int itemQuantity = item.getQuantity() - orderedItem.getQuantity();
+            item.setQuantity(itemQuantity);
+            itemRepository.save(item);
+        }
+    }
+
 }
