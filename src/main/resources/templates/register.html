@@ -16,10 +16,10 @@
             <form th:action="@{/register}" method="post" th:object="${user}" class="form">
                 <h2>Zarejestruj się</h2>
 
-                <input type="firstname" class="box" name="firstName" placeholder="Wpisz imię" th:field="*{firstName}">
-                <input type="lastname" class="box" name="lastName" placeholder="Wpisz nazwisko" th:field="*{lastName}">
-                <input type="email" class="box" name="email" placeholder="Wpisz email" th:field="*{email}">
-                <input type="password" name="password" class="box" placeholder="Wpisz hasło" th:field="*{password}">
+                <input type="firstname" class="box" name="firstName" placeholder="Wpisz imię" required minlength="2" maxlength="62" th:field="*{firstName}">
+                <input type="lastname" class="box" name="lastName" placeholder="Wpisz nazwisko" required minlength="2" maxlength="50" th:field="*{lastName}">
+                <input type="email" class="box" name="email" placeholder="Wpisz email" required minlength="3" maxlength="50" th:field="*{email}">
+                <input type="password" name="password" class="box" placeholder="Wpisz hasło" required minlength="6"  maxlength="255" th:field="*{password}">
                 <input type="submit" value="Rejestracja" id="submit">
 
                 <div th:if="${param.success}">

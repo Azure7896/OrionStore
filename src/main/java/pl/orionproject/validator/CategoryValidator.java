@@ -11,18 +11,18 @@ import java.util.List;
 
 @Component
 public class CategoryValidator {
-    @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
-    ItemRepository itemRepository;
-
-    public boolean isCategoryExists(String categoryName) {
-        return categoryRepository.findByCategoryName(categoryName) != null;
-    }
-
-    public boolean isItemWithCategoryExists(Category category) {
-        List<Item> items = itemRepository.findAllByCategory(category);
-        return  items.size() >= 1;
-    }
+//    @Autowired
+//    CategoryRepository categoryRepository;
+//
+//    @Autowired
+//    ItemRepository itemRepository;
+//
+//    public boolean isCategoryExists(String categoryName) {
+//        return categoryRepository.findByCategoryName(categoryName) != null;
+//    }
+//
+//    public boolean isItemWithCategoryExists(Category category) {
+//        List<Item> items = itemRepository.findAllByCategory(category);
+//        return  items.size() >= 1;
+//    }
 }

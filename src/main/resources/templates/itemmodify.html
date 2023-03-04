@@ -25,7 +25,7 @@
             <td><input type="text" id="item" name="item" maxlength="50"
                        value="test" th:field="*{itemName}" required>
             </td>
-            <td th:text="| Poprzednio: | + ${item.getItemName()}"></td>
+            <td th:text="| Poprzednio: | + ${item.getItemName()}" ></td>
             <br>
         </tr>
         <tr>
@@ -38,7 +38,7 @@
         <tr>
             <td>Cena:</td>
             <td><input type="number" id="price" th:field="*{price}"
-                       min="0.00" max="10000.00" step="0.01" required></td>
+                       min="0.00" max="100000.00" step="0.01" required></td>
             <td th:text="| Poprzednio: | + ${item.getPrice()}"></td>
             <br>
         </tr>
@@ -46,14 +46,14 @@
             <td>Ilość sztuk:</td>
             <td><input type="number" id="quantity"
                        th:field="*{quantity}" name="quantity" min="0" max="50000"
-                       placeholder="1000"></td>
+                       placeholder="1000" required></td>
             <td th:text="| Poprzednio: | + ${item.getQuantity()}"></td>
             <br>
 
         </tr>
         <tr>
             <td>Kategoria:</td>
-            <td><input list="browsers" th:field="*{category}" autocomplete="off">
+            <td><input list="browsers" th:field="*{category}" autocomplete="off" required>
                 <datalist id="browsers">
                     <option th:each="showcategory : ${categories}" th:value="${showcategory.getCategoryName()} " >
                 </datalist>
@@ -76,6 +76,11 @@
             </td>
         </tr>
     </table>
+
+    <div class="error" th:if="${param.fail}">
+        <p>Przedmiot już istnieje. Wybierz inną nazwę przedmiotu.</p>
+    </div>
+
 </form>
 
 </body>

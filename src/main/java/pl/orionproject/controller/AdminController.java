@@ -8,48 +8,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.orionproject.DataTransferObjects.CategoryDto;
-import pl.orionproject.DataTransferObjects.ItemDto;
-import pl.orionproject.validator.CategoryValidator;
-import pl.orionproject.validator.ItemValidator;
+import pl.orionproject.datatransferobjects.CategoryDto;
+import pl.orionproject.datatransferobjects.ItemDto;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
-import pl.orionproject.repository.*;
+import pl.orionproject.repository.ItemRepository;
+import pl.orionproject.repository.ShoppingCartItemsRepository;
+import pl.orionproject.service.CategoryService;
 import pl.orionproject.service.ItemService;
 import pl.orionproject.service.OrderService;
-import pl.orionproject.service.PdfService;
-import pl.orionproject.service.UserService;
+import pl.orionproject.validator.CategoryValidator;
 
-@Controller
 @Transactional
+@Controller
 public class AdminController {
 
     @Autowired
     ItemService itemService;
 
     @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
     ItemRepository itemRepository;
-
-    @Autowired
-    ItemValidator itemValidator;
 
     @Autowired
     CategoryValidator categoryValidator;
     @Autowired
     OrderService orderService;
-
-    @Autowired
-    PdfService pdfService;
-
-    @Autowired
-    UserService userService;
-
     @Autowired
     ShoppingCartItemsRepository shoppingCartItemsRepository;
-
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/admin")
     public String viewAdminPage() {
@@ -69,13 +56,13 @@ public class AdminController {
     @GetMapping("/admin/additem")
     public String viewAddItemPage(Model model) {
         model.addAttribute("allitems", itemRepository.findAll());
-        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("categories", categoryService.viewAllCategories());
         return "additem";
     }
 
     @PostMapping("/admin/additem")
     public String addItem(@ModelAttribute("item") ItemDto itemDto) {
-        if (itemValidator.isItemExists(itemDto.getItemName())) {
+        if (itemService.isItemExists(itemDto.getItemName())) {
             return "redirect:/admin/additem?fail";
         } else {
             itemService.addItem(itemDto);
@@ -91,62 +78,64 @@ public class AdminController {
     }
 
     @GetMapping("/admin/addcategories")
-    public String addCategories(Model model) {
-        model.addAttribute("categories", categoryRepository.findAll());
+    public String viewAddCategories(Model model) {
+        model.addAttribute("categories", categoryService.viewAllCategories());
         return "addcategories";
     }
 
     @PostMapping("/admin/addcategories")
     public String addCategories(@ModelAttribute("category") CategoryDto categoryDto) {
-        if (categoryValidator.isCategoryExists(categoryDto.getCategoryName())) {
+        if (categoryService.isCategoryExists(categoryDto.getCategoryName())) {
             return "redirect:/admin/addcategories?fail";
         }
-        categoryRepository.save(new Category(categoryDto.getCategoryName()));
+        categoryService.saveCategoryToDatabase(new Category(categoryDto.getCategoryName()));
         return "redirect:/admin/addcategories";
     }
 
     @GetMapping("/admin/category/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {
-        if (categoryValidator.isItemWithCategoryExists(categoryRepository.findByCategoryId(id))) {
+        if (categoryService.isItemWithCategoryExists(id)) {
             return "redirect:/admin/addcategories?fail";
         }
-        categoryRepository.deleteCategoriesByCategoryId(id);
+        categoryService.deleteCategoryFromDatabaseById(id);
         return "redirect:/admin/addcategories";
     }
 
     @GetMapping("/admin/category/modify/{id}")
     public String modifyCategory(@PathVariable Long id, Model model) {
-        Category category = categoryRepository.findByCategoryId(id);
+        Category category = categoryService.getCategoryById(id);
         model.addAttribute("categorytomodify", category);
         return "categorymodify";
     }
 
+
     @PostMapping("/admin/category/modify/{id}") //
     public String modifyCategory(@PathVariable Long id, @ModelAttribute("category") CategoryDto categoryDto) {
-        Category category = categoryRepository.findByCategoryId(id);
-        category.setCategoryName(categoryDto.getCategoryName());
-        categoryRepository.save(category);
-        return "redirect:/admin/addcategories";
+
+            Category category = categoryService.getCategoryById(id);
+            category.setCategoryName(categoryDto.getCategoryName());
+            categoryService.saveCategoryToDatabase(category);
+            return "redirect:/admin/addcategories";
     }
 
     @GetMapping("/admin/item/modify/{id}")
     public String modifyItem(@PathVariable Long id, Model model) {
-        Item item = itemRepository.findItemById(id);
-        model.addAttribute("itemtomodify", item);
-        model.addAttribute("categories", categoryRepository.findAll());
-        return "itemmodify";
+            Item item = itemRepository.findItemById(id);
+            model.addAttribute("itemtomodify", item);
+            model.addAttribute("categories", categoryService.viewAllCategories());
+            return "itemmodify";
     }
 
     @PostMapping("/admin/item/modify/{id}") //
     public String modifyItem(@PathVariable Long id, @ModelAttribute("item") ItemDto itemDto) {
-        Item item = itemRepository.findItemById(id);
-        item.setItemName(itemDto.getItemName());
-        item.setPrice(itemDto.getPrice());
-        item.setImagePath(itemDto.getImagePath());
-        item.setDescription(itemDto.getDescription());
-        item.setQuantity(itemDto.getQuantity());
-        item.setCategory(categoryRepository.findByCategoryName(itemDto.getCategory()));
-        itemRepository.save(item);
-        return "redirect:/admin/additem";
+            Item item = itemRepository.findItemById(id);
+            item.setItemName(itemDto.getItemName());
+            item.setPrice(itemDto.getPrice());
+            item.setImagePath(itemDto.getImagePath());
+            item.setDescription(itemDto.getDescription());
+            item.setQuantity(itemDto.getQuantity());
+            item.setCategory(categoryService.getCategoryByCategoryName(itemDto.getCategory()));
+            itemRepository.save(item);
+            return "redirect:/admin/additem";
     }
 }

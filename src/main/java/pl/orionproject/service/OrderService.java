@@ -1,5 +1,6 @@
 package pl.orionproject.service;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.Order;
@@ -53,7 +54,7 @@ public class OrderService {
         orderRepository.deleteById(order.getId());
     }
 
-    public void sendOrderCreatedMessage(Order order) {
+    public void sendOrderCreatedMail(Order order) {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = df.format(new Date());

@@ -15,16 +15,18 @@ import pl.orionproject.service.UserService;
 public class CategoriesController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
 
     @GetMapping("/category/{id}")
     public String showCategories(Model model, @PathVariable Long id) {
+        model.addAttribute("count", shoppingCartService.sumProductsCount());
+        model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         Category category = categoryService.findCategoryById(id);
         if (category == null) {
             return "redirect:/";
@@ -39,9 +41,10 @@ public class CategoriesController {
     @GetMapping("/categories")
     public String showCategoriesList(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
-        model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         model.addAttribute("categories", categoryService.viewAllCategories());
         model.addAttribute("email", userService.getUserSessionEmail());
+        model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         return "categories";
     }
+
 }

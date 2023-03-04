@@ -19,6 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(length = 30)
     private String organisationName;
     @Column(length = 15)
     private String vatNumber;
@@ -30,7 +31,7 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false, length = 62)
     private String email;
-    @Column(unique = true, length = 9)
+    @Column(length = 9)
     private String phone;
     @Column(length = 95)
     private String address;

@@ -1,7 +1,7 @@
 package pl.orionproject.service;
 
 import org.springframework.stereotype.Service;
-import pl.orionproject.DataTransferObjects.ItemDto;
+import pl.orionproject.datatransferobjects.ItemDto;
 import pl.orionproject.model.Item;
 
 import java.util.List;

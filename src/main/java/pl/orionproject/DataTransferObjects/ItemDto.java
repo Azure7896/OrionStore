@@ -1,4 +1,4 @@
-package pl.orionproject.DataTransferObjects;
+package pl.orionproject.datatransferobjects;
 
 
 import lombok.AllArgsConstructor;

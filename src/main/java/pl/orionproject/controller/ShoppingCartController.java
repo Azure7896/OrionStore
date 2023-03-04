@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.orionproject.DataTransferObjects.RestUserInfoDto;
+import pl.orionproject.datatransferobjects.RestUserInfoDto;
 import pl.orionproject.model.Order;
 import pl.orionproject.model.OrderItem;
-import pl.orionproject.repository.ShoppingCartItemsRepository;
-import pl.orionproject.repository.UserRepository;
 import pl.orionproject.service.*;
-import pl.orionproject.validator.ShoppingCartValidator;
+import pl.orionproject.validator.UserValidator;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,34 +20,28 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    ShoppingCartItemsRepository shoppingCartItemsRepository;
+    private ShoppingCartService shoppingCartService;
 
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private UserService userService;
 
     @Autowired
-    UserService userService;
+    private OrderService orderService;
 
     @Autowired
-    UserRepository userRepository;
+    private ItemService itemService;
 
     @Autowired
-    ShoppingCartValidator shoppingCartValidator;
+    private PdfService pdfService;
 
     @Autowired
-    OrderService orderService;
-
-    @Autowired
-    ItemService itemService;
-
-    @Autowired
-    PdfService pdfService;
+    private UserValidator userValidator;
 
     @GetMapping("/cart")
-    String showCart(Model model) {
+    public String showCart(Model model) {
         model.addAttribute("cartitems", shoppingCartService.fillItemsByUser());
         model.addAttribute("totalroundedprices", shoppingCartService.viewTotalRoundedPrices());
-        model.addAttribute("userfields", userRepository.findByEmail(userService.getUserSessionEmail()));
+        model.addAttribute("userfields", userService.getUserFromDatabaseBySession());
         model.addAttribute("restuserinfo", new RestUserInfoDto());
 
         if (shoppingCartService.shoppingCartIsEmpty()) {
@@ -61,19 +53,24 @@ public class ShoppingCartController {
 
     @PostMapping("/cart")
     public String orderProducts(@ModelAttribute RestUserInfoDto restUserInfoDto) throws IOException {
-        userService.addUserAdditionalInformation(restUserInfoDto);
-        Order order = orderService.saveOrder();
-        if (itemService.areEnoughItemsInDatabase(orderService.mapOrderItems(order))) {
-            List<OrderItem> orderItems = orderService.mapOrderItems(order);
-            itemService.removeAProductsPiecesAfterOrderCompleted(orderItems);
-            orderService.sendOrderCreatedMessage(order);
-            orderService.saveOrderItems(orderItems);
-            shoppingCartService.deleteAllUserShoppingCartItems();
-            pdfService.createPurchaseInvoice(userService.getUserFromDatabaseBySession(), orderItems);
-            return "redirect:/cart/ordercompleted/" + order.getId();
+        if (userValidator.isFieldNotValidRestUserInformationEmpty(restUserInfoDto) || userValidator.isNotValidRestUserInformation(restUserInfoDto)) {
+            return "redirect:/cart?fail";
         } else {
-            orderService.deleteOrder(order);
-            return "redirect:/cart?toomany";
+            userService.addUserAdditionalInformation(restUserInfoDto);
+            Order order = orderService.saveOrder();
+            itemService.areEnoughItemsInDatabase(orderService.mapOrderItems(order));
+            if (itemService.areEnoughItemsInDatabase(orderService.mapOrderItems(order))) {
+                List<OrderItem> orderItems = orderService.mapOrderItems(order);
+                itemService.removeAProductsPiecesAfterOrderCompleted(orderItems);
+                orderService.sendOrderCreatedMail(order);
+                orderService.saveOrderItems(orderItems);
+                shoppingCartService.deleteAllUserShoppingCartItems();
+                pdfService.createPurchaseInvoice(userService.getUserFromDatabaseBySession(), orderItems);
+                return "redirect:/cart/ordercompleted/" + order.getId();
+            } else {
+                orderService.deleteOrder(order);
+                return "redirect:/cart?toomany";
+            }
         }
     }
 
@@ -82,9 +79,4 @@ public class ShoppingCartController {
         shoppingCartService.deleteItemFromCart(id);
         return "redirect:/cart";
     }
-
-//    @PostMapping("/cart/recalculate")
-//    String recalculateCart() {
-//
-//    }
 }

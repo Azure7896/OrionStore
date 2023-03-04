@@ -23,3 +23,5 @@ public interface ShoppingCartItemsRepository extends JpaRepository<ShoppingCartI
 
     void deleteAllByItem(Item item);
 }
+
+

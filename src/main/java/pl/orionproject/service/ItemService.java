@@ -2,7 +2,7 @@ package pl.orionproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.orionproject.DataTransferObjects.ItemDto;
+import pl.orionproject.datatransferobjects.ItemDto;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
 import pl.orionproject.model.OrderItem;
@@ -21,6 +21,7 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+
     public void addItem(ItemDto itemDto) {
         Category category = categoryRepository.findByCategoryName(itemDto.getCategory());
         Item item = new Item(itemDto.getItemName(), itemDto.getImagePath(), itemDto.getQuantity(),
@@ -28,9 +29,13 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public List<Item> viewAllItems() {
+    public List<Item> viewAllItemsExceptItemsQuantityEqualZero() {
         return itemRepository.findAll().stream().filter(item -> item
                 .getQuantity() > 0).collect(Collectors.toList());
+    }
+
+    public List<Item> viewAllItems() {
+        return itemRepository.findAll();
     }
 
     public Item viewItemById(Long id) {
@@ -56,6 +61,10 @@ public class ItemService {
             item.setQuantity(itemQuantity);
             itemRepository.save(item);
         }
+    }
+
+    public boolean isItemExists(String itemName) {
+        return itemRepository.findItemByItemName(itemName) != null;
     }
 
 }

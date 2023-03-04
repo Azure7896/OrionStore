@@ -6,22 +6,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.orionproject.DataTransferObjects.ItemDto;
+import pl.orionproject.datatransferobjects.ItemDto;
 import pl.orionproject.service.*;
 
 @Controller
 public class HomeController {
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    SearchService searchService;
+    private SearchService searchService;
 
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
 
 
     @ModelAttribute("searcheditem")
@@ -33,7 +33,7 @@ public class HomeController {
     public String viewHomePage(Model model) {
         model.addAttribute("username", userService.createHelloNotification());
         model.addAttribute("email", userService.getUserSessionEmail());
-        model.addAttribute("items", itemService.viewAllItems());
+        model.addAttribute("items", itemService.viewAllItemsExceptItemsQuantityEqualZero());
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         return "home";
@@ -43,7 +43,7 @@ public class HomeController {
     public String viewSearchedItems(Model model, @ModelAttribute("searcheditem") ItemDto item) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
-        model.addAttribute("items", searchService.searchItems(itemService.viewAllItems(), item));
+        model.addAttribute("items", searchService.searchItems(itemService.viewAllItemsExceptItemsQuantityEqualZero(), item));
         model.addAttribute("email", userService.getUserSessionEmail());
         return "home";
     }

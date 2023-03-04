@@ -31,6 +31,10 @@
     <p>Ilość produktów które próbujesz zamówić przekracza ilość wybranych produktów. Zmień ilość i spróbuj ponownie</p>
 </div>
 
+<div class="toomany" th:if="${param.fail}">
+    <p>Błędnie wypełniony formularz, sprawdź długość pól oraz czy nie są puste.</p>
+</div>
+
 <div class="container">
 <div class="order">
     <form th:action="@{/cart}" method="post" th:object="${restuserinfo}" class="form">
@@ -40,17 +44,17 @@
         <p id="email" th:text="|Adres e-mail: | + ${userfields.getEmail()}"></p>
         </div>
         <p>Numer NIP:</p>
-        <input type="text" id="vatnumber" th:value="${userfields.getVatNumber()}" autocomplete="off">
+        <input type="text" id="vatnumber" th:field="*{vatNumber}" minlength="10" maxlength="10" autocomplete="off">
         <p>Nazwa podmiotu:</p>
-        <input type="text" id="organisationame"  th:value="${userfields.getOrganisationName()}" autocomplete="off">
+        <input type="text" id="organisationame"  th:field="*{organisationName}" autocomplete="off">
         <p>Adres zamieszkania (wraz z numerem):</p>
-        <input type="text" id="address"  th:value="${userfields.getAddress()}" autocomplete="off">
-        <p>Kod posztowy:</p>
-        <input id="postalcode"  th:value="${userfields.getPostalCode()}" autocomplete="off">
+        <input type="text" id="address"  th:field="*{address}" required autocomplete="off">
+        <p>Kod pocztowy:</p>
+        <input id="postalcode"  th:field="*{postalCode}" required autocomplete="off">
         <p>Miasto:</p>
-        <input type="text" id="city"  th:value="${userfields.getCity()}" autocomplete="off">
+        <input type="text" id="city"  th:field="*{city}" required  autocomplete="off">
         <p>Telefon kontaktowy:</p>
-        <input type="text" id="phone"  th:value="${userfields.getPhone()}" autocomplete="off">
+        <input type="text" id="phone"  th:field="*{phone}" minlength="9" maxlength="9" required autocomplete="off">
         <button>Zamów</button>
     </form>
 </div>
@@ -78,6 +82,7 @@
     </tbody>
 </table>
 </div>
+
 </body>
 
 </html>

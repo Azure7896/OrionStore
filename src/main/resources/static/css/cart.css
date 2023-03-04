@@ -147,6 +147,13 @@ td img {
     white-space: nowrap;
 }
 
+.order input {
+    padding: 5px;
+    font-size: 23px;
+    border-radius: 50px;
+    border: 2px solid rgba(171, 43, 43, 1);
+}
+
 .container {
     display: flex block;
 }
@@ -156,5 +163,5 @@ td img {
     font-size: 20px;
     text-align: center;
     margin-top: 3%;
-
 }
+

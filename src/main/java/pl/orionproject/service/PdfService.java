@@ -13,6 +13,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class PdfService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = df.format(new Date());
 
-        Paragraph storeName = new Paragraph("Wystawca: OrionStore");
+        Paragraph storeName = new Paragraph("OrionStore Szymon Napora 5ION");
 
         storeName.setFixedPosition(35, 815, 200);
         document.add(storeName);
@@ -66,24 +67,47 @@ public class PdfService {
         float col = 280f;
         float[] columnWidth = {col, col};
 
+        image.setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+
+        Paragraph info = new Paragraph("OrionStore SP. Z.O.O" + "\n" + "Techniczna 12/45" + "\n" + "41-711, Ruda Slaska");
+
+        info.setFixedPosition(35, 630, 200).setTextAlignment(TextAlignment.LEFT).setFontSize(15f);
+
+
+        Table firstTable = new Table(columnWidth).setVerticalAlignment(VerticalAlignment.MIDDLE);
+        firstTable.addCell(new Cell().setBorder(Border.NO_BORDER))
+                .setMarginTop(15f);
+
+        firstTable.addCell(new Cell().setBorder(Border.NO_BORDER))
+                .setMarginTop(30f)
+                .setMarginBottom(10f)
+                .setMarginRight(10f)
+                .setFontSize(15f);
+
+        firstTable.addCell(new Cell().setBorder(Border.NO_BORDER)
+                .setMarginTop(30f)
+                .setMarginLeft(10f)
+                .setFontSize(15f));
+
+
         Table table = new Table(columnWidth).setVerticalAlignment(VerticalAlignment.MIDDLE);
-        table.setBackgroundColor(new DeviceRgb(255, 255, 255)).setFontColor(new DeviceRgb(226, 135, 67));
-        table.addCell(new Cell().setBorder(Border.NO_BORDER).add(image).setTextAlignment(TextAlignment.CENTER)
-                .setMarginTop(15f));
+        table.setBackgroundColor(new DeviceRgb(255, 255, 255));
+        table.addCell(new Cell().setBorder(Border.NO_BORDER))
+                .setMarginTop(15f);
 
         if (user.getVatNumber().equals("Brak") || user.getVatNumber().isEmpty() || user.getOrganisationName().equals("Brak") || user.getOrganisationName().isEmpty()) {
             table.addCell(new Cell().setBorder(Border.NO_BORDER).add(user.getFirstName() + " " + user.getLastName() + "\n" + user.getAddress() + "\n" +
                             user.getPostalCode() + " " + user.getCity() + "\n" + user.getPhone())).setTextAlignment(TextAlignment.RIGHT)
-                    .setMarginTop(30f)
                     .setMarginBottom(30f)
                     .setFontSize(15f);
         } else {
             table.addCell(new Cell().setBorder(Border.NO_BORDER).add(user.getVatNumber() + "\n" + user.getOrganisationName() + "\n" + user.getFirstName() +
                             " " + user.getLastName() + "\n" + user.getAddress() + "\n" + user.getPostalCode() + " " + user.getCity() + "\n" + user.getPhone())).setTextAlignment(TextAlignment.RIGHT)
-                    .setMarginTop(30f)
                     .setMarginBottom(30f)
                     .setFontSize(15f);
         }
+
 
         float[] colWidth = {80, 300, 100, 80};
         Table products = new Table(colWidth);
@@ -98,14 +122,17 @@ public class PdfService {
             products.addCell(new Cell().add(String.valueOf(counter)));
             products.addCell(new Cell().add(orderItem.getItemName()));
             products.addCell(new Cell().add(orderItem.getQuantity() + " szt."));
-            products.addCell(new Cell().add(String.format("%.2f", orderItem.getQuantity() * orderItem.getTotalPrice())));
+            products.addCell(new Cell().add(String.format("%.2f", orderItem.getQuantity() * orderItem.getTotalPrice()) + "zl"));
 
             total += orderItem.getQuantity() * orderItem.getTotalPrice();
+            counter++;
         }
 
-        products.addCell(new Cell(0, 4).add("Razem do zaplaty: " + String.format("%.02", total) + "zł")).setTextAlignment(TextAlignment.RIGHT).setBold();
+        products.addCell(new Cell(0, 4).add("Razem do zaplaty: " + String.format("%.02f", total) + "zl")).setTextAlignment(TextAlignment.RIGHT).setBold();
 
-
+        document.add(image);
+        document.add(info);
+        document.add(firstTable);
         document.add(table);
         document.add(products);
 

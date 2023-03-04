@@ -1,14 +1,14 @@
 package pl.orionproject.controller;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.orionproject.DataTransferObjects.UserDto;
+import pl.orionproject.datatransferobjects.UserDto;
 import pl.orionproject.validator.UserValidator;
-import pl.orionproject.repository.ConfirmationTokenRepository;
 import pl.orionproject.service.UserServiceImpl;
 
 
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUserAccount(@ModelAttribute("user") UserDto registrationDto) {
+    public String registerUserAccount(@ModelAttribute("user") UserDto registrationDto) throws MessagingException {
         if (userValidator.isUserExists(registrationDto) || userValidator.isFieldEmpty(registrationDto)
                 || userValidator.isNotValidNumberOfCharacters(registrationDto)) {
             return "redirect:/register?fail";

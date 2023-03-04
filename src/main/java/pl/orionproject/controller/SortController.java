@@ -26,7 +26,7 @@ public class SortController {
     public String sortByDesc(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
-        model.addAttribute("items", sortService.sortByDesc(itemService.viewAllItems()));
+        model.addAttribute("items", sortService.sortByDesc(itemService.viewAllItemsExceptItemsQuantityEqualZero()));
         return "homecategory";
     }
 
@@ -34,7 +34,7 @@ public class SortController {
     public String sortByAsc(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
-        model.addAttribute("items", sortService.sortByAsc(itemService.viewAllItems()));
+        model.addAttribute("items", sortService.sortByAsc(itemService.viewAllItemsExceptItemsQuantityEqualZero()));
         return "homecategory";
     }
 }
