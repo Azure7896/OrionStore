@@ -50,20 +50,20 @@ public class User {
 
     private List<Role> roles;
 
-    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles, String phone, String city, String vatNumber,
-                String organisationName, String postalCode, String address) {
+    public User(String firstName, String lastName, String password, String email, Date date, boolean enabled, List<Role> roles /*String phone, String city, String vatNumber,
+                String organisationName, String postalCode, String address*/) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.date = date;
         this.roles = roles;
-        this.phone = phone;
-        this.city = city;
-        this.vatNumber = vatNumber;
-        this.organisationName = organisationName;
-        this.postalCode = postalCode;
-        this.address = address;
+//        this.phone = phone;
+//        this.city = city;
+//        this.vatNumber = vatNumber;
+//        this.organisationName = organisationName;
+//        this.postalCode = postalCode;
+//        this.address = address;
     }
 }
 

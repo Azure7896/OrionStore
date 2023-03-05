@@ -16,32 +16,20 @@ import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.repository.ShoppingCartItemsRepository;
 import pl.orionproject.service.CategoryService;
 import pl.orionproject.service.ItemService;
-import pl.orionproject.service.OrderService;
-import pl.orionproject.validator.CategoryValidator;
 
 @Transactional
 @Controller
 public class AdminController {
 
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
 
     @Autowired
-    ItemRepository itemRepository;
-
+    private ItemRepository itemRepository;
     @Autowired
-    CategoryValidator categoryValidator;
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    ShoppingCartItemsRepository shoppingCartItemsRepository;
+    private ShoppingCartItemsRepository shoppingCartItemsRepository;
     @Autowired
     private CategoryService categoryService;
-
-    @GetMapping("/admin")
-    public String viewAdminPage() {
-        return "admin";
-    }
 
     @ModelAttribute("item")
     public ItemDto itemDto() {
@@ -52,6 +40,12 @@ public class AdminController {
     public CategoryDto categoryDto() {
         return new CategoryDto();
     }
+
+    @GetMapping("/admin")
+    public String viewAdminPage() {
+        return "admin";
+    }
+
 
     @GetMapping("/admin/additem")
     public String viewAddItemPage(Model model) {
@@ -77,19 +71,19 @@ public class AdminController {
         return "redirect:/admin/additem";
     }
 
-    @GetMapping("/admin/addcategories")
-    public String viewAddCategories(Model model) {
+    @GetMapping("/admin/addcategory")
+    public String viewAddCategoryPage(Model model) {
         model.addAttribute("categories", categoryService.viewAllCategories());
-        return "addcategories";
+        return "addcategory";
     }
 
-    @PostMapping("/admin/addcategories")
-    public String addCategories(@ModelAttribute("category") CategoryDto categoryDto) {
+    @PostMapping("/admin/addcategory")
+    public String addCategory(@ModelAttribute("category") CategoryDto categoryDto) {
         if (categoryService.isCategoryExists(categoryDto.getCategoryName())) {
-            return "redirect:/admin/addcategories?fail";
+            return "redirect:/admin/addcategory?fail";
         }
         categoryService.saveCategoryToDatabase(new Category(categoryDto.getCategoryName()));
-        return "redirect:/admin/addcategories";
+        return "redirect:/admin/addcategory";
     }
 
     @GetMapping("/admin/category/delete/{id}")
@@ -102,7 +96,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/category/modify/{id}")
-    public String modifyCategory(@PathVariable Long id, Model model) {
+    public String viewModifyCategory(@PathVariable Long id, Model model) {
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("categorytomodify", category);
         return "categorymodify";
@@ -112,30 +106,30 @@ public class AdminController {
     @PostMapping("/admin/category/modify/{id}") //
     public String modifyCategory(@PathVariable Long id, @ModelAttribute("category") CategoryDto categoryDto) {
 
-            Category category = categoryService.getCategoryById(id);
-            category.setCategoryName(categoryDto.getCategoryName());
-            categoryService.saveCategoryToDatabase(category);
-            return "redirect:/admin/addcategories";
+        Category category = categoryService.getCategoryById(id);
+        category.setCategoryName(categoryDto.getCategoryName());
+        categoryService.saveCategoryToDatabase(category);
+        return "redirect:/admin/addcategories";
     }
 
     @GetMapping("/admin/item/modify/{id}")
-    public String modifyItem(@PathVariable Long id, Model model) {
-            Item item = itemRepository.findItemById(id);
-            model.addAttribute("itemtomodify", item);
-            model.addAttribute("categories", categoryService.viewAllCategories());
-            return "itemmodify";
+    public String viewModifyItem(@PathVariable Long id, Model model) {
+        Item item = itemRepository.findItemById(id);
+        model.addAttribute("itemtomodify", item);
+        model.addAttribute("categories", categoryService.viewAllCategories());
+        return "itemmodify";
     }
 
     @PostMapping("/admin/item/modify/{id}") //
     public String modifyItem(@PathVariable Long id, @ModelAttribute("item") ItemDto itemDto) {
-            Item item = itemRepository.findItemById(id);
-            item.setItemName(itemDto.getItemName());
-            item.setPrice(itemDto.getPrice());
-            item.setImagePath(itemDto.getImagePath());
-            item.setDescription(itemDto.getDescription());
-            item.setQuantity(itemDto.getQuantity());
-            item.setCategory(categoryService.getCategoryByCategoryName(itemDto.getCategory()));
-            itemRepository.save(item);
-            return "redirect:/admin/additem";
+        Item item = itemRepository.findItemById(id);
+        item.setItemName(itemDto.getItemName());
+        item.setPrice(itemDto.getPrice());
+        item.setImagePath(itemDto.getImagePath());
+        item.setDescription(itemDto.getDescription());
+        item.setQuantity(itemDto.getQuantity());
+        item.setCategory(categoryService.getCategoryByCategoryName(itemDto.getCategory()));
+        itemRepository.save(item);
+        return "redirect:/admin/additem";
     }
 }

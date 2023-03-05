@@ -47,7 +47,8 @@ public class OrderService {
     }
 
     public Order saveOrder() {
-        return orderRepository.save(new Order(new Date(), userRepository.findByEmail(userService.getUserSessionEmail()), "NOWE"));
+        return orderRepository.save(new Order(new Date(), userRepository.
+                findByEmail(userService.getUserSessionEmail()), "NOWE"));
     }
 
     public void deleteOrder(Order order) {
@@ -71,4 +72,5 @@ public class OrderService {
     public void saveOrderItems(List<OrderItem> orderItems) {
         orderItemRepository.saveAll(orderItems);
     }
+
 }

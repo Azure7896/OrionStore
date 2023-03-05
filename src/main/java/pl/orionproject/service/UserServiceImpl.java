@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = new User(userDTO.getFirstName(), userDTO.getLastName(),
                 userDTO.getPassword(), userDTO.getEmail(), new Date(),
-                false, List.of(new Role("USER")), "Brak",
-                "Brak", "Brak", "Brak", "Brak", "Brak");
+                false, List.of(new Role("USER")));
 
         userRepository.save(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
