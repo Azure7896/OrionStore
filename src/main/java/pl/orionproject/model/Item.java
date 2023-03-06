@@ -15,11 +15,13 @@ public class Item implements Comparable <Item> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 30)
     private String itemName;
-
+    @Column(length = 100)
     private String imagePath;
+    @Column(length = 10000)
     private int quantity;
-
+    @Column(length = 10000)
     private double price;
     @Column(length = 65555)
     private String description;

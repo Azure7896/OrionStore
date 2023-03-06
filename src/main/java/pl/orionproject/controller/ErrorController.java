@@ -20,8 +20,6 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
                 return "notfound";
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return "accessdenied";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error-500";
             }
         }
         return "error";

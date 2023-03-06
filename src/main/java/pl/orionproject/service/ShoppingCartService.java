@@ -42,11 +42,6 @@ public class ShoppingCartService {
     }
 
 
-//    public void deleteAllUserCartItemsWhenLogout() {
-//        shoppingCartItemsRepository.deleteAllShoppingCartItemsByUser(userRepository.findByEmail(userService.getUserName()));
-//    }
-
-
     public int sumProductsCount() {
         List<ShoppingCartItems> shoppingCartItems = fillItemsByUser();
         int sum = 0;

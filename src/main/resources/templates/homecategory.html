@@ -18,7 +18,7 @@
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
-        <li><a th:href="@{/cart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
+        <li><a th:href="@{/shoppingcart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
             <div th:each="usermail : ${email}">
                 <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>

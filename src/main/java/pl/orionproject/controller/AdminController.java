@@ -50,7 +50,7 @@ public class AdminController {
     @GetMapping("/admin/additem")
     public String viewAddItemPage(Model model) {
         model.addAttribute("allitems", itemRepository.findAll());
-        model.addAttribute("categories", categoryService.viewAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "additem";
     }
 
@@ -73,7 +73,7 @@ public class AdminController {
 
     @GetMapping("/admin/addcategory")
     public String viewAddCategoryPage(Model model) {
-        model.addAttribute("categories", categoryService.viewAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "addcategory";
     }
 
@@ -116,7 +116,7 @@ public class AdminController {
     public String viewModifyItem(@PathVariable Long id, Model model) {
         Item item = itemRepository.findItemById(id);
         model.addAttribute("itemtomodify", item);
-        model.addAttribute("categories", categoryService.viewAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "itemmodify";
     }
 

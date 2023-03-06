@@ -18,7 +18,7 @@
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
-        <li><a th:href="@{/cart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
+        <li><a th:href="@{/shoppingcart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
             <div th:each="usermail : ${email}">
                 <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
@@ -55,7 +55,7 @@
         <img th:src="${item.getImagePath()}" alt="Zdjęcie produktu">
         <p th:text="${item.getItemName()}"></p>
         <p th:text="${item.getPrice()} + zł"></p>
-        <a th:href="@{/card/{id} (id=${item.getId()})}">
+        <a th:href="@{/productcard/{id} (id=${item.getId()})}">
             <button>KUP TERAZ</button>
         </a>
     </div>

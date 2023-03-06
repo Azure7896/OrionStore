@@ -37,7 +37,7 @@ public class OrderService {
     EmailSenderService emailSenderService;
 
 
-    public List<OrderItem> mapOrderItems(Order order) {
+    public List<OrderItem> mapItemsWithOrderItemsAndOrder(Order order) {
         List<ShoppingCartItems> shoppingCartItems = shoppingCartService.fillItemsByUser();
         List<OrderItem> orderItems = new ArrayList<>();
         for (ShoppingCartItems sh : shoppingCartItems) {
@@ -46,7 +46,7 @@ public class OrderService {
         return orderItems;
     }
 
-    public Order saveOrder() {
+    public Order saveOrderToDatabase() {
         return orderRepository.save(new Order(new Date(), userRepository.
                 findByEmail(userService.getUserSessionEmail()), "NOWE"));
     }
@@ -55,22 +55,29 @@ public class OrderService {
         orderRepository.deleteById(order.getId());
     }
 
-    public void sendOrderCreatedMail(Order order) {
+    public void sendOrderCreatedMail(Order order, String invoicePath) {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = df.format(new Date());
 
-        emailSenderService.sendEmail(userService.getUserSessionEmail(),
+        emailSenderService.sendEmailWithAttachment(userService.getUserSessionEmail(),
                 "Zarejestrowaliśmy twoje zamówienie nr:" + order.getId() + " - OrionStore",
                 "Twoje zamówienie nr: " + order.getId() + " z dnia " + formatted + " zostało zarejestrowane." +
                         " Zostanie zrealizowane tak szybko jak to możliwe." +
-                        " Dziękujemy za zakup produktów w OrionStore. Zachęcamy do dalszych zakupów.");
+                        " Dziękujemy za zakup produktów w OrionStore. Zachęcamy do dalszych zakupów.", invoicePath);
     }
 
 
+    public List<Order> getAllOrdersByUser () {
+        return orderRepository.findAllByUser(userService.getUserFromDatabaseBySession());
+    }
 
     public void saveOrderItems(List<OrderItem> orderItems) {
         orderItemRepository.saveAll(orderItems);
+    }
+
+    public List<OrderItem> getOrderItemsById(Long id) {
+        return orderItemRepository.findALlByOrderId(id);
     }
 
 }

@@ -19,6 +19,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 100)
     private String vatPdfPath;
 
     @Column(nullable = false, updatable = false)
@@ -28,6 +29,7 @@ public class Order {
     @ManyToOne (fetch = FetchType.EAGER)
     private User user;
 
+    @Column(length = 10)
     private String status;
 
     public Order(Date createdDate, User user, String status) {

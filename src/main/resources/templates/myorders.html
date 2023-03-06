@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Orion Store - kosmiczny sklep internetowy</title>
-    <link rel="stylesheet" type="text/css" href="/css/categories.css">
+    <link rel="stylesheet" type="text/css" href="/css/cart.css">
 </head>
 
 <body>
+
 <nav>
     <a th:href="@{/}"><img src="/css/logo.png" class="logo" alt="OrionStore"></a>
     <ul>
@@ -17,7 +18,6 @@
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
-        <li><a th:href="@{/shoppingcart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
             <div th:each="usermail : ${email}">
                 <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
@@ -26,15 +26,30 @@
         </li>
     </ul>
 </nav>
-<div class="hello">
-    <p th:text="${username}"></p>
+
+
+<div class="container">
+<table id="example">
+    <thead>
+    <tr>
+        <th colspan="3">Twoje wszystkie zamówienia.</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.getId()}"></td>
+        <td th:text="${order.getCreatedDate()}"></td>
+        <td>
+            <a th:href="@{/myorders/order/{id} (id=${order.getId()})}">
+                <button>Sprawdź zamówienie</button>
+            </a>
+        </td>
+        </tr>
+
+    </tbody>
+</table>
 </div>
 
-<div th:each="category : ${categories}">
-<a th:href="@{/category/{id} (id=${category.getCategoryId()})}">
-    <button th:text="${category.getCategoryName()}"></button>
-</a>
-</div>
 </body>
 
 </html>

@@ -32,7 +32,7 @@ public class CategoriesController {
             return "redirect:/";
         } else {
             model.addAttribute("items", categoryService
-                    .itemsByCategory(id));
+                    .getAllItemsByCategory(id));
         }
         return "homecategory";
     }
@@ -41,7 +41,7 @@ public class CategoriesController {
     @GetMapping("/categories")
     public String showCategoriesList(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
-        model.addAttribute("categories", categoryService.viewAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("email", userService.getUserSessionEmail());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         return "categories";

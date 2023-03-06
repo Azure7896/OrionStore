@@ -54,7 +54,7 @@ public class ItemService {
         return areEnough;
     }
 
-    public void removeAProductsPiecesAfterOrderCompleted(List<OrderItem> orderItems) {
+    public void removeProductsPiecesAfterOrderCompleted(List<OrderItem> orderItems) {
         for (OrderItem orderedItem : orderItems) {
             Item item = itemRepository.findItemByItemName(orderedItem.getItemName());
             int itemQuantity = item.getQuantity() - orderedItem.getQuantity();

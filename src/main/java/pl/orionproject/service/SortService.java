@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class SortService {
-    public List<Item> sortByAsc(List<Item> items) {
+    public List<Item> sortItemsByAsc(List<Item> items) {
         Collections.sort(items);
         return items;
     }
 
-    public List<Item> sortByDesc(List<Item> items) {
+    public List<Item> sortItemsByDesc(List<Item> items) {
         Collections.sort(items);
         Collections.reverse(items);
         return items;

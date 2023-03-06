@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -24,13 +25,32 @@ public class EmailSenderService {
 
     @Async
     public void sendEmail(String toEmail, String subject, String body) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("notificationsorionstore@gmail.com");
-        mailMessage.setTo(toEmail);
-        mailMessage.setText(body);
-        mailMessage.setSubject(subject);
-        mailSender.send(mailMessage);
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom("notificationsorionstore@gmail.com");
+            messageHelper.setTo(toEmail);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(body);
+        };
+        mailSender.send(messagePreparator);
+    }
 
+
+    @Async
+    public void sendEmailWithAttachment(String toEmail, String subject, String body, String attachmentPath) {
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom("notificationsorionstore@gmail.com");
+            messageHelper.setTo(toEmail);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(body);
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            attachmentPart.attachFile(new File(attachmentPath));
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(attachmentPart);
+            mimeMessage.setContent(multipart);
+        };
+        mailSender.send(messagePreparator);
     }
 
 }

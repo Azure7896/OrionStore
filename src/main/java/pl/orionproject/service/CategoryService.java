@@ -44,12 +44,12 @@ public class CategoryService {
         return categoryRepository.findByCategoryName(categoryName);
     }
 
-    public List<Item> itemsByCategory(Long id) {
+    public List<Item> getAllItemsByCategory(Long id) {
         return itemRepository.findAll().stream().filter(item -> item
                 .getCategory().getCategoryId() == id && item.getQuantity() > 0).collect(Collectors.toList());
     }
 
-    public List<Category> viewAllCategories() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 

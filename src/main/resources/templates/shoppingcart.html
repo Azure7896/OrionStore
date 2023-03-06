@@ -37,7 +37,7 @@
 
 <div class="container">
 <div class="order">
-    <form th:action="@{/cart}" method="post" th:object="${restuserinfo}" class="form">
+    <form th:action="@{/shoppingcart}" method="post" th:object="${restuserinfo}" class="form">
         <div class="info">
         <p id="firstname" th:text="|Imię: | + ${userfields.getFirstName()}"></p>
         <p id="lastname" th:text="|Nazwisko: | + ${userfields.getLastName()}"></p>
