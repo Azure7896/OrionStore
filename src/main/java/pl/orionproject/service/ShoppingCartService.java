@@ -17,18 +17,18 @@ import java.util.stream.Collectors;
 public class ShoppingCartService {
 
     @Autowired
-    ShoppingCartItemsRepository shoppingCartItemsRepository;
+    private ShoppingCartItemsRepository shoppingCartItemsRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
-    private double totalALlItemsInTheCart() {
+    private double totalALlItemsFromTheShoppingCart() {
         List<ShoppingCartItems> shoppingCartItems = fillItemsByUser();
         double sum = 0;
         for (ShoppingCartItems li : shoppingCartItems) {
@@ -38,7 +38,7 @@ public class ShoppingCartService {
     }
 
     public String viewTotalRoundedPrices() {
-        return String.format("%.2f", totalALlItemsInTheCart());
+        return String.format("%.2f", this.totalALlItemsFromTheShoppingCart());
     }
 
 
@@ -53,24 +53,28 @@ public class ShoppingCartService {
 
     @Transactional
     public void deleteAllUserShoppingCartItems() {
-        shoppingCartItemsRepository.deleteAllByUser(userRepository.findByEmail(userService.getUserSessionEmail()));
+        shoppingCartItemsRepository.deleteAllByUser(userRepository.findByEmail(userService.getUserSessionEmailName()));
+    }
+
+    public void deleteALlShoppingCartItemsById(Long id) {
+        shoppingCartItemsRepository.deleteAllByItem(itemRepository.findItemById(id));
     }
 
     @Transactional
     public void deleteItemFromCart(Long id) {
-        User user = userRepository.findByEmail(userService.getUserSessionEmail());
+        User user = userRepository.findByEmail(userService.getUserSessionEmailName());
         shoppingCartItemsRepository.deleteShoppingCartItemsByIdAndUser(id, user);
     }
 
     public List<ShoppingCartItems> fillItemsByUser() {
         return shoppingCartItemsRepository.findAll().stream().filter(item -> item
-                .getUser().getEmail().equals(userService.getUserSessionEmail())).collect(Collectors.toList());
+                .getUser().getEmail().equals(userService.getUserSessionEmailName())).collect(Collectors.toList());
     }
 
     public void addItemToCart(Long itemId) {
         Item item = itemRepository.findItemById(itemId);
 
-        User user = userRepository.findByEmail(userService.getUserSessionEmail());
+        User user = userRepository.findByEmail(userService.getUserSessionEmailName());
 
         List<ShoppingCartItems> shoppingCartItems = shoppingCartItemsRepository.findAllShoppingCartItemsByItemAndUser(item, user);
         if (shoppingCartItems.size() >= 1) {
@@ -82,7 +86,7 @@ public class ShoppingCartService {
         }
     }
 
-    public boolean shoppingCartIsEmpty() {
+    public boolean isShoppingCartEmpty() {
         return fillItemsByUser().size() == 0;
     }
 

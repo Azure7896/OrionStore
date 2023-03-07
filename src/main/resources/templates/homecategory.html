@@ -14,29 +14,27 @@
         <li id="admin" sec:authorize="hasAuthority('ADMIN')">
             <a th:href="@{/admin}">ADMIN PANEL</a>
         </li>
-        <li><a href="">O nas</a></li>
+        <li><a th:href="@{/myorders}">Moje zamówienia</a></li>
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
         <li><a th:href="@{/shoppingcart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
-            <div th:each="usermail : ${email}">
-                <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
-                <div th:if="${usermail} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
-            </div>
+            <div th:if="${email} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
+            <div th:if="${email} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
         </li>
     </ul>
 </nav>
 
-<!--<div class="sorting-buttons">-->
-<!--    <label for="first">Sortuj po:</label>-->
-<!--    <a th:href="@{/sort/desc}">-->
-<!--        <button id="first">Cena: Malejąco</button>-->
-<!--    </a>-->
-<!--    <a th:href="@{/sort/asc}">-->
-<!--        <button id="second">Cena: Rosnąco</button>-->
-<!--    </a>-->
-<!--</div>-->
+<div class="sorting-buttons">
+    <label for="first">Sortuj po:</label>
+    <a th:href="@{/sort/desc}">
+        <button id="first">Cena: Malejąco</button>
+    </a>
+    <a th:href="@{/sort/asc}">
+        <button id="second">Cena: Rosnąco</button>
+    </a>
+</div>
 
 <div class="content">
     <div class="item" th:each="item : ${items}">
@@ -44,7 +42,7 @@
         <img th:src="${item.getImagePath()}" alt="Zdjęcie produktu">
         <p th:text="${item.getItemName()}"></p>
         <p th:text="${item.getPrice()} + zł"></p>
-        <a th:href="@{/card/{id} (id=${item.getId})}">
+        <a th:href="@{/productcard/{id} (id=${item.getId})}">
             <button>KUP TERAZ</button>
         </a>
     </div>

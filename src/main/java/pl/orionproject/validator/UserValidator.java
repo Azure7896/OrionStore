@@ -35,7 +35,7 @@ public class UserValidator {
                 restUserInfoDto.getPhone().length() != 9;
     }
 
-    public boolean isFieldNotValidRestUserInformationEmpty(RestUserInfoDto restUserInfoDto) {
+    public boolean isRestUserInformationFieldEmpty(RestUserInfoDto restUserInfoDto) {
         return restUserInfoDto.getAddress().isEmpty() || restUserInfoDto.getPostalCode().isEmpty() ||
                 restUserInfoDto.getCity().isEmpty() || restUserInfoDto.getPhone().isEmpty();
     }

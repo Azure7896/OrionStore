@@ -14,15 +14,7 @@ import pl.orionproject.service.SessionService;
 @SpringBootApplication
 public class OrionprojectApplication {
 
-    @Autowired
-    EmailSenderService emailSenderService;
-
     public static void main(String[] args) {
         SpringApplication.run(OrionprojectApplication.class, args);
     }
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void sendEmail() throws MessagingException {
-    }
-
 }

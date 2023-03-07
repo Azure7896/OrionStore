@@ -37,17 +37,16 @@ public class ShoppingCartController {
     @Autowired
     private UserValidator userValidator;
 
-    @Autowired
-    private EmailSenderService emailSenderService;
 
     @GetMapping("/shoppingcart")
-    public String showCart(Model model) {
+    public String viewShoppingCart(Model model) {
         model.addAttribute("cartitems", shoppingCartService.fillItemsByUser());
         model.addAttribute("totalroundedprices", shoppingCartService.viewTotalRoundedPrices());
         model.addAttribute("userfields", userService.getUserFromDatabaseBySession());
+        model.addAttribute("email", userService.getUserSessionEmailName());
         model.addAttribute("restuserinfo", new RestUserInfoDto());
 
-        if (shoppingCartService.shoppingCartIsEmpty()) {
+        if (shoppingCartService.isShoppingCartEmpty()) {
             return "emptycart";
         } else {
             return "shoppingcart";
@@ -55,20 +54,20 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/shoppingcart")
-    public String orderProducts(@ModelAttribute RestUserInfoDto restUserInfoDto) throws IOException {
-        if (userValidator.isFieldNotValidRestUserInformationEmpty(restUserInfoDto) || userValidator.isNotValidRestUserInformation(restUserInfoDto)) {
+    public String orderProductsFromShoppingCart(@ModelAttribute RestUserInfoDto restUserInfoDto) throws IOException {
+        if (userValidator.isRestUserInformationFieldEmpty(restUserInfoDto) || userValidator.isNotValidRestUserInformation(restUserInfoDto)) {
             return "redirect:/shoppingcart?fail";
         } else {
             userService.addUserAdditionalInformation(restUserInfoDto);
             Order order = orderService.saveOrderToDatabase();
             List <OrderItem> orderItems = orderService.mapItemsWithOrderItemsAndOrder(order);
             if (itemService.areEnoughItemsInDatabase(orderItems)) {
-                itemService.removeProductsPiecesAfterOrderCompleted(orderItems);
-                orderService.saveOrderItems(orderItems);
+                itemService.removeFromDatabaseProductsPiecesAfterOrderCompleted(orderItems);
+                orderService.saveOrderItemsToDatabase(orderItems);
                 shoppingCartService.deleteAllUserShoppingCartItems();
                 String filePath = pdfService.createPurchaseInvoice(userService.getUserFromDatabaseBySession(), orderItems);
                 orderService.sendOrderCreatedMail(order, filePath);
-                return "redirect:/cart/ordercompleted/" + order.getId();
+                return "redirect:/shoppingcart/ordercompleted/" + order.getId();
             } else {
                 orderService.deleteOrder(order);
                 return "redirect:/shoppingcart?toomany";
@@ -77,7 +76,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shoppingcart/deleteposition/{id}")
-    String deletePosition(@PathVariable Long id) {
+    String deletePositionInShoppingCart(@PathVariable Long id) {
         shoppingCartService.deleteItemFromCart(id);
         return "redirect:/shoppingcart";
     }

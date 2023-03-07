@@ -21,6 +21,9 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
 
     public void addItem(ItemDto itemDto) {
         Category category = categoryRepository.findByCategoryName(itemDto.getCategory());
@@ -34,11 +37,30 @@ public class ItemService {
                 .getQuantity() > 0).collect(Collectors.toList());
     }
 
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
+
+    public void deleteItem(Long id) {
+        itemRepository.deleteItemById(id);
+    }
+
+
+    public void updateItem(Long id, ItemDto itemDto) {
+        Item item = itemRepository.findItemById(id);
+        item.setItemName(itemDto.getItemName());
+        item.setPrice(itemDto.getPrice());
+        item.setImagePath(itemDto.getImagePath());
+        item.setDescription(itemDto.getDescription());
+        item.setQuantity(itemDto.getQuantity());
+        item.setCategory(categoryService.getCategoryByCategoryName(itemDto.getCategory()));
+        itemRepository.save(item);
+    }
     public List<Item> viewAllItems() {
         return itemRepository.findAll();
     }
 
-    public Item viewItemById(Long id) {
+    public Item getItemById(Long id) {
         return itemRepository.findItemById(id);
     }
 
@@ -54,7 +76,7 @@ public class ItemService {
         return areEnough;
     }
 
-    public void removeProductsPiecesAfterOrderCompleted(List<OrderItem> orderItems) {
+    public void removeFromDatabaseProductsPiecesAfterOrderCompleted(List<OrderItem> orderItems) {
         for (OrderItem orderedItem : orderItems) {
             Item item = itemRepository.findItemByItemName(orderedItem.getItemName());
             int itemQuantity = item.getQuantity() - orderedItem.getQuantity();

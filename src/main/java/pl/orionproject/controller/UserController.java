@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String viewLoginPage() {
-        if (userService.getUserSessionEmail().equals("anonymousUser")) {
+        if (userService.getUserSessionEmailName().equals("anonymousUser")) {
             return "login";
         } else {
             return "redirect:/";

@@ -19,7 +19,8 @@
 
 
 <h1>Modyfikuj kategorię</h1>
-<form th:href="@{/admin/category/modify/{id}}" method="post" th:object="${category}" th:each="category : ${categorytomodify}"
+<form th:href="@{/admin/category/modify/{id}}" method="post" th:object="${category}"
+      th:each="category : ${categorytomodify}"
       class="form">
     <table>
         <tr>
@@ -31,7 +32,7 @@
         <tr>
             <td colspan="2">
                 <a th:href="@{/admin/category/modify/{id}}">
-                <button type="submit">Zmień nazwę</button>
+                    <button type="submit">Zmień nazwę</button>
                 </a>
             </td>
         </tr>

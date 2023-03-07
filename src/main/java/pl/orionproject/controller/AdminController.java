@@ -16,6 +16,8 @@ import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.repository.ShoppingCartItemsRepository;
 import pl.orionproject.service.CategoryService;
 import pl.orionproject.service.ItemService;
+import pl.orionproject.service.SessionService;
+import pl.orionproject.service.ShoppingCartService;
 
 @Transactional
 @Controller
@@ -23,13 +25,14 @@ public class AdminController {
 
     @Autowired
     private ItemService itemService;
-
-    @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private ShoppingCartItemsRepository shoppingCartItemsRepository;
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SessionService sessionService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @ModelAttribute("item")
     public ItemDto itemDto() {
@@ -43,13 +46,14 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String viewAdminPage() {
+        System.out.println(sessionService.getUserSessionEmailNameFromSession());
         return "admin";
     }
 
 
     @GetMapping("/admin/additem")
     public String viewAddItemPage(Model model) {
-        model.addAttribute("allitems", itemRepository.findAll());
+        model.addAttribute("allitems", itemService.getAllItems());
         model.addAttribute("categories", categoryService.getAllCategories());
         return "additem";
     }
@@ -66,24 +70,24 @@ public class AdminController {
 
     @GetMapping("/admin/item/delete/{id}")
     public String deleteItem(@PathVariable Long id) {
-        shoppingCartItemsRepository.deleteAllByItem(itemRepository.findItemById(id));
-        itemRepository.deleteItemById(id);
+        shoppingCartService.deleteALlShoppingCartItemsById(id);
+        itemService.deleteItem(id);
         return "redirect:/admin/additem";
     }
 
-    @GetMapping("/admin/addcategory")
+    @GetMapping("/admin/addcategories")
     public String viewAddCategoryPage(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
         return "addcategory";
     }
 
-    @PostMapping("/admin/addcategory")
+    @PostMapping("/admin/addcategories")
     public String addCategory(@ModelAttribute("category") CategoryDto categoryDto) {
         if (categoryService.isCategoryExists(categoryDto.getCategoryName())) {
-            return "redirect:/admin/addcategory?fail";
+            return "redirect:/admin/addcategories?fail";
         }
         categoryService.saveCategoryToDatabase(new Category(categoryDto.getCategoryName()));
-        return "redirect:/admin/addcategory";
+        return "redirect:/admin/addcategories";
     }
 
     @GetMapping("/admin/category/delete/{id}")
@@ -114,7 +118,7 @@ public class AdminController {
 
     @GetMapping("/admin/item/modify/{id}")
     public String viewModifyItem(@PathVariable Long id, Model model) {
-        Item item = itemRepository.findItemById(id);
+        Item item = itemService.getItemById(id);
         model.addAttribute("itemtomodify", item);
         model.addAttribute("categories", categoryService.getAllCategories());
         return "itemmodify";
@@ -122,14 +126,7 @@ public class AdminController {
 
     @PostMapping("/admin/item/modify/{id}") //
     public String modifyItem(@PathVariable Long id, @ModelAttribute("item") ItemDto itemDto) {
-        Item item = itemRepository.findItemById(id);
-        item.setItemName(itemDto.getItemName());
-        item.setPrice(itemDto.getPrice());
-        item.setImagePath(itemDto.getImagePath());
-        item.setDescription(itemDto.getDescription());
-        item.setQuantity(itemDto.getQuantity());
-        item.setCategory(categoryService.getCategoryByCategoryName(itemDto.getCategory()));
-        itemRepository.save(item);
+        itemService.updateItem(id, itemDto);
         return "redirect:/admin/additem";
     }
 }

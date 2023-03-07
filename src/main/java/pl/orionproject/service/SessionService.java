@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SessionService {
-    public String getUserSessionEmail() {
+
+    public String getUserSessionEmailNameFromSession() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }

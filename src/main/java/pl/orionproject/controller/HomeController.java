@@ -30,9 +30,9 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String viewHomePage(Model model) {
+    public String viewHome(Model model) {
         model.addAttribute("username", userService.createHelloNotification());
-        model.addAttribute("email", userService.getUserSessionEmail());
+        model.addAttribute("email", userService.getUserSessionEmailName());
         model.addAttribute("items", itemService.viewAllItemsExceptItemsQuantityEqualZero());
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
@@ -44,7 +44,7 @@ public class HomeController {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         model.addAttribute("items", searchService.searchItems(itemService.viewAllItemsExceptItemsQuantityEqualZero(), item));
-        model.addAttribute("email", userService.getUserSessionEmail());
+        model.addAttribute("email", userService.getUserSessionEmailName());
         return "home";
     }
 

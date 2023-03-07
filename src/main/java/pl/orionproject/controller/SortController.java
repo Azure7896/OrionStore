@@ -14,16 +14,16 @@ import pl.orionproject.service.SortService;
 public class SortController {
 
     @Autowired
-    SortService sortService;
+    private SortService sortService;
 
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
 
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
 
     @GetMapping("/sort/desc")
-    public String sortByDesc(Model model) {
+    public String sortProductsByDesc(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         model.addAttribute("items", sortService.sortItemsByDesc(itemService.viewAllItemsExceptItemsQuantityEqualZero()));
@@ -31,7 +31,7 @@ public class SortController {
     }
 
     @GetMapping("/sort/asc")
-    public String sortByAsc(Model model) {
+    public String sortProductsByAsc(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         model.addAttribute("items", sortService.sortItemsByAsc(itemService.viewAllItemsExceptItemsQuantityEqualZero()));

@@ -24,10 +24,11 @@ public class CategoriesController {
     private ShoppingCartService shoppingCartService;
 
     @GetMapping("/category/{id}")
-    public String showCategories(Model model, @PathVariable Long id) {
+    public String viewItemsByCategory(Model model, @PathVariable Long id) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
-        Category category = categoryService.findCategoryById(id);
+        model.addAttribute("email", userService.getUserSessionEmailName());
+        Category category = categoryService.getCategoryById(id);
         if (category == null) {
             return "redirect:/";
         } else {
@@ -39,10 +40,10 @@ public class CategoriesController {
 
 
     @GetMapping("/categories")
-    public String showCategoriesList(Model model) {
+    public String viewCategoriesList(Model model) {
         model.addAttribute("count", shoppingCartService.sumProductsCount());
         model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("email", userService.getUserSessionEmail());
+        model.addAttribute("email", userService.getUserSessionEmailName());
         model.addAttribute("priceofallitems", shoppingCartService.viewTotalRoundedPrices());
         return "categories";
     }

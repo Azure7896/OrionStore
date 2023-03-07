@@ -2,6 +2,7 @@ package pl.orionproject.service;
 
 import jakarta.mail.MessagingException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import pl.orionproject.datatransferobjects.RestUserInfoDto;
 import pl.orionproject.datatransferobjects.UserDto;
@@ -15,8 +16,9 @@ public interface UserService extends UserDetailsService {
     Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles);
 
     String createHelloNotification();
+    UserDetails loadUserByUsername(String username);
 
-    String getUserSessionEmail();
+    String getUserSessionEmailName();
     User getUserFromDatabaseBySession();
     void addUserAdditionalInformation(RestUserInfoDto restUserInfoDto);
 

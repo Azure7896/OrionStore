@@ -21,8 +21,9 @@
 <form th:action="@{/admin/addcategories}" method="post" th:object="${category}" class="form">
     <table>
         <tr>
-            <td>Nazwa kategorii: </td>
-            <td><input type="text" id="category" name="category" th:field="*{categoryName}" maxlength="20" required></td>
+            <td>Nazwa kategorii:</td>
+            <td><input type="text" id="category" name="category" th:field="*{categoryName}" maxlength="20" required>
+            </td>
             <br>
         </tr>
         <tr>
@@ -52,10 +53,10 @@
         <td th:text="${category.getCategoryName()}"></td>
         <td>
             <a th:href="@{/admin/category/modify/{id} (id=${category.getCategoryId()})}">
-            <button>Modyfikuj</button>
+                <button>Modyfikuj</button>
             </a>
             <a th:href="@{/admin/category/delete/{id} (id=${category.getCategoryId()})}">
-            <button>Usuń</button>
+                <button>Usuń</button>
             </a>
         </td>
     </tr>

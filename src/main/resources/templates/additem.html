@@ -90,10 +90,10 @@
         <td th:text="${iteminfo.getCategory().getCategoryName()}"></td>
         <td>
             <a th:href="@{/admin/item/modify/{id} (id=${iteminfo.getId()})}">
-            <button>Modyfikuj</button>
+                <button>Modyfikuj</button>
             </a>
             <a th:href="@{/admin/item/delete/{id} (id=${iteminfo.getId()})}">
-            <button>Usuń</button>
+                <button>Usuń</button>
             </a>
         </td>
     </tr>

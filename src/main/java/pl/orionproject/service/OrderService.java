@@ -48,7 +48,7 @@ public class OrderService {
 
     public Order saveOrderToDatabase() {
         return orderRepository.save(new Order(new Date(), userRepository.
-                findByEmail(userService.getUserSessionEmail()), "NOWE"));
+                findByEmail(userService.getUserSessionEmailName()), "NOWE"));
     }
 
     public void deleteOrder(Order order) {
@@ -60,7 +60,7 @@ public class OrderService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = df.format(new Date());
 
-        emailSenderService.sendEmailWithAttachment(userService.getUserSessionEmail(),
+        emailSenderService.sendEmailWithAttachment(userService.getUserSessionEmailName(),
                 "Zarejestrowaliśmy twoje zamówienie nr:" + order.getId() + " - OrionStore",
                 "Twoje zamówienie nr: " + order.getId() + " z dnia " + formatted + " zostało zarejestrowane." +
                         " Zostanie zrealizowane tak szybko jak to możliwe." +
@@ -72,7 +72,7 @@ public class OrderService {
         return orderRepository.findAllByUser(userService.getUserFromDatabaseBySession());
     }
 
-    public void saveOrderItems(List<OrderItem> orderItems) {
+    public void saveOrderItemsToDatabase(List<OrderItem> orderItems) {
         orderItemRepository.saveAll(orderItems);
     }
 

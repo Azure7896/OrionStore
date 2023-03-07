@@ -14,15 +14,13 @@
         <li id="admin" sec:authorize="hasAuthority('ADMIN')">
             <a th:href="@{/admin}">ADMIN PANEL</a>
         </li>
-        <li><a href="">O nas</a></li>
         <li><a href="">Regulamin</a></li>
         <li><a href="">Promocje</a></li>
         <li><a th:href="@{/categories}">Kategorie</a></li>
+        <li><a th:href="@{/shoppingcart}" th:text="|Koszyk:(| + ${count} + |) | + ${priceofallitems} + zł"></a></li>
         <li>
-            <div th:each="usermail : ${email}">
-                <div th:if="${usermail} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
-                <div th:if="${usermail} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
-            </div>
+            <div th:if="${email} eq 'anonymousUser'" class="login"><a th:href="@{/login}">Logowanie</a></div>
+            <div th:if="${email} ne 'anonymousUser'" class="login"><a th:href="@{/logout}">Wyloguj</a></div>
         </li>
     </ul>
 </nav>
@@ -38,7 +36,7 @@
     <tbody>
     <tr th:each="order : ${orders}">
         <td th:text="${order.getId()}"></td>
-        <td th:text="${order.getCreatedDate()}"></td>
+        <td th:text="${#strings.substring(order.getCreatedDate(),0,10)}"></td>
         <td>
             <a th:href="@{/myorders/order/{id} (id=${order.getId()})}">
                 <button>Sprawdź zamówienie</button>

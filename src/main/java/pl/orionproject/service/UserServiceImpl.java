@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(username);
@@ -95,23 +96,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String createHelloNotification() {
-        if (sessionService.getUserSessionEmail().equals("anonymousUser")) {
+        if (sessionService.getUserSessionEmailNameFromSession().equals("anonymousUser")) {
             return "Witaj w sklepie OrionStore. Zaloguj się aby otrzymać pełną funkcjonalność.";
         } else {
-            return "Witaj w sklepie OrionStore, " + userRepository.findByEmail(sessionService.getUserSessionEmail()).getFirstName()
+            return "Witaj w sklepie OrionStore, " + userRepository.findByEmail(sessionService.getUserSessionEmailNameFromSession()).getFirstName()
                     + "! Dziękujemy że jesteś.";
         }
     }
 
     @Override
-    public String getUserSessionEmail() {
-        return sessionService.getUserSessionEmail();
+    public String getUserSessionEmailName() {
+        return sessionService.getUserSessionEmailNameFromSession();
     }
 
     @Override
     public User getUserFromDatabaseBySession() {
-        return userRepository.findByEmail(getUserSessionEmail());
+        return userRepository.findByEmail(getUserSessionEmailName());
     }
-
-
 }

@@ -70,7 +70,7 @@ public class PdfService {
         image.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
 
-        Paragraph info = new Paragraph("OrionStore SP. Z.O.O" + "\n" + "Techniczna 12/45" + "\n" + "41-711, Ruda Slaska");
+        Paragraph info = new Paragraph("OrionStore SP. Z.O.O" + "\n" + "Techniczna 12/45" + "\n" + "40-085, Katowice");
 
         info.setFixedPosition(35, 630, 200).setTextAlignment(TextAlignment.LEFT).setFontSize(15f);
 
