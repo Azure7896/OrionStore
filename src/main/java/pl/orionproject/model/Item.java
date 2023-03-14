@@ -38,6 +38,11 @@ public class Item implements Comparable <Item> {
         this.category = category;
     }
 
+    public Item(String itemName, double price) {
+        this.itemName = itemName;
+        this.price = price;
+    }
+
     @Override
     public int compareTo(Item other) {
         return Double.compare(this.getPrice(), other.getPrice());
