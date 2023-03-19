@@ -30,11 +30,11 @@ public class ShoppingCartService {
 
     private double totalALlItemsFromTheShoppingCart() {
         List<ShoppingCartItems> shoppingCartItems = fillItemsByUser();
-        double sum = 0;
+        double priceOfAllItems = 0;
         for (ShoppingCartItems li : shoppingCartItems) {
-            sum += li.getTotalPrices() * li.getTotalItems();
+            priceOfAllItems += li.getTotalPrices();
         }
-        return sum;
+        return priceOfAllItems;
     }
 
     public String viewTotalRoundedPrices() {
@@ -80,6 +80,7 @@ public class ShoppingCartService {
         if (shoppingCartItems.size() >= 1) {
             int numberOfItems = shoppingCartItems.get(0).getTotalItems();
             shoppingCartItems.get(0).setTotalItems(++numberOfItems);
+            shoppingCartItems.get(0).setTotalPrices(numberOfItems * item.getPrice());
             shoppingCartItemsRepository.save(shoppingCartItems.get(0));
         } else {
             shoppingCartItemsRepository.save(new ShoppingCartItems(1, item.getPrice(), user, item));

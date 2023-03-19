@@ -122,9 +122,9 @@ public class PdfService {
             products.addCell(new Cell().add(String.valueOf(counter)));
             products.addCell(new Cell().add(orderItem.getItemName()));
             products.addCell(new Cell().add(orderItem.getQuantity() + " szt."));
-            products.addCell(new Cell().add(String.format("%.2f", orderItem.getQuantity() * orderItem.getTotalPrice()) + "zl"));
+            products.addCell(new Cell().add(String.format("%.2f", orderItem.getTotalPrice()) + "zl"));
 
-            total += orderItem.getQuantity() * orderItem.getTotalPrice();
+            total += orderItem.getTotalPrice();
             counter++;
         }
 

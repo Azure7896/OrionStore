@@ -67,7 +67,7 @@
         <td th:text="${iteminfo.getItem().itemName}"></td>
         <td th:text="${iteminfo.getTotalItems()}"></td>
         <td><img th:src="${iteminfo.getItem().getImagePath()}"></td>
-        <td th:text="${ T(java.lang.String).format('%.2f', iteminfo.getTotalPrices() * iteminfo.getTotalItems())} + zł"></td>
+        <td th:text="${ T(java.lang.String).format('%.2f', iteminfo.getTotalPrices())} + zł"></td>
         <td>
             <a th:href="@{/shoppingcart/deleteposition/{id} (id=${iteminfo.getId()})}">
                 <button>Usuń</button>
