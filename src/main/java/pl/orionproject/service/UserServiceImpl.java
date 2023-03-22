@@ -1,6 +1,5 @@
 package pl.orionproject.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,20 +22,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    private EmailSenderService emailSenderService;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private SessionService sessionService;
+    private final EmailSenderService emailSenderService;
+    private final UserRepository userRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final SessionService sessionService;
 
+    public UserServiceImpl(EmailSenderService emailSenderService, UserRepository userRepository,
+                           ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, SessionService sessionService) {
+        this.emailSenderService = emailSenderService;
+        this.userRepository = userRepository;
+        this.confirmationTokenRepository = confirmationTokenRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.sessionService = sessionService;
+    }
 
     public void registerUser(UserDto userDTO) {
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));

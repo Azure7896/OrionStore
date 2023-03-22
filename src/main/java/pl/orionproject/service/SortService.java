@@ -5,7 +5,7 @@ import pl.orionproject.model.Item;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
 @Service
 public class SortService {
     public List<Item> sortItemsByAsc(List<Item> items) {

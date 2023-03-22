@@ -1,6 +1,5 @@
 package pl.orionproject.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
@@ -13,11 +12,15 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
-    @Autowired
-    CategoryRepository categoryRepository;
 
-    @Autowired
-    ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
+
+    private final ItemRepository itemRepository;
+
+    public CategoryService(CategoryRepository categoryRepository, ItemRepository itemRepository) {
+        this.categoryRepository = categoryRepository;
+        this.itemRepository = itemRepository;
+    }
 
     public boolean isCategoryExists(String categoryName) {
         return categoryRepository.findByCategoryName(categoryName) != null;
@@ -25,7 +28,7 @@ public class CategoryService {
 
     public boolean isItemWithCategoryExists(Long id) {
         List<Item> items = itemRepository.findAllByCategory(this.getCategoryById(id));
-        return  items.size() >= 1;
+        return items.size() >= 1;
     }
 
     public void deleteCategoryFromDatabaseById(Long id) {

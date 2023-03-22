@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -21,7 +19,7 @@ public class ShoppingCartItems {
 
     private double totalPrices;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)

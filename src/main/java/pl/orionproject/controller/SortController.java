@@ -1,11 +1,8 @@
 package pl.orionproject.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.orionproject.model.Item;
-import pl.orionproject.repository.ItemRepository;
 import pl.orionproject.service.ItemService;
 import pl.orionproject.service.ShoppingCartService;
 import pl.orionproject.service.SortService;
@@ -13,14 +10,20 @@ import pl.orionproject.service.SortService;
 @Controller
 public class SortController {
 
-    @Autowired
-    private SortService sortService;
 
-    @Autowired
-    private ItemService itemService;
+    private final SortService sortService;
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+
+    private final ItemService itemService;
+
+
+    private final ShoppingCartService shoppingCartService;
+
+    public SortController(SortService sortService, ItemService itemService, ShoppingCartService shoppingCartService) {
+        this.sortService = sortService;
+        this.itemService = itemService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @GetMapping("/sort/desc")
     public String sortProductsByDesc(Model model) {

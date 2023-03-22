@@ -1,6 +1,5 @@
 package pl.orionproject.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.orionproject.datatransferobjects.ItemDto;
 import pl.orionproject.model.Category;
@@ -15,14 +14,17 @@ import java.util.stream.Collectors;
 @Service
 public class ItemService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    public ItemService(CategoryRepository categoryRepository, ItemRepository itemRepository, CategoryService categoryService) {
+        this.categoryRepository = categoryRepository;
+        this.itemRepository = itemRepository;
+        this.categoryService = categoryService;
+    }
 
 
     public void addItem(ItemDto itemDto) {
@@ -55,9 +57,6 @@ public class ItemService {
         item.setQuantity(itemDto.getQuantity());
         item.setCategory(categoryService.getCategoryByCategoryName(itemDto.getCategory()));
         itemRepository.save(item);
-    }
-    public List<Item> viewAllItems() {
-        return itemRepository.findAll();
     }
 
     public Item getItemById(Long id) {

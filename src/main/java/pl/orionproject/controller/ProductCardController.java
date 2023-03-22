@@ -1,10 +1,9 @@
 package pl.orionproject.controller;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-//import pl.orionproject.repository.ShoppingCartRepository;
 import pl.orionproject.service.ItemService;
 import pl.orionproject.service.ShoppingCartService;
 import pl.orionproject.service.UserService;
@@ -13,14 +12,20 @@ import pl.orionproject.service.UserService;
 @Controller
 public class ProductCardController {
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
 
-    @Autowired
-    private ItemService itemService;
+    private final ShoppingCartService shoppingCartService;
 
-    @Autowired
-    private UserService userService;
+
+    private final ItemService itemService;
+
+
+    private final UserService userService;
+
+    public ProductCardController(ShoppingCartService shoppingCartService, ItemService itemService, UserService userService) {
+        this.shoppingCartService = shoppingCartService;
+        this.itemService = itemService;
+        this.userService = userService;
+    }
 
     @GetMapping("/productcard/{id}")
     public String viewProductCard(@PathVariable Long id, Model model) {

@@ -1,6 +1,5 @@
 package pl.orionproject.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +13,20 @@ import pl.orionproject.service.UserService;
 @Controller
 public class CategoriesController {
 
-    @Autowired
-    private CategoryService categoryService;
 
-    @Autowired
-    private UserService userService;
+    private final CategoryService categoryService;
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+
+    private final UserService userService;
+
+
+    private final ShoppingCartService shoppingCartService;
+
+    public CategoriesController(CategoryService categoryService, UserService userService, ShoppingCartService shoppingCartService) {
+        this.categoryService = categoryService;
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @GetMapping("/category/{id}")
     public String viewItemsByCategory(Model model, @PathVariable Long id) {

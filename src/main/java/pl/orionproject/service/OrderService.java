@@ -1,7 +1,5 @@
 package pl.orionproject.service;
 
-import jakarta.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.Order;
 import pl.orionproject.model.OrderItem;
@@ -18,24 +16,27 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    @Autowired
-    ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
 
-    @Autowired
-    OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    OrderItemRepository orderItemRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    @Autowired
-    EmailSenderService emailSenderService;
+    private final EmailSenderService emailSenderService;
 
+    public OrderService(ShoppingCartService shoppingCartService, OrderRepository orderRepository, UserService userService,
+                        UserRepository userRepository, OrderItemRepository orderItemRepository, EmailSenderService emailSenderService) {
+        this.shoppingCartService = shoppingCartService;
+        this.orderRepository = orderRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.emailSenderService = emailSenderService;
+    }
 
     public List<OrderItem> mapItemsWithOrderItemsAndOrder(Order order) {
         List<ShoppingCartItems> shoppingCartItems = shoppingCartService.fillItemsByUser();
@@ -68,7 +69,7 @@ public class OrderService {
     }
 
 
-    public List<Order> getAllOrdersByUser () {
+    public List<Order> getAllOrdersByUser() {
         return orderRepository.findAllByUser(userService.getUserFromDatabaseBySession());
     }
 

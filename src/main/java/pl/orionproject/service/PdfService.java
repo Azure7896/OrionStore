@@ -20,7 +20,8 @@ import org.springframework.stereotype.Service;
 import pl.orionproject.model.OrderItem;
 import pl.orionproject.model.User;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
 @Service
 public class PdfService {
 
-    public String createPurchaseInvoice(User user, List<OrderItem> orderItems) throws IOException {
+    public String createPurchaseInvoice(User user, List<OrderItem> orderItems) throws MalformedURLException, FileNotFoundException {
 
         Long orderNumber = orderItems.get(0).getOrder().getId();
 
@@ -48,11 +49,6 @@ public class PdfService {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = df.format(new Date());
-
-        Paragraph storeName = new Paragraph("OrionStore Szymon Napora 5ION");
-
-        storeName.setFixedPosition(35, 815, 200);
-        document.add(storeName);
 
         Paragraph date = new Paragraph("Data wystawienia: " + formatted);
 
@@ -139,6 +135,7 @@ public class PdfService {
         Paragraph foot = new Paragraph("Dziekujemy za zakup, zapraszamy ponownie.");
         foot.setFontSize(8);
         foot.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.BOTTOM);
+
         document.add(foot);
 
         document.close();

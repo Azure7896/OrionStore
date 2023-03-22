@@ -1,7 +1,6 @@
 package pl.orionproject.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.Item;
 import pl.orionproject.model.ShoppingCartItems;
@@ -16,17 +15,21 @@ import java.util.stream.Collectors;
 @Service
 public class ShoppingCartService {
 
-    @Autowired
-    private ShoppingCartItemsRepository shoppingCartItemsRepository;
+    private final ShoppingCartItemsRepository shoppingCartItemsRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
+
+    public ShoppingCartService(ShoppingCartItemsRepository shoppingCartItemsRepository, UserService userService,
+                               UserRepository userRepository, ItemRepository itemRepository) {
+        this.shoppingCartItemsRepository = shoppingCartItemsRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
+    }
 
     private double totalALlItemsFromTheShoppingCart() {
         List<ShoppingCartItems> shoppingCartItems = fillItemsByUser();

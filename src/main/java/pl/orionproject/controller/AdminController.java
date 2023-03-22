@@ -1,7 +1,6 @@
 package pl.orionproject.controller;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +11,6 @@ import pl.orionproject.datatransferobjects.CategoryDto;
 import pl.orionproject.datatransferobjects.ItemDto;
 import pl.orionproject.model.Category;
 import pl.orionproject.model.Item;
-import pl.orionproject.repository.ItemRepository;
-import pl.orionproject.repository.ShoppingCartItemsRepository;
 import pl.orionproject.service.CategoryService;
 import pl.orionproject.service.ItemService;
 import pl.orionproject.service.SessionService;
@@ -23,16 +20,23 @@ import pl.orionproject.service.ShoppingCartService;
 @Controller
 public class AdminController {
 
-    @Autowired
-    private ItemService itemService;
-    @Autowired
-    private CategoryService categoryService;
 
-    @Autowired
-    private SessionService sessionService;
+    private final ItemService itemService;
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    private final CategoryService categoryService;
+
+
+    private final SessionService sessionService;
+
+
+    private final ShoppingCartService shoppingCartService;
+
+    public AdminController(ItemService itemService, CategoryService categoryService, SessionService sessionService, ShoppingCartService shoppingCartService) {
+        this.itemService = itemService;
+        this.categoryService = categoryService;
+        this.sessionService = sessionService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @ModelAttribute("item")
     public ItemDto itemDto() {

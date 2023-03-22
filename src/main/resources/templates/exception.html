@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/accessdeniedstyle.css">
+    <title>404 - Czarna dziura</title>
+</head>
+<body>
+<div class="dot">
+    <div class="error">
+        <h2>Wystąpił nieoczekiwany wyjątek.</h2>
+        <h4 th:text="${trace}"></h4>
+    </div>
+</div>
+</body>
+</html>

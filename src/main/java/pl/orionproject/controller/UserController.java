@@ -1,23 +1,27 @@
 package pl.orionproject.controller;
 
 import jakarta.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.orionproject.datatransferobjects.UserDto;
-import pl.orionproject.validator.UserValidator;
 import pl.orionproject.service.UserServiceImpl;
+import pl.orionproject.validator.UserValidator;
 
 
 @Controller
 public class UserController {
-    @Autowired
-    private UserValidator userValidator;
-    @Autowired
-    private UserServiceImpl userService;
+
+    private final UserValidator userValidator;
+
+    private final UserServiceImpl userService;
+
+    public UserController(UserValidator userValidator, UserServiceImpl userService) {
+        this.userValidator = userValidator;
+        this.userService = userService;
+    }
 
     @PostMapping("/login")
     public String viewLoginPageAfterLogin() {
