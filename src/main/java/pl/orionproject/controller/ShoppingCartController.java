@@ -37,7 +37,8 @@ public class ShoppingCartController {
 
     private final UserValidator userValidator;
 
-    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService, OrderService orderService, ItemService itemService, PdfService pdfService, UserValidator userValidator) {
+    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService, OrderService orderService,
+                                  ItemService itemService, PdfService pdfService, UserValidator userValidator) {
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
         this.orderService = orderService;
@@ -62,7 +63,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/shoppingcart")
-    public String orderProductsFromShoppingCart(@ModelAttribute RestUserInfoDto restUserInfoDto, Model model) {
+    public String orderProductsFromShoppingCart(@ModelAttribute RestUserInfoDto restUserInfoDto) {
         if (userValidator.isRestUserInformationFieldEmpty(restUserInfoDto) || userValidator.isNotValidRestUserInformation(restUserInfoDto)) {
             return "redirect:/shoppingcart?fail";
         } else {
@@ -77,8 +78,7 @@ public class ShoppingCartController {
                 try {
                     filePath = pdfService.createPurchaseInvoice(userService.getUserFromDatabaseBySession(), orderItems);
                 } catch (MalformedURLException | FileNotFoundException e) {
-                    model.addAttribute("trace", e);
-                    return "exception";
+                    throw new RuntimeException();
                 }
                 orderService.sendOrderCreatedMail(order, filePath);
                 return "redirect:/shoppingcart/ordercompleted/" + order.getId();
