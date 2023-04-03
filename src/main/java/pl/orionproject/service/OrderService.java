@@ -3,7 +3,7 @@ package pl.orionproject.service;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.Order;
 import pl.orionproject.model.OrderItem;
-import pl.orionproject.model.ShoppingCartItems;
+import pl.orionproject.model.ShoppingCartItem;
 import pl.orionproject.repository.OrderItemRepository;
 import pl.orionproject.repository.OrderRepository;
 import pl.orionproject.repository.UserRepository;
@@ -39,9 +39,9 @@ public class OrderService {
     }
 
     public List<OrderItem> mapItemsWithOrderItemsAndOrder(Order order) {
-        List<ShoppingCartItems> shoppingCartItems = shoppingCartService.fillItemsByUser();
+        List<ShoppingCartItem> shoppingCartItems = shoppingCartService.fillItemsByUser();
         List<OrderItem> orderItems = new ArrayList<>();
-        for (ShoppingCartItems sh : shoppingCartItems) {
+        for (ShoppingCartItem sh : shoppingCartItems) {
             orderItems.add(new OrderItem(sh.getItem().getItemName(), sh.getTotalItems(), sh.getTotalPrices(), order));
         }
         return orderItems;

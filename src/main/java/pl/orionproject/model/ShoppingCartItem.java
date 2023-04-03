@@ -11,7 +11,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCartItems {
+@Table(name = "shoppingcartitems")
+public class ShoppingCartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +27,7 @@ public class ShoppingCartItems {
     private Item item;
 
 
-    public ShoppingCartItems(int totalItems, double totalPrices, User user, Item item) {
+    public ShoppingCartItem(int totalItems, double totalPrices, User user, Item item) {
         this.totalItems = totalItems;
         this.totalPrices = totalPrices;
         this.user = user;

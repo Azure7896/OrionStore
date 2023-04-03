@@ -3,10 +3,10 @@ package pl.orionproject.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.orionproject.model.Item;
-import pl.orionproject.model.ShoppingCartItems;
+import pl.orionproject.model.ShoppingCartItem;
 import pl.orionproject.model.User;
 import pl.orionproject.repository.ItemRepository;
-import pl.orionproject.repository.ShoppingCartItemsRepository;
+import pl.orionproject.repository.ShoppingCartItemRepository;
 import pl.orionproject.repository.UserRepository;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class ShoppingCartService {
 
-    private final ShoppingCartItemsRepository shoppingCartItemsRepository;
+    private final ShoppingCartItemRepository shoppingCartItemRepository;
 
     private final UserService userService;
 
@@ -23,18 +23,18 @@ public class ShoppingCartService {
 
     private final ItemRepository itemRepository;
 
-    public ShoppingCartService(ShoppingCartItemsRepository shoppingCartItemsRepository, UserService userService,
+    public ShoppingCartService(ShoppingCartItemRepository shoppingCartItemRepository, UserService userService,
                                UserRepository userRepository, ItemRepository itemRepository) {
-        this.shoppingCartItemsRepository = shoppingCartItemsRepository;
+        this.shoppingCartItemRepository = shoppingCartItemRepository;
         this.userService = userService;
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
     }
 
     private double totalALlItemsFromTheShoppingCart() {
-        List<ShoppingCartItems> shoppingCartItems = fillItemsByUser();
+        List<ShoppingCartItem> shoppingCartItems = fillItemsByUser();
         double priceOfAllItems = 0;
-        for (ShoppingCartItems li : shoppingCartItems) {
+        for (ShoppingCartItem li : shoppingCartItems) {
             priceOfAllItems += li.getTotalPrices();
         }
         return priceOfAllItems;
@@ -46,9 +46,9 @@ public class ShoppingCartService {
 
 
     public int sumProductsCount() {
-        List<ShoppingCartItems> shoppingCartItems = fillItemsByUser();
+        List<ShoppingCartItem> shoppingCartItems = fillItemsByUser();
         int sum = 0;
-        for (ShoppingCartItems li : shoppingCartItems) {
+        for (ShoppingCartItem li : shoppingCartItems) {
             sum += li.getTotalItems();
         }
         return sum;
@@ -56,21 +56,21 @@ public class ShoppingCartService {
 
     @Transactional
     public void deleteAllUserShoppingCartItems() {
-        shoppingCartItemsRepository.deleteAllByUser(userRepository.findByEmail(userService.getUserSessionEmailName()));
+        shoppingCartItemRepository.deleteAllByUser(userRepository.findByEmail(userService.getUserSessionEmailName()));
     }
 
     public void deleteALlShoppingCartItemsById(Long id) {
-        shoppingCartItemsRepository.deleteAllByItem(itemRepository.findItemById(id));
+        shoppingCartItemRepository.deleteAllByItem(itemRepository.findItemById(id));
     }
 
     @Transactional
     public void deleteItemFromCart(Long id) {
         User user = userRepository.findByEmail(userService.getUserSessionEmailName());
-        shoppingCartItemsRepository.deleteShoppingCartItemsByIdAndUser(id, user);
+        shoppingCartItemRepository.deleteShoppingCartItemsByIdAndUser(id, user);
     }
 
-    public List<ShoppingCartItems> fillItemsByUser() {
-        return shoppingCartItemsRepository.findAll().stream().filter(item -> item
+    public List<ShoppingCartItem> fillItemsByUser() {
+        return shoppingCartItemRepository.findAll().stream().filter(item -> item
                 .getUser().getEmail().equals(userService.getUserSessionEmailName())).collect(Collectors.toList());
     }
 
@@ -79,14 +79,14 @@ public class ShoppingCartService {
 
         User user = userRepository.findByEmail(userService.getUserSessionEmailName());
 
-        List<ShoppingCartItems> shoppingCartItems = shoppingCartItemsRepository.findAllShoppingCartItemsByItemAndUser(item, user);
+        List<ShoppingCartItem> shoppingCartItems = shoppingCartItemRepository.findAllShoppingCartItemsByItemAndUser(item, user);
         if (shoppingCartItems.size() >= 1) {
             int numberOfItems = shoppingCartItems.get(0).getTotalItems();
             shoppingCartItems.get(0).setTotalItems(++numberOfItems);
             shoppingCartItems.get(0).setTotalPrices(numberOfItems * item.getPrice());
-            shoppingCartItemsRepository.save(shoppingCartItems.get(0));
+            shoppingCartItemRepository.save(shoppingCartItems.get(0));
         } else {
-            shoppingCartItemsRepository.save(new ShoppingCartItems(1, item.getPrice(), user, item));
+            shoppingCartItemRepository.save(new ShoppingCartItem(1, item.getPrice(), user, item));
         }
     }
 
