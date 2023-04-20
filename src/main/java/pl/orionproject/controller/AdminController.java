@@ -25,7 +25,6 @@ public class AdminController {
 
     private final CategoryService categoryService;
 
-
     private final SessionService sessionService;
 
 

@@ -16,6 +16,8 @@ public class EmailSenderService {
 
     private final JavaMailSender mailSender;
 
+    private final String EMAIL_ADDRESS = "notificationsorionstore@gmail.com";
+
     public EmailSenderService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -24,7 +26,7 @@ public class EmailSenderService {
     public void sendEmail(String toEmail, String subject, String body) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("notificationsorionstore@gmail.com");
+            messageHelper.setFrom(EMAIL_ADDRESS);
             messageHelper.setTo(toEmail);
             messageHelper.setSubject(subject);
             messageHelper.setText(body);
@@ -37,7 +39,7 @@ public class EmailSenderService {
     public void sendEmailWithAttachment(String toEmail, String subject, String body, String attachmentPath) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("notificationsorionstore@gmail.com");
+            messageHelper.setFrom(EMAIL_ADDRESS);
             messageHelper.setTo(toEmail);
             messageHelper.setSubject(subject);
             messageHelper.setText(body);

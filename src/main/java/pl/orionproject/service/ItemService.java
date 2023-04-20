@@ -47,7 +47,6 @@ public class ItemService {
         itemRepository.deleteItemById(id);
     }
 
-
     public void updateItem(Long id, ItemDto itemDto) {
         Item item = itemRepository.findItemById(id);
         item.setItemName(itemDto.getItemName());

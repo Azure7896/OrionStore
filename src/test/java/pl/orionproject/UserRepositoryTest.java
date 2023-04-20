@@ -22,16 +22,4 @@ public class UserRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Test
-    public void addUserToDatabaseTest() {
-        Date date = new Date();
-        //User user = new User("testowy@gmail.com", "12345", date);
-
-        //User savedUser = userRepository.save(user);
-
-        //User existUser =  entityManager.find(User.class, savedUser.getEmail());
-       // assert equals(existUser.getEmail().equals(user.getEmail()));
-    }
-
-
 }

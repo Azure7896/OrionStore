@@ -126,15 +126,15 @@ public class PdfService {
 
         products.addCell(new Cell(0, 4).add("Razem do zaplaty: " + String.format("%.02f", total) + "zl")).setTextAlignment(TextAlignment.RIGHT).setBold();
 
+        Paragraph foot = new Paragraph("Dziekujemy za zakup, zapraszamy ponownie.");
+        foot.setFontSize(8);
+        foot.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.BOTTOM);
+
         document.add(image);
         document.add(info);
         document.add(firstTable);
         document.add(table);
         document.add(products);
-
-        Paragraph foot = new Paragraph("Dziekujemy za zakup, zapraszamy ponownie.");
-        foot.setFontSize(8);
-        foot.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.BOTTOM);
 
         document.add(foot);
 
