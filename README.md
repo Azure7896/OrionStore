@@ -3,7 +3,7 @@
 <img src="https://user-images.githubusercontent.com/95986791/229646678-b1305173-ff34-4af3-b505-fb672b74b577.png">
 </p>
 
-<b><p align="center">OrionStore is an application selling computer hadware.</p></b>
+<b><p align="center">OrionStore is an application selling computer hardware.</p></b>
 
 Used technologies:
 
